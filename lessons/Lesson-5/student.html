@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Занятие 5 — Конспект ученика</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/student.css">
+    <script src="../../js/lang.js" defer></script>
+    <style>
+        h1 { border-bottom-color: #14b8a6; }
+        h2 { color: #0f766e; background: #f0fdfa; border-left-color: #14b8a6; }
+        h3 { color: #134e4a; }
+        .definition strong { color: #0f766e; }
+    </style>
+</head>
+<body>
+
+<div class="lesson-nav">
+    <a href="../../index.html" class="nav-home" data-lang="ru">&#8592; Главная</a>
+    <a href="../../index.html" class="nav-home" data-lang="en">&#8592; Home</a>
+    <span class="nav-sep">|</span>
+    <span class="nav-title" data-lang="ru">Занятие 5: Примитивные типы и literal types</span>
+    <span class="nav-title" data-lang="en">Lesson 5: Primitive Types and Literal Types</span>
+    <span class="nav-sep">|</span>
+    <a href="lecture.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F3EB; Лекция</a>
+    <a href="lecture.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F3EB; Lecture</a>
+    <span class="nav-active" data-lang="ru">&#x1F468;&#x200D;&#x1F393; Конспект</span>
+    <span class="nav-active" data-lang="en">&#x1F468;&#x200D;&#x1F393; Notes</span>
+    <a href="tasks.html" class="nav-link" data-lang="ru">&#x1F4CB; Задания</a>
+    <a href="tasks.html" class="nav-link" data-lang="en">&#x1F4CB; Tasks</a>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+</div>
+
+<div class="container">
+
+    <h1 data-lang="ru">&#x1F4D3; КОНСПЕКТ УЧЕНИКА</h1>
+    <h1 data-lang="en">&#x1F4D3; STUDENT NOTES</h1>
+    <p class="subtitle" data-lang="ru">Занятие 5: Примитивные типы и literal types</p>
+    <p class="subtitle" data-lang="en">Lesson 5: Primitive Types and Literal Types</p>
+    <p class="date-line" data-lang="ru">Дата: _______________</p>
+    <p class="date-line" data-lang="en">Date: _______________</p>
+
+    <hr>
+
+    <h2 data-lang="ru">1. Примитивы vs объекты</h2>
+    <h2 data-lang="en">1. Primitives vs objects</h2>
+
+    <div class="definition">
+        <p data-lang="ru"><strong>Примитив</strong> — простое значение без полей. В JS/TS их 7: <code>string</code>, <code>number</code>, <code>boolean</code>, <code>bigint</code>, <code>symbol</code>, <code>null</code>, <code>undefined</code>. Сравниваются по <strong>значению</strong>.</p>
+        <p data-lang="en"><strong>Primitive</strong> — a simple value with no fields. JS/TS has 7: <code>string</code>, <code>number</code>, <code>boolean</code>, <code>bigint</code>, <code>symbol</code>, <code>null</code>, <code>undefined</code>. Compared by <strong>value</strong>.</p>
+    </div>
+
+    <pre><code>"hello" === "hello"      // true (примитивы по значению)
+{ a: 1 } === { a: 1 }   // false (объекты по ссылке)</code></pre>
+
+    <hr>
+
+    <h2 data-lang="ru">2. string</h2>
+    <h2 data-lang="en">2. string</h2>
+
+    <p data-lang="ru"><strong>3 типа кавычек:</strong> <code>'</code>, <code>"</code>, <code>`</code>. Все дают тип <code>string</code>.</p>
+    <p data-lang="en"><strong>3 quote types:</strong> <code>'</code>, <code>"</code>, <code>`</code>. All produce type <code>string</code>.</p>
+
+    <p data-lang="ru"><strong>Template literals</strong> (backticks <code>`</code>) — современный способ склеивать строки:</p>
+    <p data-lang="en"><strong>Template literals</strong> (backticks <code>`</code>) — modern way to compose strings:</p>
+
+    <pre><code>const name = "Сейди", age = 20;
+`Привет, ${name}! Тебе ${age} лет.`
+// эквивалентно: "Привет, " + name + "! Тебе " + age + " лет."</code></pre>
+
+    <p data-lang="ru"><strong>Базовые методы:</strong> <code>.length</code>, <code>.toUpperCase()</code>, <code>.toLowerCase()</code>, <code>.trim()</code>, <code>.includes(x)</code>, <code>.slice(a, b)</code>, <code>.split(x)</code>, <code>.replace(a, b)</code>.</p>
+    <p data-lang="en"><strong>Basic methods:</strong> <code>.length</code>, <code>.toUpperCase()</code>, <code>.toLowerCase()</code>, <code>.trim()</code>, <code>.includes(x)</code>, <code>.slice(a, b)</code>, <code>.split(x)</code>, <code>.replace(a, b)</code>.</p>
+
+    <hr>
+
+    <h2 data-lang="ru">3. number</h2>
+    <h2 data-lang="en">3. number</h2>
+
+    <p data-lang="ru">Единый тип для целых, дробных, отрицательных, шестнадцатеричных:</p>
+    <p data-lang="en">A single type for integers, decimals, negatives, hex:</p>
+
+    <pre><code>18, 3.14, -500, 0xff, 0b1010, 1_000_000</code></pre>
+
+    <p data-lang="ru"><strong>Операторы:</strong> <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>**</code>.</p>
+    <p data-lang="en"><strong>Operators:</strong> <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>**</code>.</p>
+
+    <p data-lang="ru"><strong>Полезное:</strong> <code>Math.round</code>, <code>Math.floor</code>, <code>Math.ceil</code>, <code>Math.abs</code>, <code>Math.max/min</code>, <code>Math.sqrt</code>, <code>Math.random</code>, <code>x.toFixed(2)</code>.</p>
+    <p data-lang="en"><strong>Useful:</strong> <code>Math.round</code>, <code>Math.floor</code>, <code>Math.ceil</code>, <code>Math.abs</code>, <code>Math.max/min</code>, <code>Math.sqrt</code>, <code>Math.random</code>, <code>x.toFixed(2)</code>.</p>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Специальные значения:</strong> <code>NaN</code>, <code>Infinity</code>, <code>-Infinity</code>. Проверка на NaN — только <code>Number.isNaN(x)</code>, потому что <code>NaN !== NaN</code>.</p>
+        <p data-lang="en"><strong>Special values:</strong> <code>NaN</code>, <code>Infinity</code>, <code>-Infinity</code>. Check for NaN only via <code>Number.isNaN(x)</code> because <code>NaN !== NaN</code>.</p>
+    </div>
+
+    <hr>
+
+    <h2 data-lang="ru">4. boolean</h2>
+    <h2 data-lang="en">4. boolean</h2>
+
+    <p data-lang="ru">Всего 2 значения: <code>true</code>, <code>false</code>. Операторы: <code>&amp;&amp;</code>, <code>||</code>, <code>!</code>. Сравнение: <strong>всегда</strong> <code>===</code> и <code>!==</code>.</p>
+    <p data-lang="en">Two values: <code>true</code>, <code>false</code>. Operators: <code>&amp;&amp;</code>, <code>||</code>, <code>!</code>. Comparison: <strong>always</strong> <code>===</code> and <code>!==</code>.</p>
+
+    <hr>
+
+    <h2 data-lang="ru">5. Truthy и falsy</h2>
+    <h2 data-lang="en">5. Truthy and falsy</h2>
+
+    <p data-lang="ru">В <code>if</code> любое значение приводится к boolean.</p>
+    <p data-lang="en">In <code>if</code>, any value is coerced to boolean.</p>
+
+    <div class="definition">
+        <p data-lang="ru"><strong>6 falsy значений:</strong> <code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>. Всё остальное — <strong>truthy</strong>.</p>
+        <p data-lang="en"><strong>6 falsy values:</strong> <code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>. Everything else — <strong>truthy</strong>.</p>
+    </div>
+
+    <p data-lang="ru"><strong>Ловушки:</strong> <code>"0"</code> — truthy (непустая строка). <code>[]</code> и <code>{}</code> — тоже truthy.</p>
+    <p data-lang="en"><strong>Traps:</strong> <code>"0"</code> is truthy (non-empty string). <code>[]</code> and <code>{}</code> are also truthy.</p>
+
+    <hr>
+
+    <h2 data-lang="ru">6. bigint и symbol — редко</h2>
+    <h2 data-lang="en">6. bigint and symbol — rare</h2>
+
+    <ul data-lang="ru">
+        <li><code>bigint</code> — для очень больших целых: <code>9007199254740993n</code>. Не смешивается с <code>number</code>.</li>
+        <li><code>symbol</code> — уникальные ключи: каждый <code>Symbol()</code> ≠ любому другому.</li>
+    </ul>
+    <ul data-lang="en">
+        <li><code>bigint</code> — for very large integers: <code>9007199254740993n</code>. Doesn't mix with <code>number</code>.</li>
+        <li><code>symbol</code> — unique keys: every <code>Symbol()</code> ≠ any other.</li>
+    </ul>
+
+    <hr>
+
+    <h2 data-lang="ru">7. Literal types — главное</h2>
+    <h2 data-lang="en">7. Literal types — the headline</h2>
+
+    <div class="definition">
+        <p data-lang="ru"><strong>Literal type</strong> — тип, описывающий <strong>одно конкретное значение</strong>: <code>"red"</code>, <code>42</code>, <code>true</code>. Не «вообще строка», а именно эта.</p>
+        <p data-lang="en"><strong>Literal type</strong> — a type describing <strong>one specific value</strong>: <code>"red"</code>, <code>42</code>, <code>true</code>. Not "any string", but exactly that one.</p>
+    </div>
+
+    <pre><code>let status1: string = "ok";   // тип: string — любая строка
+let status2: "ok" = "ok";     // тип: "ok" — только эта строка</code></pre>
+
+    <hr>
+
+    <h2 data-lang="ru">8. Union из литералов</h2>
+    <h2 data-lang="en">8. Literal unions</h2>
+
+    <p data-lang="ru">Через <code>|</code> перечисляем допустимый набор значений:</p>
+    <p data-lang="en">Use <code>|</code> to list allowed values:</p>
+
+    <pre><code>type TaskStatus = "todo" | "in-progress" | "done" | "archived";
+
+function setStatus(taskId: number, status: TaskStatus) { ... }
+
+setStatus(1, "done");        // ✅
+setStatus(2, "Done");        // ❌ опечатка — TS поймал!
+setStatus(3, "compleated");  // ❌ опечатка — TS поймал!</code></pre>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Зачем нужно:</strong> защита от опечаток, autocomplete в VS Code, самодокументирующийся код.</p>
+        <p data-lang="en"><strong>Why useful:</strong> typo protection, autocomplete in VS Code, self-documenting code.</p>
+    </div>
+
+    <hr>
+
+    <h2 data-lang="ru">9. as const — заморозка</h2>
+    <h2 data-lang="en">9. as const — freezing</h2>
+
+    <p data-lang="ru">«Сделай тип максимально точным и сделай иммутабельным»:</p>
+    <p data-lang="en">"Make the type maximally precise and immutable":</p>
+
+    <pre><code>let a = "hello";              // тип: string
+let b = "hello" as const;     // тип: "hello"
+
+const config = {
+    apiUrl: "https://api.example.com",
+    mode: "production"
+} as const;
+// все поля становятся литералами + readonly</code></pre>
+
+    <p data-lang="ru">Используется для конфигов, наборов опций, констант. Один из главных инструментов TS 2026.</p>
+    <p data-lang="en">Used for configs, option sets, constants. One of TS 2026's headline tools.</p>
+
+    <hr>
+
+    <h2 data-lang="ru">10. Template literal types (тизер)</h2>
+    <h2 data-lang="en">10. Template literal types (teaser)</h2>
+
+    <p data-lang="ru">Шаблоны на уровне типов. Подробно — в занятии 26.</p>
+    <p data-lang="en">Templates on the type level. Details in Lesson 26.</p>
+
+    <pre><code>type Greeting = `Hello, ${string}!`;
+const g: Greeting = "Hello, World!";   // ✅
+const g: Greeting = "Hi, World!";      // ❌
+
+type ClassName = `${"red" | "blue"}-${"small" | "large"}`;
+// "red-small" | "red-large" | "blue-small" | "blue-large"</code></pre>
+
+    <hr>
+
+    <div class="remember">
+        <ul data-lang="ru">
+            <li>7 примитивов: <code>string</code>, <code>number</code>, <code>boolean</code>, <code>bigint</code>, <code>symbol</code>, <code>null</code>, <code>undefined</code>.</li>
+            <li>Примитивы — по значению, объекты — по ссылке.</li>
+            <li>3 типа кавычек, backticks — для template literals: <code>`Hello, ${name}!`</code>.</li>
+            <li><code>number</code> — общий тип для всех чисел. <code>NaN !== NaN</code>, проверка — <code>Number.isNaN(x)</code>.</li>
+            <li><code>boolean</code> — <code>true/false</code>. Всегда <code>===</code>, не <code>==</code>.</li>
+            <li>6 falsy: <code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>. Всё остальное truthy. <code>"0"</code> и <code>[]</code> — truthy.</li>
+            <li><code>bigint</code> — большие целые. <code>symbol</code> — уникальные ключи. Редко.</li>
+            <li><strong>Literal type</strong> = тип одного конкретного значения: <code>"red"</code>, <code>42</code>, <code>true</code>.</li>
+            <li><strong>Литеральный union</strong>: <code>type Status = "ok" | "error"</code> — защита от опечаток.</li>
+            <li><code>as const</code> — заморозить значение в литерал + сделать readonly.</li>
+            <li>Template literal types — шаблоны на уровне типов (подробно в занятии 26).</li>
+        </ul>
+        <ul data-lang="en">
+            <li>7 primitives: <code>string</code>, <code>number</code>, <code>boolean</code>, <code>bigint</code>, <code>symbol</code>, <code>null</code>, <code>undefined</code>.</li>
+            <li>Primitives — by value, objects — by reference.</li>
+            <li>3 quote types, backticks — for template literals: <code>`Hello, ${name}!`</code>.</li>
+            <li><code>number</code> is the common type for all numbers. <code>NaN !== NaN</code>, check via <code>Number.isNaN(x)</code>.</li>
+            <li><code>boolean</code> — <code>true/false</code>. Always <code>===</code>, never <code>==</code>.</li>
+            <li>6 falsy: <code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>. Everything else truthy. <code>"0"</code> and <code>[]</code> are truthy.</li>
+            <li><code>bigint</code> — large integers. <code>symbol</code> — unique keys. Rare.</li>
+            <li><strong>Literal type</strong> = type of one specific value: <code>"red"</code>, <code>42</code>, <code>true</code>.</li>
+            <li><strong>Literal union</strong>: <code>type Status = "ok" | "error"</code> — typo protection.</li>
+            <li><code>as const</code> — freeze value into literal + make readonly.</li>
+            <li>Template literal types — templates on the type level (details in Lesson 26).</li>
+        </ul>
+    </div>
+
+    <div class="homework">
+        <ol data-lang="ru">
+            <li>В проекте создайте <code>src/strings.ts</code>. Напишите 5 строковых переменных в трёх типах кавычек. Используйте минимум 3 строковых метода (из таблицы лекции). Запустите <code>npm run dev</code>, запишите вывод.</li>
+            <li>Замените в любом старом коде минимум 3 конкатенации через <code>+</code> на template literals. Запишите «до и после».</li>
+            <li>Эксперимент с NaN: создайте <code>const x = 0 / 0</code>. Проверьте <code>x === NaN</code> и <code>Number.isNaN(x)</code>. Запишите оба результата и объясните, почему первое — <code>false</code>.</li>
+            <li>В <code>src/truthy.ts</code> прогоните через <code>if (x) console.log("truthy") else console.log("falsy")</code> следующие значения: <code>0</code>, <code>""</code>, <code>"0"</code>, <code>[]</code>, <code>{}</code>, <code>"false"</code>, <code>NaN</code>, <code>-1</code>. Запишите результаты в таблицу.</li>
+            <li>Создайте тип <code>type Direction = "left" | "right" | "up" | "down"</code>. Напишите функцию <code>move(dir: Direction)</code>, которая печатает «Двигаюсь: ...». Вызовите с правильным и неправильным значением — запишите ошибку TS для неправильного.</li>
+            <li>Создайте константу <code>const config = { apiUrl: "...", port: 3000, env: "production" } as const</code>. Наведите курсор на каждое поле, запишите типы. Сравните с теми же полями <strong>без</strong> <code>as const</code>.</li>
+            <li>Напишите тип <code>type HexColor = `#${string}`</code>. Попробуйте присвоить <code>"#ff0000"</code> и <code>"red"</code>. Запишите, что прошло, а что нет.</li>
+            <li>Подготовьте устные ответы на все 12 вопросов из «Проверь себя» лекции.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In the project create <code>src/strings.ts</code>. Write 5 string variables across all three quote types. Use at least 3 string methods (from the lecture table). Run <code>npm run dev</code>, record the output.</li>
+            <li>In any older code, replace at least 3 <code>+</code> concatenations with template literals. Write "before and after".</li>
+            <li>NaN experiment: create <code>const x = 0 / 0</code>. Check <code>x === NaN</code> and <code>Number.isNaN(x)</code>. Record both results and explain why the first is <code>false</code>.</li>
+            <li>In <code>src/truthy.ts</code> run the following values through <code>if (x) console.log("truthy") else console.log("falsy")</code>: <code>0</code>, <code>""</code>, <code>"0"</code>, <code>[]</code>, <code>{}</code>, <code>"false"</code>, <code>NaN</code>, <code>-1</code>. Tabulate results.</li>
+            <li>Create the type <code>type Direction = "left" | "right" | "up" | "down"</code>. Write a function <code>move(dir: Direction)</code> that prints "Moving: ...". Call it with valid and invalid values — record the TS error for the invalid one.</li>
+            <li>Create <code>const config = { apiUrl: "...", port: 3000, env: "production" } as const</code>. Hover each field, record the types. Compare with the same fields <strong>without</strong> <code>as const</code>.</li>
+            <li>Write the type <code>type HexColor = `#${string}`</code>. Try assigning <code>"#ff0000"</code> and <code>"red"</code>. Record what passed and what failed.</li>
+            <li>Prepare oral answers to all 12 questions from the lecture's "Test yourself".</li>
+        </ol>
+    </div>
+
+</div>
+
+</body>
+</html>

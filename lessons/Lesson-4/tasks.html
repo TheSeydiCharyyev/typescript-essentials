@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Занятие 4 — Практические задания</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/tasks.css">
+    <script src="../../js/lang.js" defer></script>
+    <style>
+        h1 { border-bottom-color: #10b981; }
+        h2 { color: #047857; background: #ecfdf5; border-left-color: #10b981; }
+    </style>
+</head>
+<body>
+
+<div class="lesson-nav">
+    <a href="../../index.html" class="nav-home" data-lang="ru">&#8592; Главная</a>
+    <a href="../../index.html" class="nav-home" data-lang="en">&#8592; Home</a>
+    <span class="nav-sep">|</span>
+    <span class="nav-title" data-lang="ru">Занятие 4: Переменные и аннотации типов</span>
+    <span class="nav-title" data-lang="en">Lesson 4: Variables and Type Annotations</span>
+    <span class="nav-sep">|</span>
+    <a href="lecture.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F3EB; Лекция</a>
+    <a href="lecture.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F3EB; Lecture</a>
+    <a href="student.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F393; Конспект</a>
+    <a href="student.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F393; Notes</a>
+    <span class="nav-active" data-lang="ru">&#x1F4CB; Задания</span>
+    <span class="nav-active" data-lang="en">&#x1F4CB; Tasks</span>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+</div>
+
+<div class="container">
+
+    <h1 data-lang="ru">&#x1F4DD; ПРАКТИЧЕСКИЕ ЗАДАНИЯ</h1>
+    <h1 data-lang="en">&#x1F4DD; PRACTICAL TASKS</h1>
+    <p class="subtitle" data-lang="ru">Занятие 4: Переменные и аннотации &mdash; 7 заданий: от const/let до правила «аннотируй границы»</p>
+    <p class="subtitle" data-lang="en">Lesson 4: Variables and Annotations &mdash; 7 tasks: from const/let to the "annotate boundaries" rule</p>
+
+    <div class="why" style="background:#ecfdf5;border-left:4px solid #10b981;padding:12px 18px;border-radius:8px;margin:16px 0;">
+        <p data-lang="ru"><strong>Где работаем:</strong> в проекте <code>ts-strict-demo/</code> из занятия 3. Если его нет — пересоберите по шагам из задания 1 занятия 3.</p>
+        <p data-lang="en"><strong>Where to work:</strong> in the <code>ts-strict-demo/</code> project from Lesson 3. If you don't have it — rebuild via Lesson 3 Task 1.</p>
+    </div>
+
+    <hr>
+
+    <!-- TASK 1 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 1. const, let, var в действии</div>
+            <div class="task-title" data-lang="en">Task 1. const, let, var in action</div>
+            <div class="task-meta">
+                <span class="badge badge-easy" data-lang="ru">Легко</span>
+                <span class="badge badge-easy" data-lang="en">Easy</span>
+                <span class="badge badge-time">15 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Прочувствовать разницу между тремя способами объявить переменную и убедиться, что <code>var</code> ведёт себя странно.</span>
+            <span data-lang="en">Feel the difference between the three declaration keywords and confirm that <code>var</code> misbehaves.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>Создайте файл <code>src/declarations.ts</code>:
+                <pre><code>// const
+const country = "Туркменистан";
+country = "Узбекистан";  // что произойдёт?
+
+// let
+let counter = 0;
+counter = 1;
+counter = 2;
+console.log(counter);
+
+// var
+var legacy = "старый код";
+var legacy = "ещё раз!";  // var разрешает!
+console.log(legacy);
+
+// block scope
+if (true) {
+    let blockVar = "внутри";
+    var funcVar = "тоже внутри";
+}
+console.log(funcVar);   // что выведет?
+console.log(blockVar);  // что выведет?</code></pre>
+            </li>
+            <li>Запустите <code>npm run check</code>. Запишите ошибки (или их отсутствие) для каждого блока.</li>
+            <li>Поправьте <code>const country</code> на <code>let country</code>, запустите снова. Что изменилось?</li>
+            <li>В тетради опишите, чем плох <code>var</code> в последних двух блоках кода.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Create <code>src/declarations.ts</code>:
+                <pre><code>// const
+const country = "Turkmenistan";
+country = "Uzbekistan";  // what happens?
+
+// let
+let counter = 0;
+counter = 1;
+counter = 2;
+console.log(counter);
+
+// var
+var legacy = "old code";
+var legacy = "again!";  // var allows this!
+console.log(legacy);
+
+// block scope
+if (true) {
+    let blockVar = "inside";
+    var funcVar = "also inside";
+}
+console.log(funcVar);   // what's printed?
+console.log(blockVar);  // what's printed?</code></pre>
+            </li>
+            <li>Run <code>npm run check</code>. Write down errors (or their absence) for each block.</li>
+            <li>Change <code>const country</code> to <code>let country</code>, run again. What changed?</li>
+            <li>In your notebook describe why <code>var</code> behaves poorly in the last two blocks.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Зафиксирована ошибка для <code>const country = ...; country = ...</code></li>
+                <li>Объяснено: почему <code>var legacy</code> можно объявить дважды, а <code>let</code> — нет</li>
+                <li>Понятно: <code>funcVar</code> «утекает» из <code>if</code>, а <code>blockVar</code> — нет</li>
+            </ul>
+            <ul data-lang="en">
+                <li>Error recorded for <code>const country = ...; country = ...</code></li>
+                <li>Explained: why <code>var legacy</code> can be redeclared, <code>let</code> cannot</li>
+                <li>Clear: <code>funcVar</code> "leaks" out of <code>if</code>, <code>blockVar</code> doesn't</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TASK 2 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 2. const с объектом — что можно и что нельзя</div>
+            <div class="task-title" data-lang="en">Task 2. const with an object — what's allowed and what's not</div>
+            <div class="task-meta">
+                <span class="badge badge-easy" data-lang="ru">Легко</span>
+                <span class="badge badge-easy" data-lang="en">Easy</span>
+                <span class="badge badge-time">10 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Понять важную тонкость: <code>const</code> блокирует переназначение ссылки, но не изменение содержимого.</span>
+            <span data-lang="en">Grasp the subtle point: <code>const</code> blocks reference reassignment but not content mutation.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>В <code>src/const-objects.ts</code> вставьте:
+                <pre><code>const user = { name: "Anna", age: 20 };
+
+// Эксперимент 1
+user = { name: "Boris", age: 30 };
+
+// Эксперимент 2
+user.name = "Boris";
+user.age = 30;
+console.log(user);
+
+// Эксперимент 3
+const list = [1, 2, 3];
+list = [4, 5, 6];   // ?
+list.push(4);       // ?
+console.log(list);</code></pre>
+            </li>
+            <li>Запустите <code>npm run check</code>. Запишите, какие из четырёх «экспериментов» вызвали ошибку.</li>
+            <li>Закомментируйте строки с ошибками и запустите <code>npm run dev</code>. Запишите вывод.</li>
+            <li>В тетради сформулируйте правило в 1 предложении: «<code>const</code> запрещает ...».</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In <code>src/const-objects.ts</code> paste:
+                <pre><code>const user = { name: "Anna", age: 20 };
+
+// Experiment 1
+user = { name: "Boris", age: 30 };
+
+// Experiment 2
+user.name = "Boris";
+user.age = 30;
+console.log(user);
+
+// Experiment 3
+const list = [1, 2, 3];
+list = [4, 5, 6];   // ?
+list.push(4);       // ?
+console.log(list);</code></pre>
+            </li>
+            <li>Run <code>npm run check</code>. Write down which of the four experiments caused an error.</li>
+            <li>Comment out the failing lines and run <code>npm run dev</code>. Write down the output.</li>
+            <li>In your notebook state the rule in one sentence: "<code>const</code> forbids ...".</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Эксперименты 1 и 3 (с переназначением) вызвали ошибку</li>
+                <li>Эксперименты 2 (изменение полей) и <code>list.push</code> прошли</li>
+                <li>Сформулировано правило: <code>const</code> запрещает <em>переназначение</em>, но не <em>изменение содержимого</em></li>
+            </ul>
+            <ul data-lang="en">
+                <li>Experiments 1 and 3 (reassignment) caused errors</li>
+                <li>Experiment 2 (field mutation) and <code>list.push</code> succeeded</li>
+                <li>Rule stated: <code>const</code> forbids <em>reassignment</em>, not <em>mutation</em></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TASK 3 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 3. Inference vs аннотация</div>
+            <div class="task-title" data-lang="en">Task 3. Inference vs annotation</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">15 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Увидеть глазами, какие типы TypeScript выводит сам. Использовать VS Code как «исследовательский инструмент».</span>
+            <span data-lang="en">See firsthand which types TypeScript infers. Use VS Code as a "research tool".</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>В <code>src/inference.ts</code> вставьте этот код <strong>без явных аннотаций</strong>:
+                <pre><code>let age = 18;
+const userName = "Anna";
+const isAdmin = false;
+const pi = 3.14;
+let cities = ["Ашхабад", "Стамбул", "Ташкент"];
+let mixed = [1, "two", true];
+const empty = [];
+let nothing;
+let later: number;
+const greeting = `Hello, ${userName}!`;</code></pre>
+            </li>
+            <li>В VS Code <strong>наведите курсор</strong> на каждую переменную. Запишите в таблицу:
+                <table style="margin-top:8px;">
+                    <thead><tr><th>Переменная</th><th>Тип, выведенный TS</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>age</code></td><td>...</td></tr>
+                        <tr><td><code>userName</code></td><td>...</td></tr>
+                        <tr><td><code>isAdmin</code></td><td>...</td></tr>
+                        <tr><td><code>pi</code></td><td>...</td></tr>
+                        <tr><td><code>cities</code></td><td>...</td></tr>
+                        <tr><td><code>mixed</code></td><td>...</td></tr>
+                        <tr><td><code>empty</code></td><td>...</td></tr>
+                        <tr><td><code>nothing</code></td><td>...</td></tr>
+                        <tr><td><code>later</code></td><td>...</td></tr>
+                        <tr><td><code>greeting</code></td><td>...</td></tr>
+                    </tbody>
+                </table>
+            </li>
+            <li>Найдите <strong>две переменные</strong>, где TS вывел <code>any</code>. Объясните, <strong>почему</strong> именно их он не смог типизировать.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In <code>src/inference.ts</code> paste this code <strong>without explicit annotations</strong>:
+                <pre><code>let age = 18;
+const userName = "Anna";
+const isAdmin = false;
+const pi = 3.14;
+let cities = ["Ashgabat", "Istanbul", "Tashkent"];
+let mixed = [1, "two", true];
+const empty = [];
+let nothing;
+let later: number;
+const greeting = `Hello, ${userName}!`;</code></pre>
+            </li>
+            <li>In VS Code <strong>hover</strong> over each variable. Fill in the table:
+                <table style="margin-top:8px;">
+                    <thead><tr><th>Variable</th><th>Type inferred by TS</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>age</code></td><td>...</td></tr>
+                        <tr><td><code>userName</code></td><td>...</td></tr>
+                        <tr><td><code>isAdmin</code></td><td>...</td></tr>
+                        <tr><td><code>pi</code></td><td>...</td></tr>
+                        <tr><td><code>cities</code></td><td>...</td></tr>
+                        <tr><td><code>mixed</code></td><td>...</td></tr>
+                        <tr><td><code>empty</code></td><td>...</td></tr>
+                        <tr><td><code>nothing</code></td><td>...</td></tr>
+                        <tr><td><code>later</code></td><td>...</td></tr>
+                        <tr><td><code>greeting</code></td><td>...</td></tr>
+                    </tbody>
+                </table>
+            </li>
+            <li>Find <strong>two variables</strong> where TS inferred <code>any</code>. Explain <strong>why</strong> it couldn't type them.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Таблица заполнена для всех 10 переменных</li>
+                <li>Найдены 2 переменные с типом <code>any</code> (вероятно <code>empty</code> и <code>nothing</code>)</li>
+                <li>Объяснено: TS не может вывести тип, если нет ни значения, ни аннотации</li>
+            </ul>
+            <ul data-lang="en">
+                <li>Table filled in for all 10 variables</li>
+                <li>Found 2 variables with type <code>any</code> (likely <code>empty</code> and <code>nothing</code>)</li>
+                <li>Explained: TS can't infer when there's neither value nor annotation</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Подсказка: если у вас в <code>tsconfig.json</code> включён <code>"strict": true</code>, то <code>let nothing;</code> и <code>const empty = []</code> вызовут предупреждения именно из-за неявного <code>any</code>.</p>
+            <p data-lang="en">Hint: if your <code>tsconfig.json</code> has <code>"strict": true</code>, then <code>let nothing;</code> and <code>const empty = []</code> will trigger warnings due to implicit <code>any</code>.</p>
+        </div>
+    </div>
+
+    <!-- TASK 4 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 4. Эксперимент с widening</div>
+            <div class="task-title" data-lang="en">Task 4. Widening experiment</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">15 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">На живом коде увидеть, как <code>let</code> и <code>const</code> дают разные типы для одних и тех же значений.</span>
+            <span data-lang="en">See live how <code>let</code> and <code>const</code> give different types for the same values.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>В <code>src/widening.ts</code> вставьте:
+                <pre><code>// Пара 1
+let a1 = 10;
+const a2 = 10;
+
+// Пара 2
+let b1 = "hello";
+const b2 = "hello";
+
+// Пара 3
+let c1 = true;
+const c2 = true;</code></pre>
+            </li>
+            <li>Наведите курсор на каждую переменную и заполните таблицу:
+                <table style="margin-top:8px;">
+                    <thead><tr><th>Переменная</th><th>Тип</th><th>Это широкий тип или литерал?</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>a1</code></td><td>...</td><td>...</td></tr>
+                        <tr><td><code>a2</code></td><td>...</td><td>...</td></tr>
+                        <tr><td><code>b1</code></td><td>...</td><td>...</td></tr>
+                        <tr><td><code>b2</code></td><td>...</td><td>...</td></tr>
+                        <tr><td><code>c1</code></td><td>...</td><td>...</td></tr>
+                        <tr><td><code>c2</code></td><td>...</td><td>...</td></tr>
+                    </tbody>
+                </table>
+            </li>
+            <li>Внизу файла добавьте:
+                <pre><code>let direction: "left" | "right" = "left";
+direction = a1;   // что выдаст TS?
+direction = a2;   // а это?</code></pre>
+                Запишите ошибки от обеих строк (если есть).
+            </li>
+            <li>В тетради ответьте: <em>почему</em> <code>const a2 = 10</code> подходит к типу <code>"left" | "right"</code> по логике widening, но всё равно не работает в этом примере?</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In <code>src/widening.ts</code> paste:
+                <pre><code>// Pair 1
+let a1 = 10;
+const a2 = 10;
+
+// Pair 2
+let b1 = "hello";
+const b2 = "hello";
+
+// Pair 3
+let c1 = true;
+const c2 = true;</code></pre>
+            </li>
+            <li>Hover over each variable and fill in:
+                <table style="margin-top:8px;">
+                    <thead><tr><th>Variable</th><th>Type</th><th>Widened or literal?</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>a1</code></td><td>...</td><td>...</td></tr>
+                        <tr><td><code>a2</code></td><td>...</td><td>...</td></tr>
+                        <tr><td><code>b1</code></td><td>...</td><td>...</td></tr>
+                        <tr><td><code>b2</code></td><td>...</td><td>...</td></tr>
+                        <tr><td><code>c1</code></td><td>...</td><td>...</td></tr>
+                        <tr><td><code>c2</code></td><td>...</td><td>...</td></tr>
+                    </tbody>
+                </table>
+            </li>
+            <li>At the bottom of the file add:
+                <pre><code>let direction: "left" | "right" = "left";
+direction = a1;   // what does TS say?
+direction = a2;   // and this?</code></pre>
+                Write down the errors from both lines (if any).
+            </li>
+            <li>In your notebook answer: <em>why</em> doesn't <code>const a2 = 10</code> fit type <code>"left" | "right"</code> even though widening logic might suggest it could?</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Таблица заполнена: <code>let</code>-переменные имеют широкий тип, <code>const</code> — литеральный</li>
+                <li>Поняли: TS отличает «значение» от «типа значения»</li>
+                <li>Поняли: <code>10</code> и <code>"left" | "right"</code> — несовместимы независимо от widening</li>
+            </ul>
+            <ul data-lang="en">
+                <li>Table filled in: <code>let</code> variables have widened types, <code>const</code> have literal types</li>
+                <li>You see: TS distinguishes "value" from "value's type"</li>
+                <li>You see: <code>10</code> and <code>"left" | "right"</code> are incompatible regardless of widening</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TASK 5 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 5. «Аннотируй границы» — рефакторинг</div>
+            <div class="task-title" data-lang="en">Task 5. "Annotate boundaries" — refactor</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">20 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Применить правило 2026 на реальном коде: убрать лишние аннотации, оставить только нужные.</span>
+            <span data-lang="en">Apply the 2026 rule to real code: strip useless annotations, keep only the needed ones.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Стартовый код (положите в <code>src/refactor.ts</code>):</strong></p>
+        <p data-lang="en"><strong>Starter code (put in <code>src/refactor.ts</code>):</strong></p>
+
+        <pre><code>function buildGreeting(name: string, age: number): string {
+    const prefix: string = "Привет, ";
+    const suffix: string = "!";
+    const ageLabel: string = ` Тебе ${age} лет`;
+    const message: string = prefix + name + suffix + ageLabel;
+    return message;
+}
+
+const result: string = buildGreeting("Сейди", 20);
+console.log(result);</code></pre>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>Запустите <code>npm run check</code> — убедитесь, что код валиден (0 ошибок).</li>
+            <li><strong>Найдите все лишние аннотации</strong> — те, которые TS вывел бы сам.</li>
+            <li>Удалите их. <strong>Оставьте только те аннотации, которые правило «аннотируй границы» считает обязательными</strong>.</li>
+            <li>После каждого удаления запускайте <code>npm run check</code>. Если появилась ошибка — верните аннотацию.</li>
+            <li>В тетради запишите финальный код и сравните: сколько строк стало без лишнего шума.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Run <code>npm run check</code> — verify the code is valid (0 errors).</li>
+            <li><strong>Find all the unnecessary annotations</strong> — those TS would infer itself.</li>
+            <li>Delete them. <strong>Keep only the annotations that the "annotate boundaries" rule considers mandatory</strong>.</li>
+            <li>After each deletion run <code>npm run check</code>. If an error appears — restore the annotation.</li>
+            <li>In your notebook write the final code and compare: how many lines became free of noise.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>После рефакторинга <code>npm run check</code> всё ещё показывает 0 ошибок</li>
+                <li>Удалены <strong>4 лишних аннотации</strong> (<code>prefix</code>, <code>suffix</code>, <code>ageLabel</code>, <code>message</code>, <code>result</code>)</li>
+                <li>Остались: аннотации параметров (<code>name: string</code>, <code>age: number</code>) и возврата (<code>: string</code>)</li>
+            </ul>
+            <ul data-lang="en">
+                <li>After refactor <code>npm run check</code> still shows 0 errors</li>
+                <li>Removed <strong>4-5 unnecessary annotations</strong> (<code>prefix</code>, <code>suffix</code>, <code>ageLabel</code>, <code>message</code>, <code>result</code>)</li>
+                <li>Kept: parameter annotations (<code>name: string</code>, <code>age: number</code>) and return (<code>: string</code>)</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Правильный финал:
+                <pre><code>function buildGreeting(name: string, age: number): string {
+    const prefix = "Привет, ";
+    const suffix = "!";
+    const ageLabel = ` Тебе ${age} лет`;
+    return prefix + name + suffix + ageLabel;
+}
+
+const result = buildGreeting("Сейди", 20);
+console.log(result);</code></pre>
+            </p>
+            <p data-lang="en">Correct final:
+                <pre><code>function buildGreeting(name: string, age: number): string {
+    const prefix = "Hello, ";
+    const suffix = "!";
+    const ageLabel = ` You are ${age}`;
+    return prefix + name + suffix + ageLabel;
+}
+
+const result = buildGreeting("Seydi", 20);
+console.log(result);</code></pre>
+            </p>
+        </div>
+    </div>
+
+    <!-- TASK 6 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 6. Чтение ошибок «is not assignable to»</div>
+            <div class="task-title" data-lang="en">Task 6. Reading "is not assignable to" errors</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">15 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Научиться спокойно читать самую частую ошибку TypeScript и быстро её исправлять.</span>
+            <span data-lang="en">Learn to calmly read the most common TypeScript error and fix it quickly.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>В <code>src/errors.ts</code> вставьте этот «сломанный» код:
+                <pre><code>let count: number = 0;
+count = "пять";
+
+let userName: string = "Anna";
+userName = 42;
+
+let active: boolean = true;
+active = "yes";
+
+function multiply(a: number, b: number): number {
+    return a * b;
+}
+multiply("2", 3);
+multiply(2, "3");
+multiply("2", "3");</code></pre>
+            </li>
+            <li>Запустите <code>npm run check</code>. Должно быть <strong>6 ошибок</strong>.</li>
+            <li>Для каждой ошибки заполните таблицу:
+                <table style="margin-top:8px;">
+                    <thead><tr><th>#</th><th>Что положили (Type 'X')</th><th>Что ожидалось (type 'Y')</th></tr></thead>
+                    <tbody>
+                        <tr><td>1</td><td>...</td><td>...</td></tr>
+                        <tr><td>2</td><td>...</td><td>...</td></tr>
+                        <tr><td>3</td><td>...</td><td>...</td></tr>
+                        <tr><td>4</td><td>...</td><td>...</td></tr>
+                        <tr><td>5</td><td>...</td><td>...</td></tr>
+                        <tr><td>6</td><td>...</td><td>...</td></tr>
+                    </tbody>
+                </table>
+            </li>
+            <li>Исправьте все 6 ошибок и убедитесь, что <code>npm run dev</code> работает.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In <code>src/errors.ts</code> paste this "broken" code:
+                <pre><code>let count: number = 0;
+count = "five";
+
+let userName: string = "Anna";
+userName = 42;
+
+let active: boolean = true;
+active = "yes";
+
+function multiply(a: number, b: number): number {
+    return a * b;
+}
+multiply("2", 3);
+multiply(2, "3");
+multiply("2", "3");</code></pre>
+            </li>
+            <li>Run <code>npm run check</code>. Should be <strong>6 errors</strong>.</li>
+            <li>For each error fill in the table:
+                <table style="margin-top:8px;">
+                    <thead><tr><th>#</th><th>What you passed (Type 'X')</th><th>What was expected (type 'Y')</th></tr></thead>
+                    <tbody>
+                        <tr><td>1</td><td>...</td><td>...</td></tr>
+                        <tr><td>2</td><td>...</td><td>...</td></tr>
+                        <tr><td>3</td><td>...</td><td>...</td></tr>
+                        <tr><td>4</td><td>...</td><td>...</td></tr>
+                        <tr><td>5</td><td>...</td><td>...</td></tr>
+                        <tr><td>6</td><td>...</td><td>...</td></tr>
+                    </tbody>
+                </table>
+            </li>
+            <li>Fix all 6 errors and verify <code>npm run dev</code> works.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Таблица заполнена для всех 6 ошибок</li>
+                <li>Все ошибки исправлены, <code>npm run dev</code> запускается</li>
+                <li>В тетради: «формула ошибки» = «Type X положили туда, где ждут Y»</li>
+            </ul>
+            <ul data-lang="en">
+                <li>Table filled for all 6 errors</li>
+                <li>All errors fixed, <code>npm run dev</code> runs</li>
+                <li>In notebook: "error formula" = "Type X was put where Y is expected"</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TASK 7 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 7. Мини-программа «Анкета»</div>
+            <div class="task-title" data-lang="en">Task 7. Mini-program "Profile"</div>
+            <div class="task-meta">
+                <span class="badge badge-hard" data-lang="ru">Сложно</span>
+                <span class="badge badge-hard" data-lang="en">Hard</span>
+                <span class="badge badge-time">25 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Применить всё с занятия на маленькой программе. Использовать правильно: <code>const</code> по умолчанию, <code>let</code> где нужно, аннотации параметров, inference для локальных переменных.</span>
+            <span data-lang="en">Apply everything from the lesson in a small program. Use correctly: <code>const</code> by default, <code>let</code> where needed, parameter annotations, inference for locals.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Задача:</strong> написать программу, которая принимает данные пользователя и выводит «анкету». Файл — <code>src/profile.ts</code>.</p>
+        <p data-lang="en"><strong>Task:</strong> write a program that takes user data and prints a "profile". File — <code>src/profile.ts</code>.</p>
+
+        <p data-lang="ru"><strong>Требования:</strong></p>
+        <p data-lang="en"><strong>Requirements:</strong></p>
+        <ol data-lang="ru">
+            <li>Создайте 5 переменных с данными о себе через <code>const</code>: <code>fullName</code> (string), <code>birthYear</code> (number), <code>city</code> (string), <code>isStudent</code> (boolean), <code>favoriteLanguages</code> (массив строк).</li>
+            <li>Создайте константу <code>const CURRENT_YEAR = 2026</code> (стиль UPPER_SNAKE_CASE — это «магическое число»).</li>
+            <li>Создайте <code>let age</code> и присвойте ей <code>CURRENT_YEAR - birthYear</code>. Подумайте, нужна ли аннотация.</li>
+            <li>Напишите функцию <code>formatProfile(name: string, age: number, city: string): string</code> — она возвращает строку вида: <code>"Сейди, 20 лет, Ашхабад"</code>.</li>
+            <li>Внутри функции <strong>не аннотируйте</strong> локальные переменные — пусть TS выводит.</li>
+            <li>В конце выведите 2 строки: <code>console.log(formatProfile(fullName, age, city))</code> и список языков через запятую.</li>
+            <li>Запустите <code>npm run check</code> — 0 ошибок. Запустите <code>npm run dev</code> — программа выводит ваши данные.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Create 5 variables about yourself via <code>const</code>: <code>fullName</code> (string), <code>birthYear</code> (number), <code>city</code> (string), <code>isStudent</code> (boolean), <code>favoriteLanguages</code> (string array).</li>
+            <li>Create a constant <code>const CURRENT_YEAR = 2026</code> (UPPER_SNAKE_CASE — it's a "magic number").</li>
+            <li>Create <code>let age</code> and assign <code>CURRENT_YEAR - birthYear</code>. Think about whether an annotation is needed.</li>
+            <li>Write a function <code>formatProfile(name: string, age: number, city: string): string</code> — it returns a string like <code>"Seydi, 20 years old, Ashgabat"</code>.</li>
+            <li>Inside the function <strong>don't annotate</strong> local variables — let TS infer.</li>
+            <li>At the end print 2 lines: <code>console.log(formatProfile(fullName, age, city))</code> and a comma-separated language list.</li>
+            <li>Run <code>npm run check</code> — 0 errors. Run <code>npm run dev</code> — the program prints your data.</li>
+        </ol>
+
+        <p data-lang="ru"><strong>Ожидаемый вывод:</strong></p>
+        <p data-lang="en"><strong>Expected output:</strong></p>
+
+        <pre><code>Сейди, 20 лет, Ашхабад
+Языки: TypeScript, Python, English</code></pre>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Использован <code>const</code> везде, где значение не меняется</li>
+                <li>Использован <code>let</code> только для <code>age</code> (или вообще <code>const</code>, если не меняется)</li>
+                <li>Аннотированы только параметры функции и её возврат — внутри inference</li>
+                <li>Имена в стиле camelCase, константы — UPPER_SNAKE_CASE</li>
+                <li><code>npm run check</code> — 0 ошибок</li>
+                <li><code>npm run dev</code> выводит ожидаемые строки</li>
+            </ul>
+            <ul data-lang="en">
+                <li><code>const</code> used everywhere the value doesn't change</li>
+                <li><code>let</code> used only for <code>age</code> (or even <code>const</code> if it doesn't change)</li>
+                <li>Only function parameters and return are annotated — inside is inference</li>
+                <li>camelCase for names, UPPER_SNAKE_CASE for constants</li>
+                <li><code>npm run check</code> — 0 errors</li>
+                <li><code>npm run dev</code> prints the expected lines</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru"><strong>Подсказка по массиву:</strong> чтобы вывести список языков через запятую — используйте метод <code>.join(", ")</code>. Пример: <code>["a", "b", "c"].join(", ")</code> → <code>"a, b, c"</code>.</p>
+            <p data-lang="en"><strong>Array hint:</strong> to print a comma-separated language list — use the <code>.join(", ")</code> method. Example: <code>["a", "b", "c"].join(", ")</code> → <code>"a, b, c"</code>.</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="write-box">
+        <p data-lang="ru">Запишите сюда, какие задания дались легко, а где пришлось думать. И — самое главное — где вы поймали себя на привычке аннотировать «всё подряд»:</p>
+        <p data-lang="en">Write here which tasks were easy and which made you think. And — most importantly — where you caught yourself in the habit of annotating "everything":</p>
+    </div>
+
+</div>
+
+</body>
+</html>

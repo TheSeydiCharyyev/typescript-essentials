@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Занятие 3 — Первая программа и tsconfig.json (strict 2026)</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/lecture.css">
+    <script src="../../js/lang.js" defer></script>
+    <style>
+        h1 { border-bottom-color: #0ea5e9; }
+        h2 { color: #0369a1; background: #f0f9ff; border-left-color: #0ea5e9; }
+        h3 { color: #0c4a6e; }
+        .timeline { border-left-color: #0ea5e9; }
+        .timeline-item::before { background: #0ea5e9; }
+        .timeline-year { color: #0369a1; }
+        .person-card .role { color: #0369a1; }
+        .step-number { background: #0ea5e9; }
+        .toc a { color: #0369a1; }
+    </style>
+</head>
+<body>
+
+<div class="lesson-nav">
+    <a href="../../index.html" class="nav-home" data-lang="ru">&#8592; Главная</a>
+    <a href="../../index.html" class="nav-home" data-lang="en">&#8592; Home</a>
+    <span class="nav-sep">|</span>
+    <span class="nav-title" data-lang="ru">Занятие 3: Первая программа и tsconfig</span>
+    <span class="nav-title" data-lang="en">Lesson 3: First Program and tsconfig</span>
+    <span class="nav-sep">|</span>
+    <span class="nav-active" data-lang="ru">&#x1F468;&#x200D;&#x1F3EB; Лекция</span>
+    <span class="nav-active" data-lang="en">&#x1F468;&#x200D;&#x1F3EB; Lecture</span>
+    <a href="student.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F393; Конспект</a>
+    <a href="student.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F393; Notes</a>
+    <a href="tasks.html" class="nav-link" data-lang="ru">&#x1F4CB; Задания</a>
+    <a href="tasks.html" class="nav-link" data-lang="en">&#x1F4CB; Tasks</a>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+</div>
+
+<div class="container">
+
+    <h1 data-lang="ru">Занятие 3: Первая программа и tsconfig.json</h1>
+    <h1 data-lang="en">Lesson 3: First Program and tsconfig.json</h1>
+    <p class="subtitle" data-lang="ru">Создаём настоящий TypeScript-проект, настраиваем компилятор в строгом режиме 2026 и видим разницу: TS со strict ловит ошибки, которых TS без strict не замечает</p>
+    <p class="subtitle" data-lang="en">Build a real TypeScript project, configure the compiler in 2026 strict mode, and see the difference: strict TS catches bugs that non-strict TS misses</p>
+
+    <div class="why">
+        <p data-lang="ru">В прошлом занятии мы поставили инструменты (Node, npm, tsx, typescript). Сегодня — соберём из них <strong>настоящий проект</strong> с конфигурационным файлом <code>tsconfig.json</code>. Этот файл — <em>сердце</em> любого TS-проекта: он говорит компилятору, <strong>как строго</strong> проверять код, в какую версию JS превращать и куда складывать результат. Без правильно настроенного <code>tsconfig.json</code> вы получите «TypeScript-без-Type-Script» — язык, который не ловит и половины ошибок.</p>
+        <p data-lang="en">In the previous lesson we installed the tools (Node, npm, tsx, typescript). Today we'll assemble them into a <strong>real project</strong> with a <code>tsconfig.json</code> config file. This file is the <em>heart</em> of any TS project: it tells the compiler <strong>how strictly</strong> to check the code, which JS version to compile to, and where to put the output. Without a properly configured <code>tsconfig.json</code> you get "TypeScript-without-Type-Script" — a language that misses half its potential errors.</p>
+        <p data-lang="ru"><strong>После этого занятия вы сможете:</strong></p>
+        <p data-lang="en"><strong>After this lesson you will be able to:</strong></p>
+        <ul data-lang="ru">
+            <li>Создать TypeScript-проект с нуля: <code>npm init -y</code> → <code>npm install -D typescript tsx</code> → <code>npx tsc --init</code></li>
+            <li>Прочитать и понять <code>tsconfig.json</code></li>
+            <li>Объяснить, что делают ключевые опции: <code>target</code>, <code>module</code>, <code>moduleResolution</code>, <code>strict</code>, <code>outDir</code>, <code>rootDir</code></li>
+            <li>Включить <strong>5 главных флагов 2026 года</strong>: <code>strict</code>, <code>noUncheckedIndexedAccess</code>, <code>verbatimModuleSyntax</code>, <code>noImplicitOverride</code>, <code>exactOptionalPropertyTypes</code></li>
+            <li>Понимать разницу: <strong>проверка типов</strong> (<code>tsc --noEmit</code>) vs <strong>сборка</strong> (<code>tsc</code>)</li>
+            <li>Объяснить, что делают source maps (<code>sourceMap</code>) и зачем они нужны</li>
+            <li>Запустить проект в режиме «watch» — компилятор пересобирает при каждом сохранении</li>
+            <li>Увидеть на живом примере: одна и та же программа компилируется без strict — и падает с 3 ошибками со strict</li>
+        </ul>
+        <ul data-lang="en">
+            <li>Create a TypeScript project from scratch: <code>npm init -y</code> → <code>npm install -D typescript tsx</code> → <code>npx tsc --init</code></li>
+            <li>Read and understand <code>tsconfig.json</code></li>
+            <li>Explain what the key options do: <code>target</code>, <code>module</code>, <code>moduleResolution</code>, <code>strict</code>, <code>outDir</code>, <code>rootDir</code></li>
+            <li>Enable the <strong>5 essential 2026 flags</strong>: <code>strict</code>, <code>noUncheckedIndexedAccess</code>, <code>verbatimModuleSyntax</code>, <code>noImplicitOverride</code>, <code>exactOptionalPropertyTypes</code></li>
+            <li>Understand the difference: <strong>type-check</strong> (<code>tsc --noEmit</code>) vs <strong>build</strong> (<code>tsc</code>)</li>
+            <li>Explain what source maps (<code>sourceMap</code>) do and why you need them</li>
+            <li>Run the project in "watch" mode — the compiler rebuilds on every save</li>
+            <li>See live: the same program compiles fine without strict — and fails with 3 errors with strict</li>
+        </ul>
+    </div>
+
+    <div class="toc">
+        <div class="toc-title" data-lang="ru">Содержание</div>
+        <div class="toc-title" data-lang="en">Contents</div>
+        <ol data-lang="ru">
+            <li><a href="#what-is-tsconfig">Что такое tsconfig.json и зачем он нужен</a></li>
+            <li><a href="#create-project">Создаём проект с нуля</a></li>
+            <li><a href="#generate-tsconfig">Генерируем tsconfig: <code>npx tsc --init</code></a></li>
+            <li><a href="#anatomy">Анатомия tsconfig.json: 6 ключевых опций</a></li>
+            <li><a href="#strict-mode">Strict-режим: главный флаг 2026 года</a></li>
+            <li><a href="#flags-2026">5 ключевых флагов 2026 года</a></li>
+            <li><a href="#config-target">Финальный tsconfig.json для курса</a></li>
+            <li><a href="#workflow">Workflow: проверка типов vs сборка</a></li>
+            <li><a href="#source-maps">Source maps — мост между .ts и .js</a></li>
+            <li><a href="#watch-mode">Watch-режим: компилятор-помощник</a></li>
+            <li><a href="#demo">Живой пример: strict vs без strict</a></li>
+        </ol>
+        <ol data-lang="en">
+            <li><a href="#what-is-tsconfig">What tsconfig.json is and why we need it</a></li>
+            <li><a href="#create-project">Creating a project from scratch</a></li>
+            <li><a href="#generate-tsconfig">Generating tsconfig: <code>npx tsc --init</code></a></li>
+            <li><a href="#anatomy">Anatomy of tsconfig.json: 6 key options</a></li>
+            <li><a href="#strict-mode">Strict mode: the headline 2026 flag</a></li>
+            <li><a href="#flags-2026">5 essential 2026 flags</a></li>
+            <li><a href="#config-target">Final tsconfig.json for the course</a></li>
+            <li><a href="#workflow">Workflow: type-check vs build</a></li>
+            <li><a href="#source-maps">Source maps — the bridge between .ts and .js</a></li>
+            <li><a href="#watch-mode">Watch mode: the compiler as helper</a></li>
+            <li><a href="#demo">Live demo: strict vs non-strict</a></li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <h2 id="what-is-tsconfig" data-lang="ru">1. Что такое tsconfig.json и зачем он нужен</h2>
+    <h2 id="what-is-tsconfig" data-lang="en">1. What tsconfig.json is and why we need it</h2>
+
+    <p data-lang="ru">В занятии 2 мы запускали <code>npx tsc hello.ts</code> — передавали имя файла прямо в командной строке. Это работает для одного файла, но не для настоящего проекта. В реальном проекте — десятки и сотни <code>.ts</code>-файлов, и каждый запуск с длинной командой превращается в кошмар.</p>
+    <p data-lang="en">In Lesson 2 we ran <code>npx tsc hello.ts</code> — passing the file name on the command line. That works for one file, but not for a real project. A real project has dozens or hundreds of <code>.ts</code> files, and running each one with a long command is a nightmare.</p>
+
+    <div style="background:#f0f9ff;border:1px solid #7dd3fc;padding:16px 20px;border-radius:8px;margin:16px 0;">
+        <p data-lang="ru"><strong>tsconfig.json</strong> — это <strong>конфигурационный файл TypeScript-проекта</strong>. Лежит в корне проекта. Описывает: какие файлы компилировать, в какую версию JavaScript, насколько строго проверять типы, куда складывать результат и десятки других опций. Если этот файл присутствует, достаточно команды <code>npx tsc</code> без аргументов — компилятор сам прочитает конфиг и сделает всё правильно.</p>
+        <p data-lang="en"><strong>tsconfig.json</strong> is the <strong>configuration file of a TypeScript project</strong>. It lives at the project root. It describes: which files to compile, which JavaScript version to target, how strictly to check types, where to put the output, and dozens of other options. When this file is present, the bare command <code>npx tsc</code> is enough — the compiler reads the config and does everything correctly.</p>
+    </div>
+
+    <p data-lang="ru">Аналогия: <code>package.json</code> — это «паспорт проекта» для npm (имя, зависимости, скрипты). <code>tsconfig.json</code> — это «инструкция для компилятора TypeScript»: как именно превращать ваш TS в JS и что считать ошибкой.</p>
+    <p data-lang="en">Analogy: <code>package.json</code> is the project's "passport" for npm (name, dependencies, scripts). <code>tsconfig.json</code> is the "instruction manual for the TypeScript compiler" — how exactly to turn your TS into JS and what to count as an error.</p>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Главное:</strong> поведение TypeScript на <strong>80% определяется</strong> файлом <code>tsconfig.json</code>. Один и тот же код в одном проекте — валидный, в другом — гора ошибок. Разница только в конфиге. Поэтому правильная настройка <code>tsconfig.json</code> — это не «деталь», а <strong>половина успеха</strong>.</p>
+        <p data-lang="en"><strong>The key insight:</strong> TypeScript's behavior is <strong>80% determined</strong> by <code>tsconfig.json</code>. The same code is valid in one project and a pile of errors in another — the only difference is the config. So getting <code>tsconfig.json</code> right isn't a "detail", it's <strong>half the battle</strong>.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="create-project" data-lang="ru">2. Создаём проект с нуля</h2>
+    <h2 id="create-project" data-lang="en">2. Creating a project from scratch</h2>
+
+    <p data-lang="ru">Повторим шаги из занятия 2, но уже с прицелом на «настоящий» проект с правильной структурой.</p>
+    <p data-lang="en">We'll repeat the steps from Lesson 2, but this time aiming at a "real" project with proper structure.</p>
+
+    <div class="step">
+        <div class="step-number">1</div>
+        <div>
+            <p data-lang="ru">Создайте папку <code>ts-strict-demo/</code> и откройте её в VS Code.</p>
+            <p data-lang="en">Create a folder <code>ts-strict-demo/</code> and open it in VS Code.</p>
+        </div>
+    </div>
+    <div class="step">
+        <div class="step-number">2</div>
+        <div>
+            <p data-lang="ru">Откройте терминал (<span class="kbd">Ctrl</span>+<span class="kbd">`</span>) и выполните:</p>
+            <p data-lang="en">Open the terminal (<span class="kbd">Ctrl</span>+<span class="kbd">`</span>) and run:</p>
+            <pre><code>npm init -y
+npm install -D typescript tsx</code></pre>
+        </div>
+    </div>
+    <div class="step">
+        <div class="step-number">3</div>
+        <div>
+            <p data-lang="ru">Создайте папку для исходников: правый клик в дереве файлов VS Code → <em>New Folder</em> → <code>src</code>.</p>
+            <p data-lang="en">Create a folder for sources: right-click in the VS Code file tree → <em>New Folder</em> → <code>src</code>.</p>
+        </div>
+    </div>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Правило профессиональных проектов:</strong> весь TypeScript-код живёт в папке <code>src/</code>, скомпилированный JavaScript — в папке <code>dist/</code> (от англ. <em>distribution</em> — «то, что распространяется»). Конфиги (<code>package.json</code>, <code>tsconfig.json</code>, <code>.gitignore</code>) — в корне.</p>
+        <p data-lang="en"><strong>Pro project rule:</strong> all TypeScript code lives in <code>src/</code>, compiled JavaScript lands in <code>dist/</code> (short for <em>distribution</em> — "what gets shipped"). Configs (<code>package.json</code>, <code>tsconfig.json</code>, <code>.gitignore</code>) sit at the root.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="generate-tsconfig" data-lang="ru">3. Генерируем tsconfig: <code>npx tsc --init</code></h2>
+    <h2 id="generate-tsconfig" data-lang="en">3. Generating tsconfig: <code>npx tsc --init</code></h2>
+
+    <p data-lang="ru">Писать <code>tsconfig.json</code> с нуля не нужно. У компилятора есть встроенная команда, которая создаёт файл с <strong>сотней опций</strong> — большинство закомментированы, рядом подробные пояснения.</p>
+    <p data-lang="en">You don't need to write <code>tsconfig.json</code> from scratch. The compiler has a built-in command that creates a file with <strong>about a hundred options</strong> — most commented out, each with a clear inline explanation.</p>
+
+    <pre><code>npx tsc --init</code></pre>
+
+    <p data-lang="ru">В корне проекта появится <code>tsconfig.json</code> размером ~5 КБ. Это <strong>стартовый шаблон</strong>. Откройте его и пролистайте — увидите, что он состоит из одной большой секции <code>"compilerOptions"</code> с включёнными и закомментированными опциями.</p>
+    <p data-lang="en">A <code>tsconfig.json</code> of about 5 KB appears at the project root. This is a <strong>starter template</strong>. Open it and scroll — you'll see one big <code>"compilerOptions"</code> section with enabled and commented-out options.</p>
+
+    <p data-lang="ru">Внутри он выглядит примерно так (с урезанными комментариями):</p>
+    <p data-lang="en">It looks roughly like this (comments trimmed):</p>
+
+    <pre><code>{
+  "compilerOptions": {
+    "target": "es2016",                  // версия JS на выходе
+    "module": "commonjs",                // формат модулей
+    "esModuleInterop": true,             // совместимость с CommonJS-модулями
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,                      // главный флаг строгости
+    "skipLibCheck": true                 // не проверять типы внутри node_modules
+  }
+}</code></pre>
+
+    <div class="important">
+        <p data-lang="ru"><strong>Внимание:</strong> сгенерированный шаблон ориентирован на «среднестатистический» проект 2018-2020 годов. Для современного TypeScript 2026 года мы заменим несколько ключевых опций — иначе будем писать «вчерашний» код.</p>
+        <p data-lang="en"><strong>Heads up:</strong> the generated template is aimed at the "average" project of 2018-2020. For modern 2026 TypeScript we'll replace several key options — otherwise we'll be writing "yesterday's" code.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="anatomy" data-lang="ru">4. Анатомия tsconfig.json: 6 ключевых опций</h2>
+    <h2 id="anatomy" data-lang="en">4. Anatomy of tsconfig.json: 6 key options</h2>
+
+    <p data-lang="ru">Из сотни опций <code>tsconfig.json</code> 95% времени вам понадобятся <strong>шесть</strong>. Разберём каждую.</p>
+    <p data-lang="en">Of <code>tsconfig.json</code>'s hundred options, 95% of the time you'll need just <strong>six</strong>. Let's go through each.</p>
+
+    <h3 data-lang="ru">4.1. <code>target</code> — в какую версию JavaScript компилировать</h3>
+    <h3 data-lang="en">4.1. <code>target</code> — which JavaScript version to compile to</h3>
+
+    <p data-lang="ru">TypeScript умеет компилировать ваш код в разные версии JavaScript: от древней <code>ES5</code> (для старых браузеров) до самой свежей <code>ESNext</code>. Чем новее <code>target</code>, тем больше синтаксиса остаётся «как написано» — без переписывания в более старую форму.</p>
+    <p data-lang="en">TypeScript can compile your code to different JavaScript versions: from ancient <code>ES5</code> (for old browsers) to bleeding-edge <code>ESNext</code>. The newer the <code>target</code>, the more syntax stays "as written" — without being rewritten into older forms.</p>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Значение</th><th>Когда выбирать</th></tr></thead>
+        <thead data-lang="en"><tr><th>Value</th><th>When to choose</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td><code>"ES5"</code></td><td>Поддержка Internet Explorer 11. В 2026 — почти никогда.</td></tr>
+            <tr><td><code>"ES2016"</code></td><td>Дефолт сгенерированного шаблона. Слишком старо для 2026.</td></tr>
+            <tr><td><code>"ES2022"</code> <span style="color:#16a34a;">✓ для курса</span></td><td>Хороший баланс: современный синтаксис + работает в Node 18+ и всех живых браузерах.</td></tr>
+            <tr><td><code>"ESNext"</code></td><td>Самая свежая версия. Подходит только если знаете, в каком рантайме будете запускать.</td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td><code>"ES5"</code></td><td>Internet Explorer 11 support. Almost never in 2026.</td></tr>
+            <tr><td><code>"ES2016"</code></td><td>Default in the generated template. Too old for 2026.</td></tr>
+            <tr><td><code>"ES2022"</code> <span style="color:#16a34a;">✓ for the course</span></td><td>Good balance: modern syntax + works in Node 18+ and every living browser.</td></tr>
+            <tr><td><code>"ESNext"</code></td><td>The newest version. Pick only if you know your target runtime.</td></tr>
+        </tbody>
+    </table>
+
+    <h3 data-lang="ru">4.2. <code>module</code> — формат модулей</h3>
+    <h3 data-lang="en">4.2. <code>module</code> — module format</h3>
+
+    <p data-lang="ru">Опция говорит, какой синтаксис модулей будет в выходном <code>.js</code>: устаревший <strong>CommonJS</strong> (<code>require</code>/<code>module.exports</code>) или современный <strong>ES Modules</strong> (<code>import</code>/<code>export</code>).</p>
+    <p data-lang="en">This option tells which module syntax goes into the output <code>.js</code>: legacy <strong>CommonJS</strong> (<code>require</code>/<code>module.exports</code>) or modern <strong>ES Modules</strong> (<code>import</code>/<code>export</code>).</p>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Значение</th><th>Когда выбирать</th></tr></thead>
+        <thead data-lang="en"><tr><th>Value</th><th>When to choose</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td><code>"commonjs"</code></td><td>Legacy Node.js-проекты. В 2026 — для новых проектов <strong>не выбирать</strong>.</td></tr>
+            <tr><td><code>"nodenext"</code> <span style="color:#16a34a;">✓ для Node-проектов</span></td><td>Современный ESM в Node.js 22+. Сам подстраивается под версию Node.</td></tr>
+            <tr><td><code>"esnext"</code> <span style="color:#16a34a;">✓ для фронтенда</span></td><td>Чистый ESM. Используется со сборщиками (Vite, esbuild).</td></tr>
+            <tr><td><code>"preserve"</code></td><td>Оставить импорты как есть — за сборку отвечает другой инструмент.</td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td><code>"commonjs"</code></td><td>Legacy Node.js projects. <strong>Don't pick</strong> for new projects in 2026.</td></tr>
+            <tr><td><code>"nodenext"</code> <span style="color:#16a34a;">✓ for Node projects</span></td><td>Modern ESM in Node.js 22+. Auto-adapts to the Node version.</td></tr>
+            <tr><td><code>"esnext"</code> <span style="color:#16a34a;">✓ for frontend</span></td><td>Pure ESM. Used with bundlers (Vite, esbuild).</td></tr>
+            <tr><td><code>"preserve"</code></td><td>Leave imports as-is — let another tool handle bundling.</td></tr>
+        </tbody>
+    </table>
+
+    <h3 data-lang="ru">4.3. <code>moduleResolution</code> — как искать импортируемые модули</h3>
+    <h3 data-lang="en">4.3. <code>moduleResolution</code> — how to find imported modules</h3>
+
+    <p data-lang="ru">Когда вы пишете <code>import { x } from "./utils"</code>, компилятор должен найти, <em>в каком файле</em> этот <code>x</code> лежит. Алгоритм поиска зависит от рантайма.</p>
+    <p data-lang="en">When you write <code>import { x } from "./utils"</code>, the compiler must find <em>which file</em> contains this <code>x</code>. The lookup algorithm depends on the runtime.</p>
+
+    <ul data-lang="ru">
+        <li><code>"node10"</code> (он же <code>"node"</code>) — старый стиль, для CommonJS-проектов</li>
+        <li><code>"nodenext"</code> <span style="color:#16a34a;">✓</span> — современный Node.js 22+ (требует <code>module: "nodenext"</code>)</li>
+        <li><code>"bundler"</code> <span style="color:#16a34a;">✓</span> — для проектов со сборщиком (Vite, webpack). Самый удобный для фронта.</li>
+    </ul>
+    <ul data-lang="en">
+        <li><code>"node10"</code> (a.k.a. <code>"node"</code>) — old style, for CommonJS projects</li>
+        <li><code>"nodenext"</code> <span style="color:#16a34a;">✓</span> — modern Node.js 22+ (requires <code>module: "nodenext"</code>)</li>
+        <li><code>"bundler"</code> <span style="color:#16a34a;">✓</span> — for projects with a bundler (Vite, webpack). Most convenient for frontend.</li>
+    </ul>
+
+    <h3 data-lang="ru">4.4. <code>rootDir</code> и <code>outDir</code> — где исходники и куда класть результат</h3>
+    <h3 data-lang="en">4.4. <code>rootDir</code> and <code>outDir</code> — where sources are and where output goes</h3>
+
+    <pre><code>"rootDir": "./src",       // папка с .ts-файлами
+"outDir":  "./dist"       // папка для скомпилированных .js</code></pre>
+
+    <p data-lang="ru">Без этих опций компилятор положит <code>.js</code> рядом с <code>.ts</code> — и проект превратится в свалку. С этими опциями структура остаётся чистой:</p>
+    <p data-lang="en">Without these, the compiler drops <code>.js</code> next to <code>.ts</code> — and your project becomes a mess. With them, the structure stays clean:</p>
+
+    <div class="diagram">ts-strict-demo/
+├── src/
+│   ├── index.ts
+│   └── utils.ts
+├── dist/              ← создаётся компилятором
+│   ├── index.js
+│   └── utils.js
+├── package.json
+└── tsconfig.json</div>
+
+    <h3 data-lang="ru">4.5. <code>include</code> и <code>exclude</code> — какие файлы компилировать</h3>
+    <h3 data-lang="en">4.5. <code>include</code> and <code>exclude</code> — which files to compile</h3>
+
+    <pre><code>"include": ["src/**/*"],          // все .ts-файлы внутри src/
+"exclude": ["node_modules", "dist"]  // эти папки игнорируем</code></pre>
+
+    <p data-lang="ru">Без <code>include</code> компилятор пытается обработать <strong>все</strong> <code>.ts</code>-файлы в проекте — включая случайные временные. Явное указание <code>include</code> избавляет от сюрпризов.</p>
+    <p data-lang="en">Without <code>include</code>, the compiler tries to process <strong>every</strong> <code>.ts</code> file in the project — including stray temp files. An explicit <code>include</code> prevents surprises.</p>
+
+    <h3 data-lang="ru">4.6. <code>strict</code> — главный флаг (про него следующий раздел)</h3>
+    <h3 data-lang="en">4.6. <code>strict</code> — the headline flag (next section is about it)</h3>
+
+    <hr>
+
+    <h2 id="strict-mode" data-lang="ru">5. Strict-режим: главный флаг 2026 года</h2>
+    <h2 id="strict-mode" data-lang="en">5. Strict mode: the headline 2026 flag</h2>
+
+    <div style="background:#f0f9ff;border:1px solid #7dd3fc;padding:16px 20px;border-radius:8px;margin:16px 0;">
+        <p data-lang="ru"><strong><code>"strict": true</code></strong> — самая важная строчка в <code>tsconfig.json</code>. Она <strong>включает разом восемь</strong> отдельных опций строгости. Без неё TypeScript ведёт себя «снисходительно» и пропускает половину ошибок. Со <code>strict: true</code> вы получаете <em>настоящий TypeScript</em>, ради которого этот язык и существует.</p>
+        <p data-lang="en"><strong><code>"strict": true</code></strong> is the single most important line in <code>tsconfig.json</code>. It <strong>enables eight</strong> strictness options at once. Without it, TypeScript behaves "leniently" and lets half the errors slip through. With <code>strict: true</code> you get <em>real TypeScript</em> — what the language was built for.</p>
+    </div>
+
+    <h3 data-lang="ru">Что включает <code>strict: true</code></h3>
+    <h3 data-lang="en">What <code>strict: true</code> turns on</h3>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Флаг</th><th>Что делает</th></tr></thead>
+        <thead data-lang="en"><tr><th>Flag</th><th>What it does</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td><code>noImplicitAny</code></td><td>Запрещает «случайный» <code>any</code>. Если вы не написали тип — TS требует написать его явно.</td></tr>
+            <tr><td><code>strictNullChecks</code></td><td>Считает <code>null</code> и <code>undefined</code> <strong>отдельными типами</strong>. Без него <code>let x: string = null</code> легально (это огромный источник багов в JS).</td></tr>
+            <tr><td><code>strictFunctionTypes</code></td><td>Проверяет совместимость типов параметров у функций.</td></tr>
+            <tr><td><code>strictBindCallApply</code></td><td>Проверяет аргументы у <code>.bind()</code>, <code>.call()</code>, <code>.apply()</code>.</td></tr>
+            <tr><td><code>strictPropertyInitialization</code></td><td>Требует, чтобы все поля класса были инициализированы в конструкторе.</td></tr>
+            <tr><td><code>noImplicitThis</code></td><td>Запрещает использование <code>this</code> с неявным типом.</td></tr>
+            <tr><td><code>useUnknownInCatchVariables</code></td><td>В <code>catch (e)</code> переменная <code>e</code> имеет тип <code>unknown</code>, а не <code>any</code> — заставляет проверять её перед использованием.</td></tr>
+            <tr><td><code>alwaysStrict</code></td><td>Добавляет <code>"use strict"</code> в каждый скомпилированный <code>.js</code>-файл.</td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td><code>noImplicitAny</code></td><td>Forbids "accidental" <code>any</code>. If you didn't write a type — TS demands you do.</td></tr>
+            <tr><td><code>strictNullChecks</code></td><td>Treats <code>null</code> and <code>undefined</code> as <strong>separate types</strong>. Without it <code>let x: string = null</code> is legal (a huge source of JS bugs).</td></tr>
+            <tr><td><code>strictFunctionTypes</code></td><td>Checks parameter-type compatibility for functions.</td></tr>
+            <tr><td><code>strictBindCallApply</code></td><td>Checks arguments to <code>.bind()</code>, <code>.call()</code>, <code>.apply()</code>.</td></tr>
+            <tr><td><code>strictPropertyInitialization</code></td><td>Requires every class field to be initialized in the constructor.</td></tr>
+            <tr><td><code>noImplicitThis</code></td><td>Forbids using <code>this</code> with an implicit type.</td></tr>
+            <tr><td><code>useUnknownInCatchVariables</code></td><td>In <code>catch (e)</code> the variable <code>e</code> has type <code>unknown</code> rather than <code>any</code> — forces you to validate before use.</td></tr>
+            <tr><td><code>alwaysStrict</code></td><td>Emits <code>"use strict"</code> in every compiled <code>.js</code> file.</td></tr>
+        </tbody>
+    </table>
+
+    <div class="mistake">
+        <p data-lang="ru"><strong>Анти-паттерн:</strong> «отключим strict, у нас слишком много ошибок». Это всё равно что снять детектор дыма, потому что он часто пищит. Ошибки никуда не делись — они теперь просто <em>невидимы</em> и взорвутся в проде.</p>
+        <p data-lang="en"><strong>Anti-pattern:</strong> "let's turn off strict, we have too many errors". That's like removing the smoke detector because it beeps too often. The errors didn't go away — they're just <em>invisible</em> now and will explode in production.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="flags-2026" data-lang="ru">6. 5 ключевых флагов 2026 года</h2>
+    <h2 id="flags-2026" data-lang="en">6. 5 essential 2026 flags</h2>
+
+    <p data-lang="ru">Кроме <code>strict: true</code>, в 2026 году принято включать ещё несколько отдельных флагов. Они не входят в <code>strict</code>, но за последние годы стали стандартом качественных проектов.</p>
+    <p data-lang="en">Beyond <code>strict: true</code>, the 2026 norm is to enable a few more separate flags. They're not part of <code>strict</code>, but in recent years they've become the standard for quality projects.</p>
+
+    <h3 data-lang="ru">6.1. <code>noUncheckedIndexedAccess</code></h3>
+    <h3 data-lang="en">6.1. <code>noUncheckedIndexedAccess</code></h3>
+
+    <p data-lang="ru">Без флага: <code>arr[0]</code> возвращает <code>T</code>. <strong>Но это ложь</strong> — массив может быть пустым, и <code>arr[0]</code> на самом деле <code>undefined</code>. Со флагом: <code>arr[0]</code> возвращает <code>T | undefined</code> — и TypeScript заставит проверить.</p>
+    <p data-lang="en">Without the flag: <code>arr[0]</code> returns <code>T</code>. <strong>But that's a lie</strong> — the array might be empty, and <code>arr[0]</code> is actually <code>undefined</code>. With the flag: <code>arr[0]</code> returns <code>T | undefined</code> — and TypeScript forces you to check.</p>
+
+    <pre><code>const users: string[] = ["Anna", "Boris"];
+
+// Без флага: TS думает, что user — это string
+const user = users[100];   // на самом деле undefined!
+console.log(user.toUpperCase());  // 💥 крашится в рантайме
+
+// Со флагом noUncheckedIndexedAccess: тип user — string | undefined
+const user = users[100];
+console.log(user.toUpperCase());  // ❌ TS: 'user' is possibly 'undefined'
+// → нужно проверить: if (user) { user.toUpperCase() }</code></pre>
+
+    <h3 data-lang="ru">6.2. <code>verbatimModuleSyntax</code></h3>
+    <h3 data-lang="en">6.2. <code>verbatimModuleSyntax</code></h3>
+
+    <p data-lang="ru">Заставляет писать <code>import type</code> явно, когда импортируется только тип. Это критично для современных раннеров (tsx, Bun, Node native) — они не умеют «угадывать», что именно тип, а что — значение.</p>
+    <p data-lang="en">Forces you to write <code>import type</code> explicitly when only a type is imported. Critical for modern runners (tsx, Bun, Node native) — they can't "guess" what's a type and what's a value.</p>
+
+    <pre><code>// Без флага — работает, но непонятно, тип это или нет:
+import { User } from "./types";
+
+// С флагом — явно и однозначно:
+import type { User } from "./types";   // только тип
+import { createUser } from "./api";    // только значение</code></pre>
+
+    <h3 data-lang="ru">6.3. <code>noImplicitOverride</code></h3>
+    <h3 data-lang="en">6.3. <code>noImplicitOverride</code></h3>
+
+    <p data-lang="ru">При переопределении метода в дочернем классе нужно явно писать <code>override</code>. Без этого можно «случайно» переопределить метод и сломать родительский класс — TS не подскажет.</p>
+    <p data-lang="en">Overriding a method in a subclass requires an explicit <code>override</code> keyword. Without it you can "accidentally" override a method and break the parent class — TS won't warn you.</p>
+
+    <pre><code>class Animal {
+  speak() { return "..."; }
+}
+
+class Dog extends Animal {
+  override speak() { return "Woof!"; }   // явно: я переопределяю
+}</code></pre>
+
+    <h3 data-lang="ru">6.4. <code>exactOptionalPropertyTypes</code></h3>
+    <h3 data-lang="en">6.4. <code>exactOptionalPropertyTypes</code></h3>
+
+    <p data-lang="ru">Различает «поля нет» и «поле есть и оно <code>undefined</code>». Без флага оба варианта одинаковы — это путает.</p>
+    <p data-lang="en">Distinguishes "field absent" from "field present and equal to <code>undefined</code>". Without the flag, both look the same — which is confusing.</p>
+
+    <pre><code>type User = { name: string; nickname?: string };
+
+// Без флага оба ОК:
+const a: User = { name: "Anna" };                  // ОК
+const b: User = { name: "Anna", nickname: undefined };  // тоже ОК
+
+// Со флагом — второй вариант запрещён, надо именно НЕ указывать поле</code></pre>
+
+    <h3 data-lang="ru">6.5. <code>skipLibCheck</code> (исключение — этот включают для скорости)</h3>
+    <h3 data-lang="en">6.5. <code>skipLibCheck</code> (the exception — this one's enabled for speed)</h3>
+
+    <p data-lang="ru">Включён по умолчанию в шаблоне. Не проверяет типы внутри <code>node_modules</code>. <strong>Оставляем включённым</strong> — ускоряет компиляцию в десятки раз и не теряет полезных ошибок (свой код всё равно проверяется).</p>
+    <p data-lang="en">Enabled by default in the template. Skips type-checking inside <code>node_modules</code>. <strong>Keep it on</strong> — speeds up compilation tenfold and loses no useful errors (your own code is still fully checked).</p>
+
+    <hr>
+
+    <h2 id="config-target" data-lang="ru">7. Финальный tsconfig.json для курса</h2>
+    <h2 id="config-target" data-lang="en">7. Final tsconfig.json for the course</h2>
+
+    <p data-lang="ru">Соберём всё вместе. Замените содержимое сгенерированного <code>tsconfig.json</code> на это:</p>
+    <p data-lang="en">Putting it all together. Replace the generated <code>tsconfig.json</code> with this:</p>
+
+    <pre><code>{
+  "compilerOptions": {
+    // Версия итогового JavaScript
+    "target": "ES2022",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+
+    // Структура папок
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    // Главные флаги строгости (включают много опций сразу)
+    "strict": true,
+
+    // 4 дополнительных флага качества 2026 года
+    "noUncheckedIndexedAccess": true,
+    "verbatimModuleSyntax": true,
+    "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Удобства
+    "sourceMap": true,        // отладка по .ts-файлу
+    "declaration": true,      // создавать .d.ts файлы
+    "esModuleInterop": true,  // импорт CommonJS-модулей как ESM
+    "skipLibCheck": true,     // не проверять node_modules (быстрее)
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}</code></pre>
+
+    <p data-lang="ru">Этот конфиг — <strong>основа всего курса</strong>. Запомните его или сохраните как шаблон.</p>
+    <p data-lang="en">This config is the <strong>foundation of the whole course</strong>. Memorize it or save as a template.</p>
+
+    <div class="pro-tip">
+        <p data-lang="ru"><strong>Чтобы Node.js понял ESM-модули</strong>, в <code>package.json</code> добавьте одну строку: <code>"type": "module"</code>. Без неё Node будет считать <code>.js</code>-файлы CommonJS-модулями, и импорты сломаются.</p>
+        <p data-lang="en"><strong>So Node.js understands ESM modules</strong>, add one line to <code>package.json</code>: <code>"type": "module"</code>. Without it Node treats <code>.js</code> as CommonJS, and imports will break.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="workflow" data-lang="ru">8. Workflow: проверка типов vs сборка</h2>
+    <h2 id="workflow" data-lang="en">8. Workflow: type-check vs build</h2>
+
+    <p data-lang="ru">Когда <code>tsconfig.json</code> готов, у вас в распоряжении <strong>две</strong> главные команды:</p>
+    <p data-lang="en">With <code>tsconfig.json</code> ready, you have <strong>two</strong> main commands at your disposal:</p>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Команда</th><th>Что делает</th><th>Когда использовать</th></tr></thead>
+        <thead data-lang="en"><tr><th>Command</th><th>What it does</th><th>When to use</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td><code>npx tsc</code></td><td>Проверить типы <strong>и сгенерировать</strong> <code>.js</code> в <code>dist/</code></td><td>Сборка проекта на продакшен</td></tr>
+            <tr><td><code>npx tsc --noEmit</code></td><td>Только проверить типы, ничего не генерировать</td><td>В CI, в pre-commit hook, при разработке через tsx</td></tr>
+            <tr><td><code>npx tsc --watch</code></td><td>Сборка + перезапуск при каждом сохранении</td><td>Активная разработка</td></tr>
+            <tr><td><code>npx tsx src/index.ts</code></td><td>Запустить TS-файл напрямую, без сборки</td><td>Скрипты, эксперименты, dev-режим</td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td><code>npx tsc</code></td><td>Type-check <strong>and emit</strong> <code>.js</code> into <code>dist/</code></td><td>Production build</td></tr>
+            <tr><td><code>npx tsc --noEmit</code></td><td>Type-check only, no output</td><td>In CI, pre-commit hooks, while developing via tsx</td></tr>
+            <tr><td><code>npx tsc --watch</code></td><td>Build + rebuild on every save</td><td>Active development</td></tr>
+            <tr><td><code>npx tsx src/index.ts</code></td><td>Run a TS file directly, no build</td><td>Scripts, experiments, dev mode</td></tr>
+        </tbody>
+    </table>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Важно понять:</strong> <code>tsx</code> запускает код, но <strong>не проверяет типы строго</strong>. Поэтому связка «<code>tsx</code> для запуска + <code>tsc --noEmit</code> для проверки» — стандартный профессиональный workflow в 2026 году.</p>
+        <p data-lang="en"><strong>Key point:</strong> <code>tsx</code> runs your code but <strong>doesn't do a strict type-check</strong>. So the pair "<code>tsx</code> for running + <code>tsc --noEmit</code> for type-checking" is the standard professional workflow in 2026.</p>
+    </div>
+
+    <p data-lang="ru">Добавьте удобные npm-скрипты в <code>package.json</code>:</p>
+    <p data-lang="en">Add convenient npm scripts to <code>package.json</code>:</p>
+
+    <pre><code>"scripts": {
+  "dev":   "tsx src/index.ts",
+  "build": "tsc",
+  "check": "tsc --noEmit",
+  "watch": "tsc --watch"
+}</code></pre>
+
+    <p data-lang="ru">Теперь работаете короткими командами: <code>npm run dev</code>, <code>npm run check</code>, <code>npm run build</code>.</p>
+    <p data-lang="en">Now you work with short commands: <code>npm run dev</code>, <code>npm run check</code>, <code>npm run build</code>.</p>
+
+    <hr>
+
+    <h2 id="source-maps" data-lang="ru">9. Source maps — мост между .ts и .js</h2>
+    <h2 id="source-maps" data-lang="en">9. Source maps — the bridge between .ts and .js</h2>
+
+    <p data-lang="ru">Когда TypeScript компилируется в JavaScript, исходный код заметно меняется: исчезают типы, типы-литералы превращаются в обычные значения, иногда переписываются конструкции. <strong>Source map</strong> — это файл <code>.js.map</code>, который говорит отладчику: «строка 5 в <code>.js</code> = строка 12 в твоём <code>.ts</code>».</p>
+    <p data-lang="en">When TypeScript compiles to JavaScript, the source changes noticeably: types disappear, literal types turn into regular values, sometimes constructs are rewritten. A <strong>source map</strong> is a <code>.js.map</code> file telling the debugger: "line 5 in <code>.js</code> = line 12 in your <code>.ts</code>".</p>
+
+    <p data-lang="ru">Опция <code>"sourceMap": true</code> создаёт такой файл. Это даёт три суперспособности:</p>
+    <p data-lang="en">The <code>"sourceMap": true</code> option creates this file. It grants three superpowers:</p>
+
+    <ol data-lang="ru">
+        <li><strong>Stack-трейсы ошибок</strong> ссылаются на ваш <code>.ts</code>-код, а не на скомпилированный <code>.js</code>.</li>
+        <li><strong>Брейкпоинты в VS Code</strong> работают прямо в <code>.ts</code>-файлах — даже если выполняется <code>.js</code>.</li>
+        <li><strong>DevTools браузера</strong> показывают ваш TypeScript, а не «прожаренный» JS.</li>
+    </ol>
+    <ol data-lang="en">
+        <li><strong>Error stack traces</strong> point at your <code>.ts</code> code, not the compiled <code>.js</code>.</li>
+        <li><strong>Breakpoints in VS Code</strong> work right in <code>.ts</code> files — even when <code>.js</code> is what's running.</li>
+        <li><strong>Browser DevTools</strong> show your TypeScript, not the "baked" JS.</li>
+    </ol>
+
+    <hr>
+
+    <h2 id="watch-mode" data-lang="ru">10. Watch-режим: компилятор-помощник</h2>
+    <h2 id="watch-mode" data-lang="en">10. Watch mode: the compiler as helper</h2>
+
+    <p data-lang="ru">Запустите <code>npx tsc --watch</code> в терминале — и оставьте его работать. Каждый раз, когда вы сохраняете <code>.ts</code>-файл, компилятор <strong>автоматически</strong> пересобирает и сразу показывает ошибки. Это огромная экономия времени.</p>
+    <p data-lang="en">Run <code>npx tsc --watch</code> in the terminal — and leave it running. Every time you save a <code>.ts</code> file, the compiler <strong>automatically</strong> rebuilds and instantly shows errors. Huge time savings.</p>
+
+    <pre><code>$ npx tsc --watch
+[10:00:00] Starting compilation in watch mode...
+[10:00:01] Found 0 errors. Watching for file changes.
+
+# Вы сохранили файл с ошибкой
+[10:01:30] File change detected. Starting incremental compilation...
+src/index.ts:5:7 - error TS2322: Type 'string' is not assignable to type 'number'.
+[10:01:30] Found 1 error. Watching for file changes.
+
+# Исправили
+[10:01:45] File change detected. Starting incremental compilation...
+[10:01:45] Found 0 errors. Watching for file changes.</code></pre>
+
+    <div class="pro-tip">
+        <p data-lang="ru">В реальной работе разработчик держит <strong>два терминала</strong>: один с <code>tsc --watch</code> (постоянная проверка типов), второй — для запуска кода через <code>tsx</code> или <code>node</code>.</p>
+        <p data-lang="en">In real work, a developer keeps <strong>two terminals</strong>: one with <code>tsc --watch</code> (continuous type-checking), the second for running code via <code>tsx</code> or <code>node</code>.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="demo" data-lang="ru">11. Живой пример: strict vs без strict</h2>
+    <h2 id="demo" data-lang="en">11. Live demo: strict vs non-strict</h2>
+
+    <p data-lang="ru">Создайте файл <code>src/demo.ts</code> со следующим кодом:</p>
+    <p data-lang="en">Create a file <code>src/demo.ts</code> with this code:</p>
+
+    <pre><code>// 1. Функция без явных типов параметров
+function greet(name) {
+    return "Hello, " + name.toUpperCase();
+}
+
+// 2. Может быть null
+function findUser(id: number) {
+    const users = new Map&lt;number, string&gt;();
+    return users.get(id);    // возвращает string | undefined
+}
+
+// 3. Обращение к индексу массива
+const items = ["apple", "banana"];
+const tenth = items[10];
+console.log(tenth.length);   // тип TS думает: string
+
+// 4. catch без типа
+try {
+    JSON.parse("{");
+} catch (e) {
+    console.log(e.message);  // тип e
+}</code></pre>
+
+    <h3 data-lang="ru">Прогон 1: tsconfig.json со <code>"strict": false</code></h3>
+    <h3 data-lang="en">Run 1: tsconfig.json with <code>"strict": false</code></h3>
+
+    <p data-lang="ru">Запустите <code>npx tsc</code> — компилятор скажет: <strong>0 ошибок</strong>. Код «как будто» работает. Запускаем — и видим серию рантайм-падений: <code>Cannot read properties of undefined (reading 'length')</code> и подобные.</p>
+    <p data-lang="en">Run <code>npx tsc</code> — the compiler says: <strong>0 errors</strong>. The code "appears" to work. Run it — and watch a parade of runtime crashes: <code>Cannot read properties of undefined (reading 'length')</code> and the like.</p>
+
+    <h3 data-lang="ru">Прогон 2: tsconfig.json со <code>"strict": true</code> + <code>"noUncheckedIndexedAccess": true</code></h3>
+    <h3 data-lang="en">Run 2: tsconfig.json with <code>"strict": true</code> + <code>"noUncheckedIndexedAccess": true</code></h3>
+
+    <p data-lang="ru">Тот же <code>npx tsc</code> теперь показывает <strong>4 ошибки</strong>:</p>
+    <p data-lang="en">The same <code>npx tsc</code> now reports <strong>4 errors</strong>:</p>
+
+    <ol data-lang="ru">
+        <li><code>Parameter 'name' implicitly has an 'any' type.</code> — забыли тип параметра</li>
+        <li><code>Object is possibly 'undefined'.</code> — <code>users.get()</code> может вернуть undefined</li>
+        <li><code>'tenth' is possibly 'undefined'.</code> — индекс <code>[10]</code> в массиве из 2 элементов</li>
+        <li><code>'e' is of type 'unknown'.</code> — нужно проверить тип ошибки перед использованием</li>
+    </ol>
+    <ol data-lang="en">
+        <li><code>Parameter 'name' implicitly has an 'any' type.</code> — forgot parameter type</li>
+        <li><code>Object is possibly 'undefined'.</code> — <code>users.get()</code> may return undefined</li>
+        <li><code>'tenth' is possibly 'undefined'.</code> — index <code>[10]</code> in a 2-element array</li>
+        <li><code>'e' is of type 'unknown'.</code> — must check the error type before use</li>
+    </ol>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Это и есть TypeScript 2026.</strong> Один тот же код. Один и тот же компилятор. Разница только в <code>tsconfig.json</code> — и она колоссальна: с правильным конфигом баги ловятся <em>до запуска</em>, с неправильным — <em>в продакшене</em>.</p>
+        <p data-lang="en"><strong>This is what TypeScript 2026 is about.</strong> Same code. Same compiler. Only <code>tsconfig.json</code> differs — and the difference is enormous: with the right config, bugs are caught <em>before runtime</em>; with the wrong one, <em>in production</em>.</p>
+    </div>
+
+    <hr>
+
+    <div class="summary">
+        <ul data-lang="ru">
+            <li><strong>tsconfig.json</strong> — конфигурационный файл TS-проекта. Лежит в корне. Определяет ~80% поведения компилятора.</li>
+            <li>Создаётся командой <code>npx tsc --init</code>, но шаблон нужно <strong>обновить под 2026</strong>.</li>
+            <li>6 ключевых опций: <strong>target</strong>, <strong>module</strong>, <strong>moduleResolution</strong>, <strong>rootDir</strong>, <strong>outDir</strong>, <strong>strict</strong>.</li>
+            <li><code>"strict": true</code> — главный флаг, включает 8 строгих проверок разом. <strong>Обязателен.</strong></li>
+            <li>5 ключевых флагов 2026: <code>strict</code>, <code>noUncheckedIndexedAccess</code>, <code>verbatimModuleSyntax</code>, <code>noImplicitOverride</code>, <code>exactOptionalPropertyTypes</code>.</li>
+            <li>Структура проекта: код в <code>src/</code>, сборка в <code>dist/</code>.</li>
+            <li><code>npx tsc</code> — сборка, <code>npx tsc --noEmit</code> — только проверка, <code>npx tsc --watch</code> — авто-пересборка.</li>
+            <li><code>tsx</code> запускает код, но не делает строгой проверки — для неё нужен <code>tsc --noEmit</code>.</li>
+            <li>Для ESM в Node.js — добавьте <code>"type": "module"</code> в <code>package.json</code>.</li>
+            <li>Source maps (<code>"sourceMap": true</code>) — стек ошибок и брейкпоинты работают по <code>.ts</code>, а не по <code>.js</code>.</li>
+            <li>Один и тот же код может компилироваться без ошибок без strict и падать с десятком ошибок со strict. <strong>Конфиг — половина успеха.</strong></li>
+        </ul>
+        <ul data-lang="en">
+            <li><strong>tsconfig.json</strong> — TS project config file. Lives at the root. Defines ~80% of compiler behavior.</li>
+            <li>Created with <code>npx tsc --init</code>, but the template needs to be <strong>updated for 2026</strong>.</li>
+            <li>6 key options: <strong>target</strong>, <strong>module</strong>, <strong>moduleResolution</strong>, <strong>rootDir</strong>, <strong>outDir</strong>, <strong>strict</strong>.</li>
+            <li><code>"strict": true</code> — the headline flag, enables 8 strict checks at once. <strong>Mandatory.</strong></li>
+            <li>5 essential 2026 flags: <code>strict</code>, <code>noUncheckedIndexedAccess</code>, <code>verbatimModuleSyntax</code>, <code>noImplicitOverride</code>, <code>exactOptionalPropertyTypes</code>.</li>
+            <li>Project structure: source in <code>src/</code>, build in <code>dist/</code>.</li>
+            <li><code>npx tsc</code> — build, <code>npx tsc --noEmit</code> — type-check only, <code>npx tsc --watch</code> — auto-rebuild.</li>
+            <li><code>tsx</code> runs code but doesn't do a strict type-check — for that use <code>tsc --noEmit</code>.</li>
+            <li>For ESM in Node.js — add <code>"type": "module"</code> to <code>package.json</code>.</li>
+            <li>Source maps (<code>"sourceMap": true</code>) — error stacks and breakpoints work over <code>.ts</code>, not <code>.js</code>.</li>
+            <li>The same code can compile clean without strict and fail with a dozen errors with strict. <strong>Config is half the battle.</strong></li>
+        </ul>
+    </div>
+
+    <div class="quiz">
+        <ol data-lang="ru">
+            <li>Что такое <code>tsconfig.json</code> и зачем он нужен?</li>
+            <li>Какой командой создаётся стартовый <code>tsconfig.json</code>?</li>
+            <li>Что делают опции <code>target</code> и <code>module</code>? Какие значения выбираете в 2026 году для Node-проекта?</li>
+            <li>Зачем нужны <code>rootDir</code> и <code>outDir</code>?</li>
+            <li>Что включает <code>"strict": true</code>? Назовите минимум 3 флага.</li>
+            <li>Что делает <code>noUncheckedIndexedAccess</code>? Приведите пример бага, который он ловит.</li>
+            <li>Зачем нужен <code>verbatimModuleSyntax</code> в современных проектах?</li>
+            <li>В чём разница между <code>npx tsc</code> и <code>npx tsc --noEmit</code>?</li>
+            <li>Что делает <code>--watch</code> и зачем он нужен в реальной работе?</li>
+            <li>Что такое source maps и какие три «суперспособности» они дают?</li>
+            <li>Если включить <code>strict: false</code>, какие риски это создаёт?</li>
+        </ol>
+        <ol data-lang="en">
+            <li>What is <code>tsconfig.json</code> and why is it needed?</li>
+            <li>Which command creates the starter <code>tsconfig.json</code>?</li>
+            <li>What do <code>target</code> and <code>module</code> do? Which values would you pick in 2026 for a Node project?</li>
+            <li>Why do we need <code>rootDir</code> and <code>outDir</code>?</li>
+            <li>What does <code>"strict": true</code> turn on? Name at least 3 flags.</li>
+            <li>What does <code>noUncheckedIndexedAccess</code> do? Give an example of a bug it catches.</li>
+            <li>Why is <code>verbatimModuleSyntax</code> needed in modern projects?</li>
+            <li>What's the difference between <code>npx tsc</code> and <code>npx tsc --noEmit</code>?</li>
+            <li>What does <code>--watch</code> do and why is it useful in real work?</li>
+            <li>What are source maps and which three "superpowers" do they unlock?</li>
+            <li>If you set <code>strict: false</code>, what risks does that create?</li>
+        </ol>
+    </div>
+
+</div>
+
+</body>
+</html>

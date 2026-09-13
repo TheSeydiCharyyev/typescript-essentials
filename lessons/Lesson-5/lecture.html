@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Занятие 5 — Примитивные типы и literal types</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/lecture.css">
+    <script src="../../js/lang.js" defer></script>
+    <style>
+        h1 { border-bottom-color: #14b8a6; }
+        h2 { color: #0f766e; background: #f0fdfa; border-left-color: #14b8a6; }
+        h3 { color: #134e4a; }
+        .timeline { border-left-color: #14b8a6; }
+        .timeline-item::before { background: #14b8a6; }
+        .timeline-year { color: #0f766e; }
+        .person-card .role { color: #0f766e; }
+        .step-number { background: #14b8a6; }
+        .toc a { color: #0f766e; }
+    </style>
+</head>
+<body>
+
+<div class="lesson-nav">
+    <a href="../../index.html" class="nav-home" data-lang="ru">&#8592; Главная</a>
+    <a href="../../index.html" class="nav-home" data-lang="en">&#8592; Home</a>
+    <span class="nav-sep">|</span>
+    <span class="nav-title" data-lang="ru">Занятие 5: Примитивные типы и literal types</span>
+    <span class="nav-title" data-lang="en">Lesson 5: Primitive Types and Literal Types</span>
+    <span class="nav-sep">|</span>
+    <span class="nav-active" data-lang="ru">&#x1F468;&#x200D;&#x1F3EB; Лекция</span>
+    <span class="nav-active" data-lang="en">&#x1F468;&#x200D;&#x1F3EB; Lecture</span>
+    <a href="student.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F393; Конспект</a>
+    <a href="student.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F393; Notes</a>
+    <a href="tasks.html" class="nav-link" data-lang="ru">&#x1F4CB; Задания</a>
+    <a href="tasks.html" class="nav-link" data-lang="en">&#x1F4CB; Tasks</a>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+</div>
+
+<div class="container">
+
+    <h1 data-lang="ru">Занятие 5: Примитивные типы и literal types</h1>
+    <h1 data-lang="en">Lesson 5: Primitive Types and Literal Types</h1>
+    <p class="subtitle" data-lang="ru">Изучаем три кита TypeScript — <code>string</code>, <code>number</code>, <code>boolean</code> — и знакомимся с literal types, которые превращают «строку» в «точное значение»</p>
+    <p class="subtitle" data-lang="en">Learn the three pillars of TypeScript — <code>string</code>, <code>number</code>, <code>boolean</code> — and meet literal types that turn "a string" into "an exact value"</p>
+
+    <div class="why">
+        <p data-lang="ru">В прошлом занятии вы научились создавать переменные и понимать, что у каждой есть <strong>тип</strong>. Сейчас разберём три самых главных типа, из которых построено 80% любого кода: <code>string</code>, <code>number</code>, <code>boolean</code>. А в конце познакомимся с literal types — секретным оружием TypeScript, которого нет в большинстве других языков. Это они делают TS таким <em>точным</em>: не «какая-то строка», а «именно <code>"red"</code>, <code>"green"</code> или <code>"blue"</code>».</p>
+        <p data-lang="en">In the previous lesson you learned to declare variables and that each has a <strong>type</strong>. Now we'll dive into the three most important types that make up 80% of any code: <code>string</code>, <code>number</code>, <code>boolean</code>. And at the end we'll meet literal types — TypeScript's secret weapon that most other languages don't have. They're what makes TS so <em>precise</em>: not "some string", but "exactly <code>"red"</code>, <code>"green"</code>, or <code>"blue"</code>".</p>
+        <p data-lang="ru"><strong>После этого занятия вы сможете:</strong></p>
+        <p data-lang="en"><strong>After this lesson you will be able to:</strong></p>
+        <ul data-lang="ru">
+            <li>Объяснить, что такое «примитивный тип» и чем он отличается от объекта</li>
+            <li>Использовать <code>string</code>: одинарные/двойные кавычки, шаблонные строки (template literals)</li>
+            <li>Использовать <code>number</code>: целые, дробные, отрицательные, специальные значения <code>NaN</code> и <code>Infinity</code></li>
+            <li>Использовать <code>boolean</code>: <code>true</code>/<code>false</code>, понимать truthy/falsy</li>
+            <li>Понимать редкие примитивы: <code>bigint</code> и <code>symbol</code></li>
+            <li><strong>Объяснить literal types</strong>: тип <code>"red"</code> vs тип <code>string</code></li>
+            <li>Создать union из литералов: <code>type Status = "ok" | "error" | "loading"</code></li>
+            <li>Применить <code>as const</code> для «заморозки» литерала</li>
+            <li>Понимать, как TS защищает от опечаток в строковых константах</li>
+        </ul>
+        <ul data-lang="en">
+            <li>Explain what a "primitive type" is and how it differs from an object</li>
+            <li>Use <code>string</code>: single/double quotes, template literals</li>
+            <li>Use <code>number</code>: integers, decimals, negatives, special values <code>NaN</code> and <code>Infinity</code></li>
+            <li>Use <code>boolean</code>: <code>true</code>/<code>false</code>, understand truthy/falsy</li>
+            <li>Recognize the rare primitives: <code>bigint</code> and <code>symbol</code></li>
+            <li><strong>Explain literal types</strong>: type <code>"red"</code> vs type <code>string</code></li>
+            <li>Build a literal union: <code>type Status = "ok" | "error" | "loading"</code></li>
+            <li>Apply <code>as const</code> to "freeze" a literal</li>
+            <li>Understand how TS protects you from typos in string constants</li>
+        </ul>
+    </div>
+
+    <div class="toc">
+        <div class="toc-title" data-lang="ru">Содержание</div>
+        <div class="toc-title" data-lang="en">Contents</div>
+        <ol data-lang="ru">
+            <li><a href="#primitive">Что такое примитивный тип</a></li>
+            <li><a href="#string">string — строки</a></li>
+            <li><a href="#template">Template literals — шаблонные строки</a></li>
+            <li><a href="#number">number — числа</a></li>
+            <li><a href="#nan">NaN, Infinity и другие сюрпризы</a></li>
+            <li><a href="#boolean">boolean — true/false</a></li>
+            <li><a href="#truthy">Truthy и falsy значения</a></li>
+            <li><a href="#bigint-symbol">bigint и symbol — редкие гости</a></li>
+            <li><a href="#literal">Literal types — главная фишка занятия</a></li>
+            <li><a href="#literal-union">Union из литералов</a></li>
+            <li><a href="#as-const">as const — заморозка литерала</a></li>
+            <li><a href="#template-types">Тизер: template literal types</a></li>
+        </ol>
+        <ol data-lang="en">
+            <li><a href="#primitive">What a primitive type is</a></li>
+            <li><a href="#string">string — strings</a></li>
+            <li><a href="#template">Template literals — template strings</a></li>
+            <li><a href="#number">number — numbers</a></li>
+            <li><a href="#nan">NaN, Infinity, and other surprises</a></li>
+            <li><a href="#boolean">boolean — true/false</a></li>
+            <li><a href="#truthy">Truthy and falsy values</a></li>
+            <li><a href="#bigint-symbol">bigint and symbol — rare guests</a></li>
+            <li><a href="#literal">Literal types — the headline of the lesson</a></li>
+            <li><a href="#literal-union">Literal unions</a></li>
+            <li><a href="#as-const">as const — freezing a literal</a></li>
+            <li><a href="#template-types">Teaser: template literal types</a></li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <h2 id="primitive" data-lang="ru">1. Что такое примитивный тип</h2>
+    <h2 id="primitive" data-lang="en">1. What a primitive type is</h2>
+
+    <p data-lang="ru">В TypeScript (как и в JavaScript) все значения делятся на две группы: <strong>примитивы</strong> и <strong>объекты</strong>. Сегодня — про примитивы.</p>
+    <p data-lang="en">In TypeScript (as in JavaScript) all values fall into two groups: <strong>primitives</strong> and <strong>objects</strong>. Today is about primitives.</p>
+
+    <div style="background:#f0fdfa;border:1px solid #5eead4;padding:16px 20px;border-radius:8px;margin:16px 0;">
+        <p data-lang="ru"><strong>Примитивное значение</strong> — это «простое», «неделимое» значение, у которого нет внутренней структуры в виде полей. В JavaScript их семь: <code>string</code>, <code>number</code>, <code>boolean</code>, <code>bigint</code>, <code>symbol</code>, <code>null</code>, <code>undefined</code>. Сегодня разбираем первые пять. <code>null</code> и <code>undefined</code> — в занятии 7.</p>
+        <p data-lang="en">A <strong>primitive value</strong> is a "simple", "atomic" value with no internal field structure. JavaScript has seven of them: <code>string</code>, <code>number</code>, <code>boolean</code>, <code>bigint</code>, <code>symbol</code>, <code>null</code>, <code>undefined</code>. Today we cover the first five. <code>null</code> and <code>undefined</code> are in Lesson 7.</p>
+    </div>
+
+    <p data-lang="ru"><strong>Главное отличие от объектов:</strong> примитивы сравниваются по <em>значению</em>, а не по ссылке.</p>
+    <p data-lang="en"><strong>Main difference from objects:</strong> primitives compare by <em>value</em>, not by reference.</p>
+
+    <pre><code>// Примитивы — сравнение по значению
+"hello" === "hello"   // true
+42 === 42             // true
+true === true         // true
+
+// Объекты — сравнение по ссылке
+{ a: 1 } === { a: 1 }     // false! (разные объекты в памяти)
+const obj = { a: 1 };
+obj === obj               // true (одна и та же ссылка)</code></pre>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Запомните:</strong> примитивы — «копия по значению», объекты — «общая ссылка». Поэтому два объекта с одинаковым содержимым — это всё равно <em>разные</em> объекты.</p>
+        <p data-lang="en"><strong>Remember:</strong> primitives — "copy by value", objects — "shared reference". Two objects with identical contents are still <em>different</em> objects.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="string" data-lang="ru">2. string — строки</h2>
+    <h2 id="string" data-lang="en">2. string — strings</h2>
+
+    <p data-lang="ru"><strong>string</strong> — это последовательность символов, заключённая в кавычки. В JS/TS есть <strong>три</strong> вида кавычек:</p>
+    <p data-lang="en"><strong>string</strong> is a sequence of characters in quotes. JS/TS has <strong>three</strong> kinds of quotes:</p>
+
+    <pre><code>const a = 'одинарные кавычки';
+const b = "двойные кавычки";
+const c = `обратные кавычки (backticks)`;</code></pre>
+
+    <p data-lang="ru">Для TypeScript все три типа кавычек дают <strong>одинаковый тип</strong> — <code>string</code>. Выбор между одинарными и двойными — вопрос стиля проекта (обычно команда договаривается и придерживается одного).</p>
+    <p data-lang="en">For TypeScript, all three quote styles produce the <strong>same type</strong> — <code>string</code>. The choice between single and double is a style question (teams usually agree on one).</p>
+
+    <h3 data-lang="ru">Когда какие кавычки</h3>
+    <h3 data-lang="en">Which quotes to use when</h3>
+
+    <ul data-lang="ru">
+        <li><strong>Двойные <code>"</code></strong> — самый распространённый стиль; настройка по умолчанию в Prettier</li>
+        <li><strong>Одинарные <code>'</code></strong> — также популярны; короче на 1 символ при наборе</li>
+        <li><strong>Обратные <code>`</code></strong> — для шаблонных строк (интерполяция, многострочные)</li>
+    </ul>
+    <ul data-lang="en">
+        <li><strong>Double <code>"</code></strong> — the most common style; Prettier default</li>
+        <li><strong>Single <code>'</code></strong> — also popular; one character shorter to type</li>
+        <li><strong>Backticks <code>`</code></strong> — for template strings (interpolation, multi-line)</li>
+    </ul>
+
+    <h3 data-lang="ru">Эскейпинг (экранирование) и спец-символы</h3>
+    <h3 data-lang="en">Escaping and special characters</h3>
+
+    <p data-lang="ru">Внутри строки в кавычках того же типа символ нужно «экранировать» обратным слэшем:</p>
+    <p data-lang="en">Inside a string, a quote of the same type must be "escaped" with a backslash:</p>
+
+    <pre><code>const wrong = "Он сказал "Привет""; // ❌ синтаксическая ошибка
+const right = "Он сказал \"Привет\"";  // ✅
+const easier = 'Он сказал "Привет"';   // ✅ другой тип кавычек — без эскейпа
+
+// Полезные эскейп-последовательности
+const newline = "Первая\nВторая";   // \n — перенос строки
+const tab = "Имя\tВозраст";          // \t — табуляция
+const backslash = "C:\\Users";        // \\ — обратный слэш</code></pre>
+
+    <h3 data-lang="ru">Базовые методы строк</h3>
+    <h3 data-lang="en">Basic string methods</h3>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Метод</th><th>Что делает</th><th>Пример</th></tr></thead>
+        <thead data-lang="en"><tr><th>Method</th><th>What it does</th><th>Example</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td><code>.length</code></td><td>Количество символов</td><td><code>"hello".length</code> → <code>5</code></td></tr>
+            <tr><td><code>.toUpperCase()</code></td><td>В верхний регистр</td><td><code>"abc".toUpperCase()</code> → <code>"ABC"</code></td></tr>
+            <tr><td><code>.toLowerCase()</code></td><td>В нижний регистр</td><td><code>"ABC".toLowerCase()</code> → <code>"abc"</code></td></tr>
+            <tr><td><code>.trim()</code></td><td>Убрать пробелы по краям</td><td><code>"  hi  ".trim()</code> → <code>"hi"</code></td></tr>
+            <tr><td><code>.includes(x)</code></td><td>Есть ли подстрока x?</td><td><code>"hello".includes("ell")</code> → <code>true</code></td></tr>
+            <tr><td><code>.slice(a, b)</code></td><td>Часть строки от a до b</td><td><code>"hello".slice(1, 4)</code> → <code>"ell"</code></td></tr>
+            <tr><td><code>.split(x)</code></td><td>Разбить по разделителю</td><td><code>"a,b,c".split(",")</code> → <code>["a","b","c"]</code></td></tr>
+            <tr><td><code>.replace(a, b)</code></td><td>Заменить</td><td><code>"hello".replace("l", "L")</code> → <code>"heLlo"</code></td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td><code>.length</code></td><td>Character count</td><td><code>"hello".length</code> → <code>5</code></td></tr>
+            <tr><td><code>.toUpperCase()</code></td><td>To uppercase</td><td><code>"abc".toUpperCase()</code> → <code>"ABC"</code></td></tr>
+            <tr><td><code>.toLowerCase()</code></td><td>To lowercase</td><td><code>"ABC".toLowerCase()</code> → <code>"abc"</code></td></tr>
+            <tr><td><code>.trim()</code></td><td>Strip edge whitespace</td><td><code>"  hi  ".trim()</code> → <code>"hi"</code></td></tr>
+            <tr><td><code>.includes(x)</code></td><td>Contains substring x?</td><td><code>"hello".includes("ell")</code> → <code>true</code></td></tr>
+            <tr><td><code>.slice(a, b)</code></td><td>Part from a to b</td><td><code>"hello".slice(1, 4)</code> → <code>"ell"</code></td></tr>
+            <tr><td><code>.split(x)</code></td><td>Split by separator</td><td><code>"a,b,c".split(",")</code> → <code>["a","b","c"]</code></td></tr>
+            <tr><td><code>.replace(a, b)</code></td><td>Replace</td><td><code>"hello".replace("l", "L")</code> → <code>"heLlo"</code></td></tr>
+        </tbody>
+    </table>
+
+    <div class="pro-tip">
+        <p data-lang="ru"><strong>Сильная сторона TypeScript:</strong> наведите курсор в VS Code на любую строковую переменную и нажмите <code>.</code> — TS покажет полный список из ~50 методов. Это самая удобная справка. Никакой документации не нужно.</p>
+        <p data-lang="en"><strong>TypeScript superpower:</strong> hover over any string variable in VS Code and type <code>.</code> — TS shows the full list of ~50 methods. The most convenient reference. No docs needed.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="template" data-lang="ru">3. Template literals — шаблонные строки</h2>
+    <h2 id="template" data-lang="en">3. Template literals — template strings</h2>
+
+    <p data-lang="ru">Самый удобный способ «склеивать» строки с переменными — обратные кавычки и <code>${...}</code>:</p>
+    <p data-lang="en">The most convenient way to "weave" variables into strings — backticks and <code>${...}</code>:</p>
+
+    <pre><code>const name = "Сейди";
+const age = 20;
+
+// Старый способ: конкатенация через +
+const oldWay = "Привет, " + name + "! Тебе " + age + " лет.";
+
+// Современный способ: template literal
+const newWay = `Привет, ${name}! Тебе ${age} лет.`;</code></pre>
+
+    <p data-lang="ru">Внутри <code>${...}</code> можно писать <strong>любое выражение</strong>:</p>
+    <p data-lang="en">Inside <code>${...}</code> you can put <strong>any expression</strong>:</p>
+
+    <pre><code>const price = 100;
+const qty = 3;
+
+const sum = `Итого: ${price * qty} рублей`;            // "Итого: 300 рублей"
+const upper = `Имя: ${name.toUpperCase()}`;             // "Имя: СЕЙДИ"
+const conditional = `Совершеннолетний: ${age >= 18}`;   // "Совершеннолетний: true"</code></pre>
+
+    <h3 data-lang="ru">Многострочные шаблоны</h3>
+    <h3 data-lang="en">Multi-line templates</h3>
+
+    <p data-lang="ru">Backticks умеют то, чего не умеют обычные кавычки — содержать переносы строк <em>прямо в коде</em>:</p>
+    <p data-lang="en">Backticks can do what regular quotes can't — contain line breaks <em>right in the code</em>:</p>
+
+    <pre><code>const html = `
+&lt;div class="card"&gt;
+    &lt;h1&gt;${name}&lt;/h1&gt;
+    &lt;p&gt;Возраст: ${age}&lt;/p&gt;
+&lt;/div&gt;
+`;</code></pre>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Правило 2026:</strong> в новом коде используйте <em>почти всегда</em> template literals вместо конкатенации через <code>+</code>. Это короче, читаемее и меньше шансов ошибиться с пробелами и кавычками.</p>
+        <p data-lang="en"><strong>2026 rule:</strong> in new code use template literals <em>almost always</em> instead of <code>+</code> concatenation. Shorter, more readable, fewer chances to mess up spaces and quotes.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="number" data-lang="ru">4. number — числа</h2>
+    <h2 id="number" data-lang="en">4. number — numbers</h2>
+
+    <p data-lang="ru"><strong>number</strong> — единый тип для <strong>всех</strong> числовых значений: целых, дробных, отрицательных, шестнадцатеричных. В отличие от других языков, в TS нет отдельных <code>int</code> и <code>float</code>.</p>
+    <p data-lang="en"><strong>number</strong> is a single type for <strong>all</strong> numeric values: integers, decimals, negatives, hex. Unlike other languages, TS has no separate <code>int</code> and <code>float</code>.</p>
+
+    <pre><code>const age: number = 18;
+const pi: number = 3.14;
+const debt: number = -500;
+const hex: number = 0xff;       // 255 в шестнадцатеричной
+const binary: number = 0b1010;  // 10 в двоичной
+const big: number = 1_000_000;  // подчёркивания для читаемости (= 1000000)</code></pre>
+
+    <h3 data-lang="ru">Арифметические операторы</h3>
+    <h3 data-lang="en">Arithmetic operators</h3>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Оператор</th><th>Что делает</th><th>Пример</th></tr></thead>
+        <thead data-lang="en"><tr><th>Operator</th><th>What</th><th>Example</th></tr></thead>
+        <tbody>
+            <tr><td><code>+</code></td><td>Сложение / Addition</td><td><code>2 + 3</code> → <code>5</code></td></tr>
+            <tr><td><code>-</code></td><td>Вычитание / Subtraction</td><td><code>5 - 2</code> → <code>3</code></td></tr>
+            <tr><td><code>*</code></td><td>Умножение / Multiplication</td><td><code>4 * 3</code> → <code>12</code></td></tr>
+            <tr><td><code>/</code></td><td>Деление / Division</td><td><code>10 / 4</code> → <code>2.5</code></td></tr>
+            <tr><td><code>%</code></td><td>Остаток / Remainder</td><td><code>10 % 3</code> → <code>1</code></td></tr>
+            <tr><td><code>**</code></td><td>Степень / Exponentiation</td><td><code>2 ** 10</code> → <code>1024</code></td></tr>
+        </tbody>
+    </table>
+
+    <h3 data-lang="ru">Полезные методы и функции для числа</h3>
+    <h3 data-lang="en">Useful number methods and functions</h3>
+
+    <pre><code>const pi = 3.14159;
+
+pi.toFixed(2);          // "3.14"  ← округление до N знаков (вернёт строку!)
+Math.round(pi);         // 3       ← округлить до целого
+Math.floor(pi);         // 3       ← округлить вниз
+Math.ceil(pi);          // 4       ← округлить вверх
+Math.abs(-5);           // 5       ← модуль
+Math.max(1, 5, 3);      // 5
+Math.min(1, 5, 3);      // 1
+Math.random();          // 0.42... ← случайное число от 0 до 1
+Math.sqrt(16);          // 4       ← корень
+
+// Парсинг из строки
+Number("42");           // 42
+parseInt("42px");       // 42      ← берёт ведущую целую часть
+parseFloat("3.14abc");  // 3.14    ← берёт ведущую дробную часть</code></pre>
+
+    <hr>
+
+    <h2 id="nan" data-lang="ru">5. NaN, Infinity и другие сюрпризы</h2>
+    <h2 id="nan" data-lang="en">5. NaN, Infinity, and other surprises</h2>
+
+    <p data-lang="ru">У типа <code>number</code> есть три «специальных» значения:</p>
+    <p data-lang="en">The <code>number</code> type has three "special" values:</p>
+
+    <ul data-lang="ru">
+        <li><code>Infinity</code> — положительная бесконечность (например, <code>1 / 0</code>)</li>
+        <li><code>-Infinity</code> — отрицательная бесконечность</li>
+        <li><code>NaN</code> — «Not a Number», результат некорректной арифметической операции</li>
+    </ul>
+    <ul data-lang="en">
+        <li><code>Infinity</code> — positive infinity (e.g., <code>1 / 0</code>)</li>
+        <li><code>-Infinity</code> — negative infinity</li>
+        <li><code>NaN</code> — "Not a Number", the result of an invalid arithmetic operation</li>
+    </ul>
+
+    <pre><code>console.log(1 / 0);                // Infinity
+console.log(-1 / 0);               // -Infinity
+console.log(0 / 0);                // NaN
+console.log(parseInt("abc"));      // NaN
+console.log(Number("hello"));      // NaN
+console.log(Math.sqrt(-1));        // NaN</code></pre>
+
+    <div class="mistake">
+        <p data-lang="ru"><strong>Главный сюрприз:</strong> <code>NaN !== NaN</code>. Это значит, что нельзя проверить «значение равно NaN?» обычным <code>===</code>:</p>
+        <pre><code>const x = NaN;
+x === NaN;          // ❌ false (!)
+Number.isNaN(x);    // ✅ true — правильная проверка</code></pre>
+        <p data-lang="en"><strong>Main surprise:</strong> <code>NaN !== NaN</code>. So you can't check "is this NaN?" with regular <code>===</code>:</p>
+        <pre><code>const x = NaN;
+x === NaN;          // ❌ false (!)
+Number.isNaN(x);    // ✅ true — the correct check</code></pre>
+    </div>
+
+    <div class="pro-tip">
+        <p data-lang="ru"><strong>Правило:</strong> используйте <code>Number.isNaN(x)</code> для проверки на NaN и <code>Number.isFinite(x)</code> чтобы убедиться, что значение — конечное число (не <code>Infinity</code>, не <code>NaN</code>).</p>
+        <p data-lang="en"><strong>Rule:</strong> use <code>Number.isNaN(x)</code> to check for NaN and <code>Number.isFinite(x)</code> to verify a value is a finite number (not <code>Infinity</code>, not <code>NaN</code>).</p>
+    </div>
+
+    <hr>
+
+    <h2 id="boolean" data-lang="ru">6. boolean — true/false</h2>
+    <h2 id="boolean" data-lang="en">6. boolean — true/false</h2>
+
+    <p data-lang="ru"><strong>boolean</strong> — самый простой тип. Всего два значения: <code>true</code> или <code>false</code>.</p>
+    <p data-lang="en"><strong>boolean</strong> is the simplest type. Just two values: <code>true</code> or <code>false</code>.</p>
+
+    <pre><code>const isAdmin: boolean = true;
+const isVerified: boolean = false;
+const isAdult: boolean = age &gt;= 18;     // результат сравнения — тоже boolean</code></pre>
+
+    <h3 data-lang="ru">Логические операторы</h3>
+    <h3 data-lang="en">Logical operators</h3>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Оператор</th><th>Название</th><th>Пример</th></tr></thead>
+        <thead data-lang="en"><tr><th>Operator</th><th>Name</th><th>Example</th></tr></thead>
+        <tbody>
+            <tr><td><code>&amp;&amp;</code></td><td>AND (и)</td><td><code>true &amp;&amp; false</code> → <code>false</code></td></tr>
+            <tr><td><code>||</code></td><td>OR (или)</td><td><code>true || false</code> → <code>true</code></td></tr>
+            <tr><td><code>!</code></td><td>NOT (отрицание)</td><td><code>!true</code> → <code>false</code></td></tr>
+        </tbody>
+    </table>
+
+    <h3 data-lang="ru">Операторы сравнения возвращают boolean</h3>
+    <h3 data-lang="en">Comparison operators return boolean</h3>
+
+    <pre><code>5 &gt; 3              // true
+5 &lt; 3              // false
+5 === 5            // true   (строгое равенство)
+5 === "5"          // false  (разные типы)
+5 !== 6            // true</code></pre>
+
+    <div class="important">
+        <p data-lang="ru"><strong>В TypeScript всегда используйте <code>===</code> и <code>!==</code> (строгое сравнение), а не <code>==</code> и <code>!=</code>.</strong> Строгое сравнение проверяет и значение, и тип; нестрогое — пытается «привести» типы и часто ведёт к багам. Например, <code>0 == false</code> → <code>true</code>, что почти никогда не то, что вы хотели.</p>
+        <p data-lang="en"><strong>In TypeScript always use <code>===</code> and <code>!==</code> (strict equality), not <code>==</code> and <code>!=</code>.</strong> Strict equality checks both value and type; loose equality tries to "coerce" types and often causes bugs. E.g., <code>0 == false</code> → <code>true</code>, which is almost never what you wanted.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="truthy" data-lang="ru">7. Truthy и falsy значения</h2>
+    <h2 id="truthy" data-lang="en">7. Truthy and falsy values</h2>
+
+    <p data-lang="ru">В JavaScript (и TypeScript) <strong>любое значение</strong> можно использовать в логическом контексте — например, в <code>if</code>. Тогда значение автоматически приводится к <code>true</code> или <code>false</code>. Запомните <strong>6 falsy значений</strong> — всё остальное truthy.</p>
+    <p data-lang="en">In JavaScript (and TypeScript) <strong>any value</strong> can be used in a logical context — like inside <code>if</code>. The value is then automatically coerced to <code>true</code> or <code>false</code>. Memorize the <strong>6 falsy values</strong> — everything else is truthy.</p>
+
+    <h3 data-lang="ru">Шесть falsy значений</h3>
+    <h3 data-lang="en">The six falsy values</h3>
+
+    <pre><code>false           // сам false
+0               // ноль
+-0              // отрицательный ноль
+""              // пустая строка
+null            // null
+undefined       // undefined
+NaN             // Not a Number</code></pre>
+
+    <p data-lang="ru"><strong>Всё остальное truthy</strong>, включая:</p>
+    <p data-lang="en"><strong>Everything else is truthy</strong>, including:</p>
+
+    <pre><code>"0"             // строка "0" — truthy!
+"false"         // строка "false" — truthy!
+[]              // пустой массив — truthy
+{}              // пустой объект — truthy
+-1              // любое ненулевое число</code></pre>
+
+    <p data-lang="ru">Это позволяет писать сокращённые проверки:</p>
+    <p data-lang="en">This enables shorthand checks:</p>
+
+    <pre><code>const userName = "";
+
+if (userName) {
+    console.log(`Привет, ${userName}!`);
+} else {
+    console.log("Имя не указано");   // ← попадём сюда: "" — falsy
+}</code></pre>
+
+    <div class="mistake">
+        <p data-lang="ru"><strong>Внимание на ловушки:</strong></p>
+        <ul>
+            <li><code>"0"</code> — это <em>truthy</em>, потому что это непустая строка. Это не то же, что число <code>0</code>.</li>
+            <li><code>[]</code> и <code>{}</code> — тоже truthy. Чтобы проверить «массив пустой?» — пишите <code>arr.length === 0</code>.</li>
+        </ul>
+        <p data-lang="en"><strong>Watch the traps:</strong></p>
+        <ul>
+            <li><code>"0"</code> is <em>truthy</em> — it's a non-empty string. Different from the number <code>0</code>.</li>
+            <li><code>[]</code> and <code>{}</code> are also truthy. To check "is the array empty?" — write <code>arr.length === 0</code>.</li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h2 id="bigint-symbol" data-lang="ru">8. bigint и symbol — редкие гости</h2>
+    <h2 id="bigint-symbol" data-lang="en">8. bigint and symbol — rare guests</h2>
+
+    <p data-lang="ru">Два примитива, с которыми вы будете встречаться редко — но знать о них надо.</p>
+    <p data-lang="en">Two primitives you'll rarely meet — but should know about.</p>
+
+    <h3 data-lang="ru"><code>bigint</code> — для очень больших целых чисел</h3>
+    <h3 data-lang="en"><code>bigint</code> — for very large integers</h3>
+
+    <p data-lang="ru">Тип <code>number</code> точно работает с целыми только до <code>2<sup>53</sup> - 1</code> (≈ 9 квадриллионов). Для бóльших — <code>bigint</code>:</p>
+    <p data-lang="en">Type <code>number</code> precisely handles integers only up to <code>2<sup>53</sup> - 1</code> (≈ 9 quadrillion). For larger — <code>bigint</code>:</p>
+
+    <pre><code>const big: bigint = 9007199254740993n;   // суффикс "n" обязателен
+const fromInt = BigInt(123);             // или через функцию
+
+// bigint и number не смешиваются!
+big + 1n;       // ✅
+big + 1;        // ❌ Operator '+' cannot be applied to types 'bigint' and 'number'</code></pre>
+
+    <p data-lang="ru">Где используется: финансовые расчёты, идентификаторы из БД, криптография.</p>
+    <p data-lang="en">Where used: financial calculations, database IDs, cryptography.</p>
+
+    <h3 data-lang="ru"><code>symbol</code> — уникальные идентификаторы</h3>
+    <h3 data-lang="en"><code>symbol</code> — unique identifiers</h3>
+
+    <p data-lang="ru">Каждый <code>symbol()</code> — это <strong>уникальное</strong> значение, не равное никакому другому. Используется как «секретные ключи» для свойств объектов, чтобы избежать коллизий.</p>
+    <p data-lang="en">Every <code>symbol()</code> is a <strong>unique</strong> value, equal to no other. Used as "secret keys" for object properties to avoid collisions.</p>
+
+    <pre><code>const s1 = Symbol("ключ");
+const s2 = Symbol("ключ");
+s1 === s2;   // false — несмотря на одинаковое описание</code></pre>
+
+    <div class="pro-tip">
+        <p data-lang="ru"><strong>На практике</strong> в обычном коде вы будете встречать <code>bigint</code> и <code>symbol</code> 1-2 раза в год. В первый год программирования можно про них «помнить, что есть, но не использовать».</p>
+        <p data-lang="en"><strong>In practice</strong>, you'll meet <code>bigint</code> and <code>symbol</code> 1-2 times a year in normal code. In your first year of programming, it's fine to "remember they exist but not use them".</p>
+    </div>
+
+    <hr>
+
+    <h2 id="literal" data-lang="ru">9. Literal types — главная фишка занятия</h2>
+    <h2 id="literal" data-lang="en">9. Literal types — the headline of the lesson</h2>
+
+    <p data-lang="ru">А теперь — самое интересное. То, ради чего TypeScript часто и используют.</p>
+    <p data-lang="en">And now — the most interesting part. What people often use TypeScript for in the first place.</p>
+
+    <div style="background:#f0fdfa;border:2px solid #14b8a6;padding:16px 20px;border-radius:8px;margin:16px 0;">
+        <p data-lang="ru"><strong>Literal type</strong> — это тип, который описывает <strong>одно конкретное значение</strong>, а не «вообще все строки» или «вообще все числа». Например, тип <code>"red"</code> допускает только строку <code>"red"</code> — и больше ничего.</p>
+        <p data-lang="en">A <strong>literal type</strong> is a type that describes <strong>one specific value</strong>, not "all strings" or "all numbers". For example, the type <code>"red"</code> allows only the string <code>"red"</code> — nothing else.</p>
+    </div>
+
+    <pre><code>let status1: string = "ok";        // тип string — любая строка
+status1 = "что угодно";            // ✅
+
+let status2: "ok" = "ok";          // тип "ok" — только эта строка!
+status2 = "fail";                  // ❌ Type '"fail"' is not assignable to type '"ok"'</code></pre>
+
+    <p data-lang="ru">На первый взгляд это выглядит странно: <em>«зачем мне переменная, в которую можно положить только одну единственную строку?»</em> Сам по себе — действительно бесполезно. Но в сочетании с <strong>union</strong> (об этом ниже) литералы становятся мощнейшим инструментом.</p>
+    <p data-lang="en">At first glance this looks weird: <em>"why would I want a variable that can only hold one single string?"</em> By itself — yes, useless. But combined with a <strong>union</strong> (next section), literals become an extremely powerful tool.</p>
+
+    <p data-lang="ru">Литералы есть для всех трёх примитивов:</p>
+    <p data-lang="en">Literals exist for all three primitives:</p>
+
+    <pre><code>let direction: "left" = "left";
+let count: 42 = 42;
+let flag: true = true;</code></pre>
+
+    <hr>
+
+    <h2 id="literal-union" data-lang="ru">10. Union из литералов</h2>
+    <h2 id="literal-union" data-lang="en">10. Literal unions</h2>
+
+    <p data-lang="ru">Союзник литералов — оператор <code>|</code> («или»). Можно перечислить через него <strong>набор</strong> допустимых значений:</p>
+    <p data-lang="en">Literals' best friend is the <code>|</code> ("or") operator. You can list a <strong>set</strong> of allowed values:</p>
+
+    <pre><code>let direction: "left" | "right" | "up" | "down";
+
+direction = "left";       // ✅
+direction = "right";      // ✅
+direction = "diagonal";   // ❌ Type '"diagonal"' is not assignable to '"left" | "right" | "up" | "down"'</code></pre>
+
+    <p data-lang="ru">Это и есть главное применение литералов: <strong>защита от опечаток</strong> и <strong>самодокументирующийся код</strong>.</p>
+    <p data-lang="en">This is the headline use of literals: <strong>typo protection</strong> and <strong>self-documenting code</strong>.</p>
+
+    <h3 data-lang="ru">Пример: статус задачи</h3>
+    <h3 data-lang="en">Example: a task status</h3>
+
+    <pre><code>type TaskStatus = "todo" | "in-progress" | "done" | "archived";
+
+function setStatus(taskId: number, status: TaskStatus) {
+    console.log(`Задача ${taskId}: новый статус "${status}"`);
+}
+
+setStatus(1, "done");        // ✅
+setStatus(2, "in-progress"); // ✅
+setStatus(3, "Done");        // ❌ опечатка в регистре — TS поймал!
+setStatus(4, "compleated");  // ❌ опечатка в слове — TS поймал!</code></pre>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Зачем это нужно:</strong> в JavaScript передать «<em>compleated</em>» вместо «<em>completed</em>» — обычное дело, баг найдётся только в проде, когда статус никогда не сменится. В TypeScript эта опечатка <strong>невозможна</strong> — литеральный union её отлавливает в редакторе.</p>
+        <p data-lang="en"><strong>Why it matters:</strong> in JavaScript passing "<em>compleated</em>" instead of "<em>completed</em>" is a common mistake; you find it in production when statuses never change. In TypeScript that typo is <strong>impossible</strong> — the literal union catches it in the editor.</p>
+    </div>
+
+    <p data-lang="ru">VS Code даже подсказывает варианты! Поставьте курсор после <code>setStatus(1, </code> — и редактор предложит выбрать из 4 допустимых значений. Это называется <strong>autocomplete</strong>, и без TypeScript он невозможен — JS просто не знает, какие значения вы ждёте.</p>
+    <p data-lang="en">VS Code even autocompletes! Put the cursor after <code>setStatus(1, </code> — and the editor offers a pick from the 4 allowed values. This is called <strong>autocomplete</strong>, and it's impossible without TypeScript — JS simply doesn't know which values you expect.</p>
+
+    <hr>
+
+    <h2 id="as-const" data-lang="ru">11. as const — заморозка литерала</h2>
+    <h2 id="as-const" data-lang="en">11. as const — freezing a literal</h2>
+
+    <p data-lang="ru">Помните widening из занятия 4? <code>let x = "hello"</code> → <code>string</code>, <code>const x = "hello"</code> → <code>"hello"</code>. А что, если значение нужно литеральное, но самой переменной мы хотим <code>let</code>?</p>
+    <p data-lang="en">Remember widening from Lesson 4? <code>let x = "hello"</code> → <code>string</code>, <code>const x = "hello"</code> → <code>"hello"</code>. What if we need a literal type but a <code>let</code> variable?</p>
+
+    <p data-lang="ru">Есть специальный синтаксис: <strong><code>as const</code></strong>.</p>
+    <p data-lang="en">There's a special syntax: <strong><code>as const</code></strong>.</p>
+
+    <pre><code>let a = "hello";              // тип: string
+let b = "hello" as const;     // тип: "hello"  ← заморозили в литерал
+
+const arr1 = [1, 2, 3];           // тип: number[]    ← можно push/pop, менять
+const arr2 = [1, 2, 3] as const;  // тип: readonly [1, 2, 3]  ← заморозили!
+arr2.push(4);                     // ❌ Property 'push' does not exist on type 'readonly...'</code></pre>
+
+    <p data-lang="ru"><strong><code>as const</code></strong> делает значение <em>максимально точным</em> и <em>иммутабельным</em> (нельзя изменить). Это критически важно для объектов в стиле «конфиг»:</p>
+    <p data-lang="en"><strong><code>as const</code></strong> makes a value <em>maximally precise</em> and <em>immutable</em>. Critical for "config-style" objects:</p>
+
+    <pre><code>const config = {
+    apiUrl: "https://api.example.com",
+    timeout: 5000,
+    mode: "production"
+} as const;
+
+// Без as const:
+//   config.apiUrl: string
+//   config.timeout: number
+//   config.mode: string
+
+// С as const:
+//   config.apiUrl: "https://api.example.com"  (литерал!)
+//   config.timeout: 5000                       (литерал!)
+//   config.mode: "production"                  (литерал!)
+//   и весь объект readonly — нельзя изменить</code></pre>
+
+    <p data-lang="ru">Зачем это полезно? Когда вы пишете функцию, которая ожидает <code>"production" | "development"</code>, вы можете передать <code>config.mode</code> — и она пройдёт проверку. Без <code>as const</code> <code>config.mode</code> был бы просто <code>string</code> — и TS не разрешил бы.</p>
+    <p data-lang="en">Why useful? When you write a function expecting <code>"production" | "development"</code>, you can pass <code>config.mode</code> — and it'll typecheck. Without <code>as const</code>, <code>config.mode</code> would just be <code>string</code> — and TS would refuse.</p>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Запомните:</strong> <code>as const</code> — это «<em>сделай тип максимально точным и заморозь содержимое</em>». Используется для конфигов, наборов опций, констант. Это один из главных инструментов современного TS 2026.</p>
+        <p data-lang="en"><strong>Remember:</strong> <code>as const</code> means "<em>make the type maximally precise and freeze the contents</em>". Used for configs, option sets, constants. One of the headline tools of modern TS 2026.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="template-types" data-lang="ru">12. Тизер: template literal types</h2>
+    <h2 id="template-types" data-lang="en">12. Teaser: template literal types</h2>
+
+    <p data-lang="ru">Подробно мы их разберём в занятии 26, но познакомимся уже сейчас. Помните template literals (раздел 3)? Так вот, у них есть <strong>аналог на уровне типов</strong>:</p>
+    <p data-lang="en">We'll cover them in detail in Lesson 26, but let's meet them now. Remember template literals (section 3)? They have a <strong>type-level counterpart</strong>:</p>
+
+    <pre><code>type Greeting = `Hello, ${string}!`;
+
+const a: Greeting = "Hello, World!";   // ✅
+const b: Greeting = "Hello, Сейди!";    // ✅
+const c: Greeting = "Hi, World!";      // ❌ не начинается с "Hello, "
+const d: Greeting = "Hello, World";    // ❌ нет восклицательного знака</code></pre>
+
+    <p data-lang="ru">Можно даже комбинировать литералы:</p>
+    <p data-lang="en">You can even combine literals:</p>
+
+    <pre><code>type Color = "red" | "green" | "blue";
+type Size = "small" | "large";
+
+type ClassName = `${Color}-${Size}`;
+//                 ↑
+// "red-small" | "red-large" | "green-small" | "green-large" | "blue-small" | "blue-large"</code></pre>
+
+    <p data-lang="ru">Это можно использовать для типобезопасных CSS-классов, маршрутов API, ключей событий. Подробности — в занятии 26.</p>
+    <p data-lang="en">Useful for type-safe CSS classes, API routes, event keys. Details in Lesson 26.</p>
+
+    <hr>
+
+    <div class="summary">
+        <ul data-lang="ru">
+            <li>В JS/TS <strong>7 примитивов</strong>: <code>string</code>, <code>number</code>, <code>boolean</code>, <code>bigint</code>, <code>symbol</code>, <code>null</code>, <code>undefined</code>.</li>
+            <li>Примитивы сравниваются по <strong>значению</strong>, объекты — по <strong>ссылке</strong>.</li>
+            <li><code>string</code> — три типа кавычек: <code>'</code>, <code>"</code>, <code>`</code>. Backticks нужны для template literals.</li>
+            <li><strong>Template literals</strong>: <code>`Hello, ${name}!`</code> — современная замена конкатенации через <code>+</code>.</li>
+            <li><code>number</code> — единый тип для целых, дробных и шестнадцатеричных чисел.</li>
+            <li><code>NaN</code>, <code>Infinity</code>, <code>-Infinity</code> — «специальные» значения. <code>NaN !== NaN</code>, проверка — <code>Number.isNaN(x)</code>.</li>
+            <li><code>boolean</code> — <code>true</code> или <code>false</code>. Всегда используйте <code>===</code> и <code>!==</code>, не <code>==</code>.</li>
+            <li>В if-контексте значение приводится к <code>boolean</code>. <strong>6 falsy:</strong> <code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>. Всё остальное truthy.</li>
+            <li><code>bigint</code> — для очень больших целых. <code>symbol</code> — для уникальных ключей. Оба редко.</li>
+            <li><strong>Literal type</strong> — тип, описывающий <em>одно конкретное значение</em>: <code>"red"</code>, <code>42</code>, <code>true</code>.</li>
+            <li><strong>Union из литералов</strong> через <code>|</code> — самый частый инструмент: <code>type Status = "ok" | "error"</code>.</li>
+            <li><strong><code>as const</code></strong> — «заморозить» значение в максимально точный литеральный тип и сделать иммутабельным.</li>
+            <li><strong>Template literal types</strong> (тизер) — комбинирование литеральных типов через шаблон.</li>
+        </ul>
+        <ul data-lang="en">
+            <li>JS/TS has <strong>7 primitives</strong>: <code>string</code>, <code>number</code>, <code>boolean</code>, <code>bigint</code>, <code>symbol</code>, <code>null</code>, <code>undefined</code>.</li>
+            <li>Primitives compare by <strong>value</strong>, objects by <strong>reference</strong>.</li>
+            <li><code>string</code> — three quote types: <code>'</code>, <code>"</code>, <code>`</code>. Backticks needed for template literals.</li>
+            <li><strong>Template literals</strong>: <code>`Hello, ${name}!`</code> — modern replacement for <code>+</code> concatenation.</li>
+            <li><code>number</code> — a single type for integers, decimals, and hex numbers.</li>
+            <li><code>NaN</code>, <code>Infinity</code>, <code>-Infinity</code> are "special" values. <code>NaN !== NaN</code>, check via <code>Number.isNaN(x)</code>.</li>
+            <li><code>boolean</code> — <code>true</code> or <code>false</code>. Always use <code>===</code> and <code>!==</code>, never <code>==</code>.</li>
+            <li>In if-context a value is coerced to <code>boolean</code>. <strong>6 falsy:</strong> <code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>. Everything else is truthy.</li>
+            <li><code>bigint</code> — for very large integers. <code>symbol</code> — for unique keys. Both rare.</li>
+            <li><strong>Literal type</strong> — a type describing <em>one specific value</em>: <code>"red"</code>, <code>42</code>, <code>true</code>.</li>
+            <li><strong>Literal union</strong> via <code>|</code> — the most common pattern: <code>type Status = "ok" | "error"</code>.</li>
+            <li><strong><code>as const</code></strong> — "freeze" a value into a maximally precise literal type and make it immutable.</li>
+            <li><strong>Template literal types</strong> (teaser) — composing literal types via a template.</li>
+        </ul>
+    </div>
+
+    <div class="quiz">
+        <ol data-lang="ru">
+            <li>Чем примитивы отличаются от объектов? Приведите пример сравнения.</li>
+            <li>Какие три типа кавычек есть в JS/TS? Когда какие использовать?</li>
+            <li>Что такое template literal? Напишите пример с подстановкой переменной.</li>
+            <li>Какие специальные значения есть у типа <code>number</code>? Как проверить переменную на NaN?</li>
+            <li>Почему в TypeScript всегда пишут <code>===</code>, а не <code>==</code>?</li>
+            <li>Назовите все 6 falsy значений.</li>
+            <li>Truthy или falsy: <code>"0"</code>, <code>[]</code>, <code>{}</code>, <code>"false"</code>?</li>
+            <li>Что такое literal type? В чём отличие от типа <code>string</code>?</li>
+            <li>Что такое union из литералов? Приведите пример типа «статус задачи».</li>
+            <li>Что делает оператор <code>as const</code>? Зачем он нужен на практике?</li>
+            <li>Когда используется <code>bigint</code> и почему его нельзя смешивать с <code>number</code>?</li>
+            <li>Какой autocomplete в VS Code появляется, если у параметра тип <code>"a" | "b" | "c"</code>?</li>
+        </ol>
+        <ol data-lang="en">
+            <li>How do primitives differ from objects? Give a comparison example.</li>
+            <li>What three quote types exist in JS/TS? When to use which?</li>
+            <li>What is a template literal? Write an example with variable interpolation.</li>
+            <li>What special values does <code>number</code> have? How do you check for NaN?</li>
+            <li>Why do TypeScript devs always write <code>===</code>, not <code>==</code>?</li>
+            <li>Name all 6 falsy values.</li>
+            <li>Truthy or falsy: <code>"0"</code>, <code>[]</code>, <code>{}</code>, <code>"false"</code>?</li>
+            <li>What is a literal type? How does it differ from <code>string</code>?</li>
+            <li>What is a literal union? Give a "task status" example.</li>
+            <li>What does <code>as const</code> do? Why is it useful in practice?</li>
+            <li>When is <code>bigint</code> used and why can't it mix with <code>number</code>?</li>
+            <li>What autocomplete does VS Code show if a parameter has type <code>"a" | "b" | "c"</code>?</li>
+        </ol>
+    </div>
+
+</div>
+
+</body>
+</html>

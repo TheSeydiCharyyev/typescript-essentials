@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Занятие 6 — Массивы, readonly и кортежи</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/lecture.css">
+    <script src="../../js/lang.js" defer></script>
+    <style>
+        h1 { border-bottom-color: #84cc16; }
+        h2 { color: #4d7c0f; background: #f7fee7; border-left-color: #84cc16; }
+        h3 { color: #365314; }
+        .timeline { border-left-color: #84cc16; }
+        .timeline-item::before { background: #84cc16; }
+        .timeline-year { color: #4d7c0f; }
+        .person-card .role { color: #4d7c0f; }
+        .step-number { background: #84cc16; }
+        .toc a { color: #4d7c0f; }
+    </style>
+</head>
+<body>
+
+<div class="lesson-nav">
+    <a href="../../index.html" class="nav-home" data-lang="ru">&#8592; Главная</a>
+    <a href="../../index.html" class="nav-home" data-lang="en">&#8592; Home</a>
+    <span class="nav-sep">|</span>
+    <span class="nav-title" data-lang="ru">Занятие 6: Массивы, readonly и кортежи</span>
+    <span class="nav-title" data-lang="en">Lesson 6: Arrays, Readonly, and Tuples</span>
+    <span class="nav-sep">|</span>
+    <span class="nav-active" data-lang="ru">&#x1F468;&#x200D;&#x1F3EB; Лекция</span>
+    <span class="nav-active" data-lang="en">&#x1F468;&#x200D;&#x1F3EB; Lecture</span>
+    <a href="student.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F393; Конспект</a>
+    <a href="student.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F393; Notes</a>
+    <a href="tasks.html" class="nav-link" data-lang="ru">&#x1F4CB; Задания</a>
+    <a href="tasks.html" class="nav-link" data-lang="en">&#x1F4CB; Tasks</a>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+</div>
+
+<div class="container">
+
+    <h1 data-lang="ru">Занятие 6: Массивы, readonly и кортежи</h1>
+    <h1 data-lang="en">Lesson 6: Arrays, Readonly, and Tuples</h1>
+    <p class="subtitle" data-lang="ru">От простого <code>number[]</code> до иммутабельных массивов и tuple — компактных «фиксированных» массивов из разных типов</p>
+    <p class="subtitle" data-lang="en">From plain <code>number[]</code> to immutable arrays and tuples — compact "fixed" arrays of different types</p>
+
+    <div class="why">
+        <p data-lang="ru">До сих пор мы работали с <strong>одиночными значениями</strong>: одно число, одна строка, одно булево. Сейчас научимся хранить <strong>наборы значений</strong>. Массивы — это «список из N штук одного типа», кортежи (tuples) — «список из <em>точного</em> числа элементов с <em>разными</em> типами на каждой позиции». А readonly-массивы — то, чего нет в обычном JavaScript: гарантия, что список не изменят случайно.</p>
+        <p data-lang="en">Until now we worked with <strong>single values</strong>: one number, one string, one boolean. Now we'll learn to store <strong>collections</strong>. Arrays are "a list of N items of the same type"; tuples are "a list with an <em>exact</em> count of elements and <em>different</em> types at each position". And readonly arrays are something plain JavaScript lacks: a guarantee that the list won't be mutated by accident.</p>
+        <p data-lang="ru"><strong>После этого занятия вы сможете:</strong></p>
+        <p data-lang="en"><strong>After this lesson you will be able to:</strong></p>
+        <ul data-lang="ru">
+            <li>Создавать массивы в двух нотациях: <code>number[]</code> и <code>Array&lt;number&gt;</code></li>
+            <li>Использовать ключевые методы массива: <code>push</code>, <code>pop</code>, <code>map</code>, <code>filter</code>, <code>find</code>, <code>includes</code>, <code>length</code></li>
+            <li>Понимать, почему <code>arr[100]</code> может быть <code>undefined</code> и как с этим работать со strict-режимом</li>
+            <li>Объявлять <strong>readonly</strong>-массивы и понимать, в чём их сила</li>
+            <li>Создавать <strong>tuple</strong>: <code>[string, number]</code> — массив с фиксированной длиной и типами</li>
+            <li>Использовать <strong>named tuples</strong>: <code>[name: string, age: number]</code></li>
+            <li>Знать про опциональные элементы (<code>?</code>) и rest (<code>...T[]</code>) в tuple</li>
+            <li>Применять <code>as const</code> к массивам — получать readonly tuple</li>
+            <li>Различать: «массив» (длина может расти/уменьшаться) vs «tuple» (фиксированная длина)</li>
+        </ul>
+        <ul data-lang="en">
+            <li>Create arrays in two notations: <code>number[]</code> and <code>Array&lt;number&gt;</code></li>
+            <li>Use the key array methods: <code>push</code>, <code>pop</code>, <code>map</code>, <code>filter</code>, <code>find</code>, <code>includes</code>, <code>length</code></li>
+            <li>Understand why <code>arr[100]</code> may be <code>undefined</code> and how strict mode handles it</li>
+            <li>Declare <strong>readonly</strong> arrays and grasp their power</li>
+            <li>Create a <strong>tuple</strong>: <code>[string, number]</code> — an array with fixed length and per-position types</li>
+            <li>Use <strong>named tuples</strong>: <code>[name: string, age: number]</code></li>
+            <li>Know about optional elements (<code>?</code>) and rest (<code>...T[]</code>) in tuples</li>
+            <li>Apply <code>as const</code> to arrays — getting a readonly tuple</li>
+            <li>Tell apart "array" (length can grow/shrink) vs "tuple" (fixed length)</li>
+        </ul>
+    </div>
+
+    <div class="toc">
+        <div class="toc-title" data-lang="ru">Содержание</div>
+        <div class="toc-title" data-lang="en">Contents</div>
+        <ol data-lang="ru">
+            <li><a href="#what-is-array">Что такое массив</a></li>
+            <li><a href="#two-syntaxes">Два синтаксиса: <code>T[]</code> vs <code>Array&lt;T&gt;</code></a></li>
+            <li><a href="#methods">Ключевые методы массива</a></li>
+            <li><a href="#functional">Функциональные методы: map, filter, find, reduce</a></li>
+            <li><a href="#unchecked-indexed">Индексы и noUncheckedIndexedAccess</a></li>
+            <li><a href="#readonly">readonly-массивы — иммутабельность</a></li>
+            <li><a href="#tuple">Tuple — массив с фиксированной длиной</a></li>
+            <li><a href="#named-tuple">Named tuples — именованные позиции</a></li>
+            <li><a href="#optional-rest">Опциональные элементы и rest в tuple</a></li>
+            <li><a href="#as-const-array">as const + массив = readonly tuple</a></li>
+            <li><a href="#array-vs-tuple">Массив vs tuple — когда что</a></li>
+        </ol>
+        <ol data-lang="en">
+            <li><a href="#what-is-array">What an array is</a></li>
+            <li><a href="#two-syntaxes">Two syntaxes: <code>T[]</code> vs <code>Array&lt;T&gt;</code></a></li>
+            <li><a href="#methods">Key array methods</a></li>
+            <li><a href="#functional">Functional methods: map, filter, find, reduce</a></li>
+            <li><a href="#unchecked-indexed">Indexes and noUncheckedIndexedAccess</a></li>
+            <li><a href="#readonly">Readonly arrays — immutability</a></li>
+            <li><a href="#tuple">Tuple — array with fixed length</a></li>
+            <li><a href="#named-tuple">Named tuples — labeled positions</a></li>
+            <li><a href="#optional-rest">Optional elements and rest in tuples</a></li>
+            <li><a href="#as-const-array">as const + array = readonly tuple</a></li>
+            <li><a href="#array-vs-tuple">Array vs tuple — which when</a></li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <h2 id="what-is-array" data-lang="ru">1. Что такое массив</h2>
+    <h2 id="what-is-array" data-lang="en">1. What an array is</h2>
+
+    <p data-lang="ru"><strong>Массив</strong> — это упорядоченный список значений <strong>одного типа</strong>, доступных по индексу. Индекс начинается с <code>0</code>.</p>
+    <p data-lang="en">An <strong>array</strong> is an ordered list of values of <strong>the same type</strong>, accessed by index. Indexing starts at <code>0</code>.</p>
+
+    <pre><code>const cities: string[] = ["Ашхабад", "Стамбул", "Ташкент"];
+//                          [0]         [1]         [2]
+
+cities[0];           // "Ашхабад"
+cities[1];           // "Стамбул"
+cities[2];           // "Ташкент"
+cities.length;       // 3</code></pre>
+
+    <div class="analogy">
+        <p data-lang="ru">Аналогия: массив — это <strong>пронумерованные ящики</strong>. На каждом ящике есть номер (индекс), внутри лежит значение. Все ящики одного типа: либо все с числами, либо все со строками, либо все с булевыми.</p>
+        <p data-lang="en">Analogy: an array is <strong>numbered lockers</strong>. Each has a number (index) and a value inside. All lockers hold the same type: either all numbers, all strings, or all booleans.</p>
+    </div>
+
+    <p data-lang="ru">Если попытаться положить «не тот» тип — TypeScript сразу сообщит:</p>
+    <p data-lang="en">If you try to put the "wrong" type — TypeScript reports immediately:</p>
+
+    <pre><code>const numbers: number[] = [1, 2, 3];
+numbers.push(4);         // ✅
+numbers.push("пять");    // ❌ Argument of type 'string' is not assignable to 'number'</code></pre>
+
+    <hr>
+
+    <h2 id="two-syntaxes" data-lang="ru">2. Два синтаксиса: <code>T[]</code> vs <code>Array&lt;T&gt;</code></h2>
+    <h2 id="two-syntaxes" data-lang="en">2. Two syntaxes: <code>T[]</code> vs <code>Array&lt;T&gt;</code></h2>
+
+    <p data-lang="ru">В TypeScript есть <strong>два способа</strong> объявить тип массива — они полностью эквивалентны:</p>
+    <p data-lang="en">TypeScript has <strong>two ways</strong> to declare an array type — they're completely equivalent:</p>
+
+    <pre><code>let a: number[]        = [1, 2, 3];   // короткий синтаксис
+let b: Array&lt;number&gt;   = [1, 2, 3];   // generic-синтаксис</code></pre>
+
+    <p data-lang="ru">Оба варианта дают <strong>один и тот же тип</strong>. Выбор — вопрос стиля:</p>
+    <p data-lang="en">Both produce <strong>the same type</strong>. The choice is a style question:</p>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Стиль</th><th>Когда удобнее</th></tr></thead>
+        <thead data-lang="en"><tr><th>Style</th><th>When preferable</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td><code>T[]</code></td><td>Простые типы. <strong>Стандарт</strong> в большинстве проектов.</td></tr>
+            <tr><td><code>Array&lt;T&gt;</code></td><td>Сложные типы, чтобы не было путаницы со скобками: <code>Array&lt;{ id: number; name: string }&gt;</code> читаемее, чем <code>{ id: number; name: string }[]</code></td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td><code>T[]</code></td><td>Simple types. <strong>The default</strong> in most projects.</td></tr>
+            <tr><td><code>Array&lt;T&gt;</code></td><td>Complex types, to avoid bracket confusion: <code>Array&lt;{ id: number; name: string }&gt;</code> reads better than <code>{ id: number; name: string }[]</code></td></tr>
+        </tbody>
+    </table>
+
+    <h3 data-lang="ru">Массив союза типов</h3>
+    <h3 data-lang="en">Array of a union type</h3>
+
+    <p data-lang="ru">Часто нужен массив, где могут быть значения <strong>нескольких</strong> типов. Используем <code>(union)[]</code>:</p>
+    <p data-lang="en">You often need an array allowing values of <strong>several</strong> types. Use <code>(union)[]</code>:</p>
+
+    <pre><code>let mixed: (number | string)[] = [1, "two", 3, "four"];
+
+// Без скобок будет ошибка/неоднозначность:
+let bad: number | string[] = ...;   // это: ЛИБО число, ЛИБО массив строк (не то, что хотели)</code></pre>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Запомните:</strong> когда у элементов разные типы — оборачивайте union в скобки: <code>(number | string)[]</code>.</p>
+        <p data-lang="en"><strong>Remember:</strong> when elements have different types, wrap the union in parentheses: <code>(number | string)[]</code>.</p>
+    </div>
+
+    <h3 data-lang="ru">Создание пустого массива</h3>
+    <h3 data-lang="en">Creating an empty array</h3>
+
+    <p data-lang="ru">Если массив создан пустым, без аннотации тип будет <code>never[]</code> или <code>any[]</code>. <strong>Всегда аннотируйте</strong> пустые массивы:</p>
+    <p data-lang="en">An empty array without annotation gets the type <code>never[]</code> or <code>any[]</code>. <strong>Always annotate</strong> empty arrays:</p>
+
+    <pre><code>// ❌ Плохо: тип any[] (или never[] со strict)
+const items = [];
+
+// ✅ Хорошо
+const items: string[] = [];
+
+// ✅ Тоже хорошо — аннотация через generic
+const items = new Array&lt;string&gt;();</code></pre>
+
+    <hr>
+
+    <h2 id="methods" data-lang="ru">3. Ключевые методы массива</h2>
+    <h2 id="methods" data-lang="en">3. Key array methods</h2>
+
+    <p data-lang="ru">Массив — самая часто используемая структура в JS/TS. У него <strong>~40 методов</strong>. Запомнить надо ~10. Разделим их на две группы: «изменяющие» (мутируют исходный массив) и «возвращающие» (создают новый).</p>
+    <p data-lang="en">An array is the most-used structure in JS/TS. It has <strong>~40 methods</strong>. You need to know about 10. We'll split them into two groups: "mutating" (change the original) and "returning" (create a new one).</p>
+
+    <h3 data-lang="ru">Мутирующие методы — меняют исходный массив</h3>
+    <h3 data-lang="en">Mutating methods — change the original</h3>
+
+    <pre><code>const arr = [1, 2, 3];
+
+arr.push(4);          // добавить в конец: [1, 2, 3, 4]
+arr.pop();            // удалить с конца:  [1, 2, 3], вернёт 4
+arr.unshift(0);       // добавить в начало: [0, 1, 2, 3]
+arr.shift();          // удалить с начала: [1, 2, 3], вернёт 0
+arr.sort();           // отсортировать на месте
+arr.reverse();        // развернуть на месте
+arr.splice(1, 1);     // удалить N элементов с позиции i</code></pre>
+
+    <h3 data-lang="ru">Возвращающие методы — создают новый массив (или значение)</h3>
+    <h3 data-lang="en">Returning methods — create a new array (or value)</h3>
+
+    <pre><code>const arr = [1, 2, 3];
+
+arr.length;                  // 3 — не метод, а свойство
+arr.includes(2);             // true  — есть ли 2?
+arr.indexOf(2);              // 1     — индекс первого вхождения (или -1)
+arr.slice(1, 3);             // [2, 3] — копия от 1 до 3 (3 не включая)
+arr.concat([4, 5]);          // [1, 2, 3, 4, 5] — объединение
+arr.join("-");               // "1-2-3" — собрать в строку
+[...arr, 4];                 // [1, 2, 3, 4] — копия через spread</code></pre>
+
+    <div class="pro-tip">
+        <p data-lang="ru"><strong>Правило 2026:</strong> предпочитайте <em>не мутирующие</em> подходы. Вместо <code>arr.push(4)</code> часто пишут <code>const next = [...arr, 4]</code>. Это особенно важно во фронтенд-фреймворках (React/Vue): они «не замечают» мутацию массива, но видят новый массив. Подробно — в занятии 17.</p>
+        <p data-lang="en"><strong>2026 rule:</strong> prefer <em>non-mutating</em> approaches. Instead of <code>arr.push(4)</code> people often write <code>const next = [...arr, 4]</code>. Especially important in frontend frameworks (React/Vue): they don't "notice" mutation but do see a new array. Details in Lesson 17.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="functional" data-lang="ru">4. Функциональные методы: map, filter, find, reduce</h2>
+    <h2 id="functional" data-lang="en">4. Functional methods: map, filter, find, reduce</h2>
+
+    <p data-lang="ru">Самые важные методы массива в современном TypeScript — те, что принимают <strong>функцию</strong>. Они называются «функциональными» или «итерационными». Все они возвращают <strong>новый</strong> массив (или одно значение), не трогая исходник.</p>
+    <p data-lang="en">The most important array methods in modern TypeScript are those that take a <strong>function</strong>. They're called "functional" or "iterative". All of them return a <strong>new</strong> array (or a single value), leaving the source untouched.</p>
+
+    <h3 data-lang="ru"><code>map</code> — преобразовать каждый элемент</h3>
+    <h3 data-lang="en"><code>map</code> — transform every element</h3>
+
+    <pre><code>const numbers = [1, 2, 3, 4];
+
+const doubled = numbers.map(n =&gt; n * 2);
+// doubled: [2, 4, 6, 8]
+
+const labels = numbers.map(n =&gt; `№${n}`);
+// labels: ["№1", "№2", "№3", "№4"]</code></pre>
+
+    <h3 data-lang="ru"><code>filter</code> — оставить только подходящие</h3>
+    <h3 data-lang="en"><code>filter</code> — keep only the matching ones</h3>
+
+    <pre><code>const numbers = [1, 2, 3, 4, 5];
+
+const even = numbers.filter(n =&gt; n % 2 === 0);
+// even: [2, 4]
+
+const big = numbers.filter(n =&gt; n &gt;= 3);
+// big: [3, 4, 5]</code></pre>
+
+    <h3 data-lang="ru"><code>find</code> — найти первое совпадение</h3>
+    <h3 data-lang="en"><code>find</code> — find the first match</h3>
+
+    <pre><code>const users = ["Anna", "Boris", "Cyrus"];
+
+const found = users.find(u =&gt; u.startsWith("B"));
+// found: "Boris"
+
+const notFound = users.find(u =&gt; u === "Daria");
+// notFound: undefined  ← обязательно проверьте!</code></pre>
+
+    <div class="important">
+        <p data-lang="ru"><strong>Важно:</strong> <code>find</code> возвращает <code>T | undefined</code>. Если со strict-режимом — TypeScript заставит вас проверить результат перед использованием.</p>
+        <p data-lang="en"><strong>Important:</strong> <code>find</code> returns <code>T | undefined</code>. With strict mode, TypeScript forces you to check the result before using it.</p>
+    </div>
+
+    <h3 data-lang="ru"><code>reduce</code> — свернуть массив в одно значение</h3>
+    <h3 data-lang="en"><code>reduce</code> — fold an array into a single value</h3>
+
+    <pre><code>const numbers = [1, 2, 3, 4];
+
+const sum = numbers.reduce((acc, n) =&gt; acc + n, 0);
+// sum: 10
+
+const product = numbers.reduce((acc, n) =&gt; acc * n, 1);
+// product: 24</code></pre>
+
+    <p data-lang="ru">Где: <code>acc</code> — «накопитель», <code>n</code> — текущий элемент, второй аргумент (<code>0</code> или <code>1</code>) — начальное значение.</p>
+    <p data-lang="en">Where: <code>acc</code> is the "accumulator", <code>n</code> is the current element, the second argument (<code>0</code> or <code>1</code>) is the initial value.</p>
+
+    <h3 data-lang="ru">Цепочки методов — мощь функционального стиля</h3>
+    <h3 data-lang="en">Method chains — the power of functional style</h3>
+
+    <pre><code>const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+// Получить сумму квадратов чётных чисел
+const result = numbers
+    .filter(n =&gt; n % 2 === 0)   // [2, 4, 6, 8, 10]
+    .map(n =&gt; n * n)             // [4, 16, 36, 64, 100]
+    .reduce((acc, n) =&gt; acc + n, 0);
+// result: 220</code></pre>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>В современном TypeScript</strong> циклы <code>for</code> используются редко. Большинство задач решается комбинацией <code>map</code> + <code>filter</code> + <code>reduce</code>. Это короче, читаемее и меньше шансов ошибиться.</p>
+        <p data-lang="en"><strong>In modern TypeScript</strong> <code>for</code> loops are rare. Most tasks are solved with combinations of <code>map</code> + <code>filter</code> + <code>reduce</code>. Shorter, more readable, fewer chances to mess up.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="unchecked-indexed" data-lang="ru">5. Индексы и noUncheckedIndexedAccess</h2>
+    <h2 id="unchecked-indexed" data-lang="en">5. Indexes and noUncheckedIndexedAccess</h2>
+
+    <p data-lang="ru">Тонкий, но <strong>критически важный</strong> момент.</p>
+    <p data-lang="en">A subtle but <strong>critically important</strong> point.</p>
+
+    <pre><code>const cities: string[] = ["Ашхабад", "Стамбул"];
+
+const first = cities[0];     // тип: string ... или?
+const tenth = cities[100];   // существует ли элемент?</code></pre>
+
+    <p data-lang="ru">В JavaScript обращение к несуществующему индексу <code>cities[100]</code> возвращает <code>undefined</code>. Это <strong>огромный источник багов</strong>:</p>
+    <p data-lang="en">In JavaScript, accessing a non-existent index <code>cities[100]</code> returns <code>undefined</code>. A <strong>huge source of bugs</strong>:</p>
+
+    <pre><code>const tenth = cities[100];   // undefined (на самом деле)
+console.log(tenth.length);   // 💥 TypeError: Cannot read properties of undefined</code></pre>
+
+    <p data-lang="ru">По умолчанию TypeScript <strong>не</strong> предупреждает об этом — он считает, что <code>cities[100]</code> имеет тип <code>string</code>. Это ложь. Чтобы TS говорил правду, нужен флаг — мы его уже включили в занятии 3:</p>
+    <p data-lang="en">By default TypeScript <strong>doesn't</strong> warn about this — it thinks <code>cities[100]</code> has type <code>string</code>. That's a lie. To make TS tell the truth, you need the flag — which we already enabled in Lesson 3:</p>
+
+    <pre><code>// tsconfig.json
+"noUncheckedIndexedAccess": true</code></pre>
+
+    <p data-lang="ru">С этим флагом <code>cities[100]</code> имеет тип <strong><code>string | undefined</code></strong>. TypeScript теперь заставит вас проверить:</p>
+    <p data-lang="en">With this flag, <code>cities[100]</code> has type <strong><code>string | undefined</code></strong>. TypeScript now forces you to check:</p>
+
+    <pre><code>const tenth = cities[100];           // тип: string | undefined
+console.log(tenth.length);           // ❌ Object is possibly 'undefined'.
+
+// Правильно:
+if (tenth) {
+    console.log(tenth.length);       // ✅ TS уверен: тут string
+}
+
+// Или через optional chaining
+console.log(tenth?.length);          // ✅ undefined если tenth undefined</code></pre>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>В конфиге 2026:</strong> <code>noUncheckedIndexedAccess</code> — обязателен. С ним вы никогда не получите runtime-ошибку «Cannot read properties of undefined» из-за выхода за границы массива.</p>
+        <p data-lang="en"><strong>In the 2026 config:</strong> <code>noUncheckedIndexedAccess</code> is mandatory. With it you'll never get a runtime "Cannot read properties of undefined" from array out-of-bounds.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="readonly" data-lang="ru">6. readonly-массивы — иммутабельность</h2>
+    <h2 id="readonly" data-lang="en">6. Readonly arrays — immutability</h2>
+
+    <p data-lang="ru">TypeScript умеет создавать <strong>иммутабельные</strong> (неизменяемые) массивы. Это массивы, у которых <strong>нет</strong> мутирующих методов (<code>push</code>, <code>pop</code>, <code>sort</code> и т.д.) и нельзя присвоить элемент по индексу.</p>
+    <p data-lang="en">TypeScript can create <strong>immutable</strong> arrays. These are arrays with <strong>no</strong> mutating methods (<code>push</code>, <code>pop</code>, <code>sort</code>, etc.) and no index assignment.</p>
+
+    <p data-lang="ru">Два эквивалентных синтаксиса:</p>
+    <p data-lang="en">Two equivalent syntaxes:</p>
+
+    <pre><code>const a: readonly number[]      = [1, 2, 3];
+const b: ReadonlyArray&lt;number&gt;  = [1, 2, 3];</code></pre>
+
+    <p data-lang="ru">Теперь любая попытка мутации — ошибка:</p>
+    <p data-lang="en">Now any attempted mutation is an error:</p>
+
+    <pre><code>const numbers: readonly number[] = [1, 2, 3];
+
+numbers.push(4);     // ❌ Property 'push' does not exist on type 'readonly number[]'
+numbers[0] = 99;     // ❌ Index signature in type 'readonly number[]' only permits reading
+numbers.sort();      // ❌ Property 'sort' does not exist
+
+// Что МОЖНО:
+numbers[0];                  // ✅ читать
+numbers.length;              // ✅ узнать длину
+numbers.map(n =&gt; n * 2);     // ✅ map не мутирует
+numbers.filter(n =&gt; n &gt; 1);  // ✅ filter не мутирует
+[...numbers, 4];             // ✅ создать новый (исходный не тронут)</code></pre>
+
+    <h3 data-lang="ru">Зачем нужны readonly-массивы</h3>
+    <h3 data-lang="en">Why readonly arrays matter</h3>
+
+    <ol data-lang="ru">
+        <li><strong>Параметры функций.</strong> Если функция не должна менять переданный массив — объявите его <code>readonly</code>. Так читатель кода (и TypeScript) точно знают: тут мутации нет.</li>
+        <li><strong>Конфиги и константы.</strong> Список разрешённых статусов, цветов, URL не должен меняться в рантайме.</li>
+        <li><strong>Защита от чужой мутации.</strong> Если возвращаете массив наружу из своего модуля, <code>readonly</code> гарантирует, что внешний код его не испортит.</li>
+        <li><strong>Подсказка о намерении.</strong> Читать код становится проще: <code>readonly</code> = «этот массив не меняется».</li>
+    </ol>
+    <ol data-lang="en">
+        <li><strong>Function parameters.</strong> If a function shouldn't mutate the passed array, declare it <code>readonly</code>. Code readers (and TS) instantly know: no mutation here.</li>
+        <li><strong>Configs and constants.</strong> A list of allowed statuses, colors, URLs shouldn't change at runtime.</li>
+        <li><strong>Defense against outside mutation.</strong> If you return an array from your module, <code>readonly</code> guarantees external code can't damage it.</li>
+        <li><strong>Intent hint.</strong> Reading code gets easier: <code>readonly</code> = "this array doesn't change".</li>
+    </ol>
+
+    <pre><code>// Хорошая практика
+function logCities(cities: readonly string[]) {
+    cities.forEach(c =&gt; console.log(c));
+    // cities.push("новый"); // ❌ TS не даст случайно мутировать
+}</code></pre>
+
+    <div class="pro-tip">
+        <p data-lang="ru"><strong>Совет:</strong> начинайте писать <code>readonly</code> в параметрах функций по умолчанию. Если в функции <em>действительно</em> нужна мутация — просто уберёте слово. Но в 90% случаев мутация не нужна, а защита бесплатная.</p>
+        <p data-lang="en"><strong>Tip:</strong> default to <code>readonly</code> in function parameters. If a function <em>actually</em> needs mutation — drop the word. But in 90% of cases mutation isn't needed and the safety is free.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="tuple" data-lang="ru">7. Tuple — массив с фиксированной длиной</h2>
+    <h2 id="tuple" data-lang="en">7. Tuple — array with fixed length</h2>
+
+    <div style="background:#f7fee7;border:1px solid #bef264;padding:16px 20px;border-radius:8px;margin:16px 0;">
+        <p data-lang="ru"><strong>Tuple</strong> (кортеж) — это <strong>массив с фиксированной длиной</strong>, где каждая позиция имеет свой собственный тип. В обычном массиве все элементы одного типа; в tuple — каждая позиция своя.</p>
+        <p data-lang="en">A <strong>tuple</strong> is an <strong>array with a fixed length</strong>, where each position has its own type. In a regular array all elements share the type; in a tuple each position has its own.</p>
+    </div>
+
+    <pre><code>// Обычный массив: все элементы одного типа
+let arr: string[] = ["Сейди", "20", "Ашхабад"];   // всё строки
+
+// Tuple: 3 позиции, у каждой свой тип
+let person: [string, number, string] = ["Сейди", 20, "Ашхабад"];
+//           [0]      [1]     [2]
+//           string   number  string</code></pre>
+
+    <p data-lang="ru">Что TS теперь гарантирует для <code>person</code>:</p>
+    <p data-lang="en">What TS now guarantees for <code>person</code>:</p>
+
+    <ul data-lang="ru">
+        <li>Длина — <strong>ровно 3</strong> элемента</li>
+        <li><code>person[0]</code> — точно <code>string</code></li>
+        <li><code>person[1]</code> — точно <code>number</code></li>
+        <li><code>person[2]</code> — точно <code>string</code></li>
+        <li><code>person[3]</code> — <strong>ошибка компиляции</strong>: индекса нет</li>
+    </ul>
+    <ul data-lang="en">
+        <li>Length — <strong>exactly 3</strong> elements</li>
+        <li><code>person[0]</code> — exactly <code>string</code></li>
+        <li><code>person[1]</code> — exactly <code>number</code></li>
+        <li><code>person[2]</code> — exactly <code>string</code></li>
+        <li><code>person[3]</code> — <strong>compile error</strong>: no such index</li>
+    </ul>
+
+    <pre><code>let person: [string, number, string] = ["Сейди", 20, "Ашхабад"];
+
+person[0].toUpperCase();   // ✅ string
+person[1].toFixed(2);      // ✅ number
+person[1].toUpperCase();   // ❌ Property 'toUpperCase' does not exist on type 'number'
+person[3];                 // ❌ Tuple type has no element at index '3'
+
+// Деструктуризация работает идеально
+const [name, age, city] = person;
+// name: string, age: number, city: string</code></pre>
+
+    <h3 data-lang="ru">Где используются tuple</h3>
+    <h3 data-lang="en">Where tuples are used</h3>
+
+    <ul data-lang="ru">
+        <li>Возврат нескольких значений из функции: <code>[error, result]</code></li>
+        <li>Координаты: <code>[x, y]</code> или <code>[lat, lng]</code></li>
+        <li>Пары ключ-значение: <code>Object.entries(obj)</code> возвращает <code>[string, V][]</code></li>
+        <li>React hooks: <code>const [state, setState] = useState(0)</code> — это <strong>tuple</strong></li>
+    </ul>
+    <ul data-lang="en">
+        <li>Returning multiple values from a function: <code>[error, result]</code></li>
+        <li>Coordinates: <code>[x, y]</code> or <code>[lat, lng]</code></li>
+        <li>Key-value pairs: <code>Object.entries(obj)</code> returns <code>[string, V][]</code></li>
+        <li>React hooks: <code>const [state, setState] = useState(0)</code> — that's a <strong>tuple</strong></li>
+    </ul>
+
+    <hr>
+
+    <h2 id="named-tuple" data-lang="ru">8. Named tuples — именованные позиции</h2>
+    <h2 id="named-tuple" data-lang="en">8. Named tuples — labeled positions</h2>
+
+    <p data-lang="ru">Tuple <code>[string, number, string]</code> работает, но не <em>объясняет</em>, что значит каждая позиция. С TypeScript 4.0 можно давать позициям <strong>имена</strong>:</p>
+    <p data-lang="en">A tuple <code>[string, number, string]</code> works, but doesn't <em>explain</em> what each position means. From TypeScript 4.0 you can give positions <strong>names</strong>:</p>
+
+    <pre><code>type Person = [name: string, age: number, city: string];
+
+const seydi: Person = ["Сейди", 20, "Ашхабад"];
+
+seydi[0];   // тип: string (имя: name)
+seydi[1];   // тип: number (имя: age)</code></pre>
+
+    <p data-lang="ru">Имена — <strong>чисто для документации</strong>. В рантайме они исчезают. Но в редакторе они показывают: когда вы пишете <code>seydi[</code> — VS Code подсказывает: «<em>0: name</em>», «<em>1: age</em>», «<em>2: city</em>».</p>
+    <p data-lang="en">Names are <strong>documentation-only</strong>. They vanish at runtime. But in the editor they appear: when you type <code>seydi[</code> — VS Code hints "<em>0: name</em>", "<em>1: age</em>", "<em>2: city</em>".</p>
+
+    <div class="pro-tip">
+        <p data-lang="ru"><strong>Когда использовать имена:</strong> всегда, когда позиции tuple неочевидны. Координаты <code>[number, number]</code> — лучше как <code>[x: number, y: number]</code>. Цвет <code>[number, number, number]</code> — лучше как <code>[r: number, g: number, b: number]</code>.</p>
+        <p data-lang="en"><strong>When to use names:</strong> any time tuple positions aren't obvious. Coordinates <code>[number, number]</code> read better as <code>[x: number, y: number]</code>. A color <code>[number, number, number]</code> reads better as <code>[r: number, g: number, b: number]</code>.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="optional-rest" data-lang="ru">9. Опциональные элементы и rest в tuple</h2>
+    <h2 id="optional-rest" data-lang="en">9. Optional elements and rest in tuples</h2>
+
+    <h3 data-lang="ru">Опциональный элемент (<code>?</code>)</h3>
+    <h3 data-lang="en">Optional element (<code>?</code>)</h3>
+
+    <p data-lang="ru">Иногда у tuple последние позиции необязательны. Помечаем их <code>?</code>:</p>
+    <p data-lang="en">Sometimes a tuple's trailing positions are optional. Mark them with <code>?</code>:</p>
+
+    <pre><code>type Range = [start: number, end: number, step?: number];
+
+const r1: Range = [0, 10];           // ✅ step опционален
+const r2: Range = [0, 10, 2];        // ✅
+const r3: Range = [0, 10, 2, 5];     // ❌ слишком много элементов</code></pre>
+
+    <h3 data-lang="ru">Rest-элемент (<code>...T[]</code>)</h3>
+    <h3 data-lang="en">Rest element (<code>...T[]</code>)</h3>
+
+    <p data-lang="ru">Иногда нужно: «первый элемент строго такого типа, дальше — массив чего-то»:</p>
+    <p data-lang="en">Sometimes you need: "the first element of this exact type, then a list of something":</p>
+
+    <pre><code>type StringFirstThenNumbers = [string, ...number[]];
+
+const a: StringFirstThenNumbers = ["score", 1, 2, 3];           // ✅
+const b: StringFirstThenNumbers = ["total"];                    // ✅ (0 чисел тоже ОК)
+const c: StringFirstThenNumbers = ["mixed", 1, "two"];          // ❌ "two" не number</code></pre>
+
+    <p data-lang="ru">Rest может быть и <strong>в середине</strong>:</p>
+    <p data-lang="en">Rest can also be <strong>in the middle</strong>:</p>
+
+    <pre><code>type FirstLastAndMiddle = [string, ...number[], boolean];
+
+const x: FirstLastAndMiddle = ["start", 1, 2, 3, true];   // ✅</code></pre>
+
+    <hr>
+
+    <h2 id="as-const-array" data-lang="ru">10. <code>as const</code> + массив = readonly tuple</h2>
+    <h2 id="as-const-array" data-lang="en">10. <code>as const</code> + array = readonly tuple</h2>
+
+    <p data-lang="ru">В занятии 5 мы видели <code>as const</code> для значений. С массивами он делает кое-что особенное: превращает обычный массив в <strong>readonly tuple с литеральными типами</strong>:</p>
+    <p data-lang="en">In Lesson 5 we saw <code>as const</code> for values. With arrays it does something special: turns a plain array into a <strong>readonly tuple with literal types</strong>:</p>
+
+    <pre><code>const a = [1, 2, 3];               // тип: number[]
+const b = [1, 2, 3] as const;      // тип: readonly [1, 2, 3]
+
+a.push(4);     // ✅
+b.push(4);     // ❌ Property 'push' does not exist on type 'readonly [1, 2, 3]'
+b[0] = 99;     // ❌
+b[0];          // тип: 1 (литерал!)</code></pre>
+
+    <p data-lang="ru">Это особенно полезно для <strong>наборов опций</strong>:</p>
+    <p data-lang="en">Especially useful for <strong>option sets</strong>:</p>
+
+    <pre><code>const STATUSES = ["todo", "in-progress", "done"] as const;
+// тип: readonly ["todo", "in-progress", "done"]
+
+type Status = typeof STATUSES[number];
+// тип Status = "todo" | "in-progress" | "done"</code></pre>
+
+    <p data-lang="ru">Это паттерн «список значений → union-тип»: один источник правды, и для рантайма (список), и для типов (union).</p>
+    <p data-lang="en">This is the "list of values → union type" pattern: one source of truth for both runtime (the list) and types (the union).</p>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Запомните этот трюк:</strong> <code>const COLORS = ["red", "green", "blue"] as const;</code> + <code>type Color = typeof COLORS[number];</code>. Это один из главных идиоматических приёмов TS 2026.</p>
+        <p data-lang="en"><strong>Memorize this trick:</strong> <code>const COLORS = ["red", "green", "blue"] as const;</code> + <code>type Color = typeof COLORS[number];</code>. One of the headline idiomatic patterns of TS 2026.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="array-vs-tuple" data-lang="ru">11. Массив vs tuple — когда что</h2>
+    <h2 id="array-vs-tuple" data-lang="en">11. Array vs tuple — which when</h2>
+
+    <table>
+        <thead data-lang="ru"><tr><th></th><th>Массив <code>T[]</code></th><th>Tuple <code>[A, B, C]</code></th></tr></thead>
+        <thead data-lang="en"><tr><th></th><th>Array <code>T[]</code></th><th>Tuple <code>[A, B, C]</code></th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td>Длина</td><td>Меняется</td><td>Фиксирована</td></tr>
+            <tr><td>Тип элементов</td><td>Все одного типа</td><td>Разные на каждой позиции</td></tr>
+            <tr><td>Доступ</td><td>По индексу (можно за границы)</td><td>Только заданные индексы</td></tr>
+            <tr><td>Деструктуризация</td><td>Все одного типа</td><td>Каждая позиция — свой тип</td></tr>
+            <tr><td>Когда использовать</td><td>Список однородных элементов</td><td>Несколько связанных значений разных типов</td></tr>
+            <tr><td>Пример</td><td>Список пользователей, городов</td><td>Координата <code>[x, y]</code>, пара <code>[ключ, значение]</code></td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td>Length</td><td>Variable</td><td>Fixed</td></tr>
+            <tr><td>Element type</td><td>All same</td><td>Different per position</td></tr>
+            <tr><td>Access</td><td>By index (can go out of bounds)</td><td>Only declared indexes</td></tr>
+            <tr><td>Destructuring</td><td>All same type</td><td>Each position — own type</td></tr>
+            <tr><td>When to use</td><td>List of homogeneous items</td><td>Several related values of different types</td></tr>
+            <tr><td>Example</td><td>List of users, cities</td><td>Coordinate <code>[x, y]</code>, pair <code>[key, value]</code></td></tr>
+        </tbody>
+    </table>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Эвристика:</strong> «однотипный список переменной длины — массив; группа связанных значений с фиксированной структурой — tuple <em>или</em> объект». Объект (через занятие 15) обычно лучше tuple, потому что у полей есть имена. Tuple удобен, когда позиций мало (2-3) и они интуитивны (например, <code>[x, y]</code>).</p>
+        <p data-lang="en"><strong>Heuristic:</strong> "a homogeneous list of variable length — array; a group of related values with fixed structure — tuple <em>or</em> object". An object (Lesson 15) usually beats a tuple because fields have names. Tuple shines when positions are few (2-3) and intuitive (e.g., <code>[x, y]</code>).</p>
+    </div>
+
+    <hr>
+
+    <div class="summary">
+        <ul data-lang="ru">
+            <li><strong>Массив</strong> — упорядоченный список значений одного типа: <code>const arr: number[] = [1, 2, 3]</code>.</li>
+            <li>Два синтаксиса: <code>T[]</code> (стандарт) и <code>Array&lt;T&gt;</code> (для сложных типов).</li>
+            <li>Союз типов в массиве — <code>(number | string)[]</code> в скобках.</li>
+            <li>Пустые массивы <strong>всегда</strong> аннотируем: <code>const items: string[] = []</code>.</li>
+            <li>Мутирующие методы: <code>push</code>, <code>pop</code>, <code>shift</code>, <code>unshift</code>, <code>sort</code>, <code>reverse</code>, <code>splice</code>.</li>
+            <li>Возвращающие методы: <code>slice</code>, <code>concat</code>, <code>join</code>, <code>includes</code>, <code>indexOf</code>.</li>
+            <li>Функциональные методы (самое главное): <code>map</code>, <code>filter</code>, <code>find</code>, <code>reduce</code>. Они не мутируют.</li>
+            <li>С <code>noUncheckedIndexedAccess</code> <code>arr[i]</code> имеет тип <code>T | undefined</code> — TS заставит проверить.</li>
+            <li><strong>readonly-массив</strong>: <code>readonly T[]</code> — нельзя мутировать. Используйте в параметрах функций по умолчанию.</li>
+            <li><strong>Tuple</strong>: <code>[string, number, string]</code> — фиксированная длина, разные типы по позициям.</li>
+            <li><strong>Named tuple</strong>: <code>[name: string, age: number]</code> — имена для документации.</li>
+            <li>Опциональные: <code>[a: number, b?: number]</code>. Rest: <code>[string, ...number[]]</code>.</li>
+            <li><code>as const</code> с массивом → <code>readonly</code> tuple с литералами. Используйте для наборов опций.</li>
+            <li>Паттерн: <code>const COLORS = [...] as const</code> + <code>type Color = typeof COLORS[number]</code>.</li>
+            <li>Эвристика: однотипный список переменной длины — массив; фиксированная группа разных значений — tuple или объект.</li>
+        </ul>
+        <ul data-lang="en">
+            <li><strong>Array</strong> — ordered list of same-type values: <code>const arr: number[] = [1, 2, 3]</code>.</li>
+            <li>Two syntaxes: <code>T[]</code> (default) and <code>Array&lt;T&gt;</code> (for complex types).</li>
+            <li>Union inside an array — <code>(number | string)[]</code> in parentheses.</li>
+            <li><strong>Always</strong> annotate empty arrays: <code>const items: string[] = []</code>.</li>
+            <li>Mutating methods: <code>push</code>, <code>pop</code>, <code>shift</code>, <code>unshift</code>, <code>sort</code>, <code>reverse</code>, <code>splice</code>.</li>
+            <li>Returning methods: <code>slice</code>, <code>concat</code>, <code>join</code>, <code>includes</code>, <code>indexOf</code>.</li>
+            <li>Functional methods (the headline): <code>map</code>, <code>filter</code>, <code>find</code>, <code>reduce</code>. They don't mutate.</li>
+            <li>With <code>noUncheckedIndexedAccess</code> <code>arr[i]</code> has type <code>T | undefined</code> — TS forces a check.</li>
+            <li><strong>Readonly array</strong>: <code>readonly T[]</code> — no mutation. Default for function parameters.</li>
+            <li><strong>Tuple</strong>: <code>[string, number, string]</code> — fixed length, per-position types.</li>
+            <li><strong>Named tuple</strong>: <code>[name: string, age: number]</code> — names for documentation.</li>
+            <li>Optional: <code>[a: number, b?: number]</code>. Rest: <code>[string, ...number[]]</code>.</li>
+            <li><code>as const</code> on an array → <code>readonly</code> tuple with literals. Use for option sets.</li>
+            <li>Pattern: <code>const COLORS = [...] as const</code> + <code>type Color = typeof COLORS[number]</code>.</li>
+            <li>Heuristic: a same-type list of variable length — array; a fixed group of different values — tuple or object.</li>
+        </ul>
+    </div>
+
+    <div class="quiz">
+        <ol data-lang="ru">
+            <li>Как объявить массив строк двумя способами? В чём разница?</li>
+            <li>Что произойдёт, если объявить <code>const items = []</code> без аннотации в strict-режиме?</li>
+            <li>Какие методы массива <strong>мутируют</strong> исходный, а какие — <strong>возвращают новый</strong>?</li>
+            <li>Что делают <code>map</code>, <code>filter</code>, <code>find</code>, <code>reduce</code>? Дайте по примеру.</li>
+            <li>Какой тип имеет <code>arr[100]</code> с включённым <code>noUncheckedIndexedAccess</code>?</li>
+            <li>Что такое <code>readonly</code>-массив и зачем он нужен?</li>
+            <li>Что такое tuple? Чем он отличается от обычного массива?</li>
+            <li>Что такое named tuple? Покажите синтаксис для координаты.</li>
+            <li>Как сделать последний элемент tuple опциональным?</li>
+            <li>Что делает <code>const x = [1, 2, 3] as const</code>?</li>
+            <li>Объясните паттерн: <code>const COLORS = ["red","blue"] as const;</code> + <code>type Color = typeof COLORS[number]</code>.</li>
+            <li>Когда использовать массив, а когда tuple?</li>
+        </ol>
+        <ol data-lang="en">
+            <li>How do you declare a string array two ways? What's the difference?</li>
+            <li>What happens if you declare <code>const items = []</code> without annotation in strict mode?</li>
+            <li>Which array methods <strong>mutate</strong> the original, and which <strong>return a new one</strong>?</li>
+            <li>What do <code>map</code>, <code>filter</code>, <code>find</code>, <code>reduce</code> do? Give an example for each.</li>
+            <li>What type does <code>arr[100]</code> have with <code>noUncheckedIndexedAccess</code> enabled?</li>
+            <li>What's a <code>readonly</code> array and why is it useful?</li>
+            <li>What's a tuple? How is it different from a regular array?</li>
+            <li>What's a named tuple? Show the syntax for a coordinate.</li>
+            <li>How do you mark the last tuple element optional?</li>
+            <li>What does <code>const x = [1, 2, 3] as const</code> do?</li>
+            <li>Explain the pattern: <code>const COLORS = ["red","blue"] as const;</code> + <code>type Color = typeof COLORS[number]</code>.</li>
+            <li>When to use an array vs a tuple?</li>
+        </ol>
+    </div>
+
+</div>
+
+</body>
+</html>

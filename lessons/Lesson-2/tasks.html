@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Занятие 2 — Практические задания</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/tasks.css">
+    <script src="../../js/lang.js" defer></script>
+    <style>
+        h1 { border-bottom-color: #a855f7; }
+        h2 { color: #7e22ce; background: #faf5ff; border-left-color: #a855f7; }
+    </style>
+</head>
+<body>
+
+<div class="lesson-nav">
+    <a href="../../index.html" class="nav-home" data-lang="ru">&#8592; Главная</a>
+    <a href="../../index.html" class="nav-home" data-lang="en">&#8592; Home</a>
+    <span class="nav-sep">|</span>
+    <span class="nav-title" data-lang="ru">Занятие 2: Установка инструментов</span>
+    <span class="nav-title" data-lang="en">Lesson 2: Tools Setup</span>
+    <span class="nav-sep">|</span>
+    <a href="lecture.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F3EB; Лекция</a>
+    <a href="lecture.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F3EB; Lecture</a>
+    <a href="student.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F393; Конспект</a>
+    <a href="student.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F393; Notes</a>
+    <span class="nav-active" data-lang="ru">&#x1F4CB; Задания</span>
+    <span class="nav-active" data-lang="en">&#x1F4CB; Tasks</span>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+</div>
+
+<div class="container">
+
+    <h1 data-lang="ru">&#x1F4DD; ПРАКТИЧЕСКИЕ ЗАДАНИЯ</h1>
+    <h1 data-lang="en">&#x1F4DD; PRACTICAL TASKS</h1>
+    <p class="subtitle" data-lang="ru">Занятие 2: Установка инструментов &mdash; 6 заданий от установки до первого запуска</p>
+    <p class="subtitle" data-lang="en">Lesson 2: Tools Setup &mdash; 6 tasks from install to first run</p>
+
+    <div class="why" style="background:#faf5ff;border-left:4px solid #a855f7;padding:12px 18px;border-radius:8px;margin:16px 0;">
+        <p data-lang="ru"><strong>Важно:</strong> для всех заданий вам понадобится <strong>работающий интернет</strong> и <strong>права администратора</strong> на компьютере (чтобы устанавливать программы). Если ставить нельзя — попросите учителя или родителей помочь.</p>
+        <p data-lang="en"><strong>Important:</strong> for all tasks you'll need <strong>a working internet connection</strong> and <strong>admin rights</strong> on the computer (to install software). If you can't install, ask your teacher or parents to help.</p>
+    </div>
+
+    <hr>
+
+    <!-- TASK 1 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 1. Установить VS Code и Node.js 22+</div>
+            <div class="task-title" data-lang="en">Task 1. Install VS Code and Node.js 22+</div>
+            <div class="task-meta">
+                <span class="badge badge-easy" data-lang="ru">Легко</span>
+                <span class="badge badge-easy" data-lang="en">Easy</span>
+                <span class="badge badge-time">15 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Поставить два главных инструмента: редактор и среду исполнения.</span>
+            <span data-lang="en">Install the two main tools: the editor and the runtime.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>Откройте <code>code.visualstudio.com</code>, скачайте и установите <strong>VS Code</strong> для вашей ОС. На Windows — поставьте галочки <em>«Add to PATH»</em> и <em>«Open with Code»</em>.</li>
+            <li>Откройте <code>nodejs.org</code>, скачайте <strong>LTS-версию</strong> (зелёная кнопка слева). Запустите установщик, нажимайте Next/Install.</li>
+            <li>Откройте VS Code. Откройте терминал (<span class="kbd">Ctrl</span>+<span class="kbd">`</span>). Запустите:
+                <pre><code>node --version
+npm --version</code></pre>
+            </li>
+            <li>Запишите в тетрадь обе версии.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Open <code>code.visualstudio.com</code>, download and install <strong>VS Code</strong> for your OS. On Windows — check the boxes <em>"Add to PATH"</em> and <em>"Open with Code"</em>.</li>
+            <li>Open <code>nodejs.org</code>, download the <strong>LTS version</strong> (green button on the left). Run the installer, click Next/Install.</li>
+            <li>Open VS Code. Open the terminal (<span class="kbd">Ctrl</span>+<span class="kbd">`</span>). Run:
+                <pre><code>node --version
+npm --version</code></pre>
+            </li>
+            <li>Write down both versions in your notebook.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>VS Code открывается, виден интерфейс</li>
+                <li><code>node --version</code> показывает <strong>v22.x.x или выше</strong></li>
+                <li><code>npm --version</code> показывает <strong>10.x.x или выше</strong></li>
+            </ul>
+            <ul data-lang="en">
+                <li>VS Code opens, interface is visible</li>
+                <li><code>node --version</code> shows <strong>v22.x.x or higher</strong></li>
+                <li><code>npm --version</code> shows <strong>10.x.x or higher</strong></li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Если <code>node</code> не находится — закройте терминал, откройте новый. Если не помогло — перезагрузите компьютер. Так делают <strong>все</strong>.</p>
+            <p data-lang="en">If <code>node</code> isn't found — close the terminal and open a new one. If that doesn't help — reboot. <strong>Everyone</strong> does this.</p>
+        </div>
+    </div>
+
+    <!-- TASK 2 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 2. Создать первый TS-проект</div>
+            <div class="task-title" data-lang="en">Task 2. Create your first TS project</div>
+            <div class="task-meta">
+                <span class="badge badge-easy" data-lang="ru">Легко</span>
+                <span class="badge badge-easy" data-lang="en">Easy</span>
+                <span class="badge badge-time">10 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Создать папку проекта, инициализировать <code>package.json</code>, поставить TypeScript и tsx локально.</span>
+            <span data-lang="en">Create a project folder, initialize <code>package.json</code>, install TypeScript and tsx locally.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>Создайте на рабочем столе папку <code>my-first-ts/</code>.</li>
+            <li>Откройте её в VS Code: <em>File → Open Folder</em>.</li>
+            <li>Откройте терминал и выполните по очереди:
+                <pre><code>npm init -y
+npm install -D typescript tsx</code></pre>
+            </li>
+            <li>Когда установка закончится, посмотрите на левую панель — появились:
+                <ul>
+                    <li><code>package.json</code> — «паспорт» проекта</li>
+                    <li><code>package-lock.json</code> — точные версии пакетов</li>
+                    <li><code>node_modules/</code> — скачанные пакеты</li>
+                </ul>
+            </li>
+            <li>Откройте <code>package.json</code> и проверьте: внутри есть секция <code>devDependencies</code> с двумя пакетами (<code>typescript</code> и <code>tsx</code>).</li>
+            <li>Запустите проверки:
+                <pre><code>npx tsc --version
+npx tsx --version</code></pre>
+            </li>
+            <li>Запишите в тетрадь обе версии.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Create a folder <code>my-first-ts/</code> on your desktop.</li>
+            <li>Open it in VS Code: <em>File → Open Folder</em>.</li>
+            <li>Open the terminal and run in order:
+                <pre><code>npm init -y
+npm install -D typescript tsx</code></pre>
+            </li>
+            <li>When install finishes, check the left panel — you'll see:
+                <ul>
+                    <li><code>package.json</code> — project "passport"</li>
+                    <li><code>package-lock.json</code> — exact package versions</li>
+                    <li><code>node_modules/</code> — downloaded packages</li>
+                </ul>
+            </li>
+            <li>Open <code>package.json</code> and check: it contains a <code>devDependencies</code> section with two packages (<code>typescript</code> and <code>tsx</code>).</li>
+            <li>Run the checks:
+                <pre><code>npx tsc --version
+npx tsx --version</code></pre>
+            </li>
+            <li>Write down both versions in your notebook.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Папка <code>my-first-ts/</code> создана и открыта в VS Code</li>
+                <li>В ней есть <code>package.json</code> с секцией <code>devDependencies</code></li>
+                <li>В ней есть папка <code>node_modules/</code></li>
+                <li><code>npx tsc --version</code> и <code>npx tsx --version</code> показывают версии</li>
+            </ul>
+            <ul data-lang="en">
+                <li>Folder <code>my-first-ts/</code> created and opened in VS Code</li>
+                <li>It has <code>package.json</code> with a <code>devDependencies</code> section</li>
+                <li>It has a <code>node_modules/</code> folder</li>
+                <li><code>npx tsc --version</code> and <code>npx tsx --version</code> show versions</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Если случайно набрали <code>tsc --version</code> без <code>npx</code> и получили <code>command not found</code> — это нормально! Мы поставили tsc <em>локально</em>, его надо вызывать через <code>npx</code>.</p>
+            <p data-lang="en">If you accidentally typed <code>tsc --version</code> without <code>npx</code> and got <code>command not found</code> — that's normal! We installed tsc <em>locally</em>; it must be called via <code>npx</code>.</p>
+        </div>
+    </div>
+
+    <!-- TASK 3 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 3. Hello, TypeScript! — двумя способами</div>
+            <div class="task-title" data-lang="en">Task 3. Hello, TypeScript! — two ways</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">15 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Запустить первый <code>.ts</code>-файл двумя разными способами и понять разницу.</span>
+            <span data-lang="en">Run your first <code>.ts</code> file two different ways and understand the difference.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>В папке <code>my-first-ts/</code> создайте файл <code>hello.ts</code> со следующим кодом:
+                <pre><code>const greeting: string = "Hello, TypeScript!";
+const year: number = 2026;
+
+console.log(greeting);
+console.log("Год: " + year);</code></pre>
+            </li>
+            <li><strong>Способ A — через tsx:</strong>
+                <pre><code>npx tsx hello.ts</code></pre>
+                Запишите результат, который вывелось в терминал.
+            </li>
+            <li><strong>Способ Б — через tsc + node:</strong>
+                <pre><code>npx tsc hello.ts
+node hello.js</code></pre>
+                Снова запишите результат.
+            </li>
+            <li>Откройте файл <code>hello.js</code>, который появился рядом с <code>hello.ts</code>. Сравните оба файла. Запишите в тетрадь: <strong>что исчезло</strong> при компиляции?</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In the <code>my-first-ts/</code> folder create <code>hello.ts</code> with the code:
+                <pre><code>const greeting: string = "Hello, TypeScript!";
+const year: number = 2026;
+
+console.log(greeting);
+console.log("Год: " + year);</code></pre>
+            </li>
+            <li><strong>Way A — via tsx:</strong>
+                <pre><code>npx tsx hello.ts</code></pre>
+                Write down what's printed to the terminal.
+            </li>
+            <li><strong>Way B — via tsc + node:</strong>
+                <pre><code>npx tsc hello.ts
+node hello.js</code></pre>
+                Write down the result again.
+            </li>
+            <li>Open <code>hello.js</code> that appeared next to <code>hello.ts</code>. Compare both files. Write in your notebook: <strong>what disappeared</strong> during compilation?</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Оба способа выводят одинаковый результат</li>
+                <li>В тетради записано: что <code>: string</code> и <code>: number</code> исчезают из <code>.js</code></li>
+                <li>Сделан вывод: <strong>tsx быстрее</strong> (одна команда), <strong>tsc нужен для прод-сборки</strong></li>
+            </ul>
+            <ul data-lang="en">
+                <li>Both ways print the same result</li>
+                <li>Noted: <code>: string</code> and <code>: number</code> are gone in <code>.js</code></li>
+                <li>Conclusion: <strong>tsx is faster</strong> (one command), <strong>tsc is for production builds</strong></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TASK 4 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 4. Установить 4 расширения и поймать ошибку</div>
+            <div class="task-title" data-lang="en">Task 4. Install 4 extensions and catch an error</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">20 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Настроить VS Code четырьмя ключевыми расширениями и проверить, как они работают на реальной ошибке.</span>
+            <span data-lang="en">Set up VS Code with four key extensions and verify they work on a real error.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>В VS Code откройте <strong>Extensions</strong> (<span class="kbd">Ctrl</span>+<span class="kbd">Shift</span>+<span class="kbd">X</span>). По очереди найдите и установите:
+                <ul>
+                    <li><strong>Pretty TypeScript Errors</strong> (автор: YoavBls)</li>
+                    <li><strong>Error Lens</strong> (автор: usernamehw)</li>
+                    <li><strong>Prettier - Code formatter</strong> (автор: Prettier)</li>
+                    <li><strong>Code Runner</strong> (автор: Jun Han)</li>
+                </ul>
+            </li>
+            <li>Откройте <code>hello.ts</code>. Намеренно «сломайте» одну строку:
+                <pre><code>const year: number = "две тысячи двадцать шесть";</code></pre>
+            </li>
+            <li>Посмотрите, как ошибка отображается:
+                <ul>
+                    <li><strong>Error Lens</strong>: текст ошибки появляется <em>в той же строке</em>, справа</li>
+                    <li><strong>Pretty TypeScript Errors</strong>: при наведении курсора — красивое окошко с понятным описанием</li>
+                </ul>
+            </li>
+            <li>Сделайте скриншот этой ошибки и запишите в тетрадь <strong>текст</strong> ошибки.</li>
+            <li>Верните правильный код (<code>const year: number = 2026;</code>) и сохраните файл — Prettier должен отформатировать его автоматически.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In VS Code open <strong>Extensions</strong> (<span class="kbd">Ctrl</span>+<span class="kbd">Shift</span>+<span class="kbd">X</span>). Find and install:
+                <ul>
+                    <li><strong>Pretty TypeScript Errors</strong> (author: YoavBls)</li>
+                    <li><strong>Error Lens</strong> (author: usernamehw)</li>
+                    <li><strong>Prettier - Code formatter</strong> (author: Prettier)</li>
+                    <li><strong>Code Runner</strong> (author: Jun Han)</li>
+                </ul>
+            </li>
+            <li>Open <code>hello.ts</code>. Intentionally "break" one line:
+                <pre><code>const year: number = "two thousand twenty-six";</code></pre>
+            </li>
+            <li>Observe how the error displays:
+                <ul>
+                    <li><strong>Error Lens</strong>: error text shows <em>in the same line</em>, on the right</li>
+                    <li><strong>Pretty TypeScript Errors</strong>: hover the cursor — a pretty box with a clear description</li>
+                </ul>
+            </li>
+            <li>Screenshot the error and write down its <strong>text</strong> in your notebook.</li>
+            <li>Restore the correct code (<code>const year: number = 2026;</code>) and save the file — Prettier should auto-format it.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Все 4 расширения установлены</li>
+                <li>Ошибка видна <em>прямо в строке</em> кода (Error Lens работает)</li>
+                <li>В тетради записан текст ошибки</li>
+                <li>Prettier форматирует файл при сохранении</li>
+            </ul>
+            <ul data-lang="en">
+                <li>All 4 extensions installed</li>
+                <li>Error is visible <em>right in the code line</em> (Error Lens works)</li>
+                <li>Error text written down in notebook</li>
+                <li>Prettier auto-formats on save</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Если Prettier не форматирует — нажмите <span class="kbd">Ctrl</span>+<span class="kbd">Shift</span>+<span class="kbd">P</span>, найдите команду <em>«Format Document With...»</em> и выберите Prettier как форматтер по умолчанию.</p>
+            <p data-lang="en">If Prettier doesn't format — press <span class="kbd">Ctrl</span>+<span class="kbd">Shift</span>+<span class="kbd">P</span>, find <em>"Format Document With..."</em> and select Prettier as the default formatter.</p>
+        </div>
+    </div>
+
+    <!-- TASK 5 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 5. Добавить npm-скрипты и .gitignore</div>
+            <div class="task-title" data-lang="en">Task 5. Add npm scripts and .gitignore</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">15 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Сделать проект «удобным»: добавить короткие команды и правильно настроить, что не коммитить в git.</span>
+            <span data-lang="en">Make the project "convenient": add short commands and properly configure what not to commit to git.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>Откройте <code>package.json</code>. Найдите секцию <code>"scripts"</code> и замените её на:
+                <pre><code>"scripts": {
+  "start": "tsx hello.ts",
+  "build": "tsc hello.ts",
+  "check": "tsc --noEmit hello.ts"
+}</code></pre>
+            </li>
+            <li>Сохраните файл. Теперь в терминале можно писать <strong>короткие</strong> команды:
+                <pre><code>npm start        # запустит tsx hello.ts
+npm run build    # запустит tsc hello.ts
+npm run check    # только проверит типы</code></pre>
+                <em>Заметьте: для <code>start</code> не нужен <code>run</code>, для остальных — нужен.</em>
+            </li>
+            <li>Проверьте все три команды.</li>
+            <li>Создайте файл <code>.gitignore</code> в корне проекта со следующим содержимым:
+                <pre><code>node_modules
+*.js
+*.js.map</code></pre>
+            </li>
+            <li>Объясните в тетради (1-2 предложения) <strong>зачем</strong> мы добавили эти три строки.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Open <code>package.json</code>. Find the <code>"scripts"</code> section and replace with:
+                <pre><code>"scripts": {
+  "start": "tsx hello.ts",
+  "build": "tsc hello.ts",
+  "check": "tsc --noEmit hello.ts"
+}</code></pre>
+            </li>
+            <li>Save the file. Now in the terminal you can use <strong>short</strong> commands:
+                <pre><code>npm start        # runs tsx hello.ts
+npm run build    # runs tsc hello.ts
+npm run check    # only checks types</code></pre>
+                <em>Note: <code>start</code> doesn't need <code>run</code>, the others do.</em>
+            </li>
+            <li>Try all three commands.</li>
+            <li>Create a <code>.gitignore</code> file at the project root with:
+                <pre><code>node_modules
+*.js
+*.js.map</code></pre>
+            </li>
+            <li>In your notebook explain (1-2 sentences) <strong>why</strong> we added these three lines.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Все три команды (<code>npm start</code>, <code>npm run build</code>, <code>npm run check</code>) работают</li>
+                <li>Файл <code>.gitignore</code> создан и содержит 3 строки</li>
+                <li>В тетради записано объяснение, зачем игнорируем <code>node_modules</code> и <code>*.js</code></li>
+            </ul>
+            <ul data-lang="en">
+                <li>All three commands (<code>npm start</code>, <code>npm run build</code>, <code>npm run check</code>) work</li>
+                <li><code>.gitignore</code> file created and contains 3 lines</li>
+                <li>Notebook has explanation: why we ignore <code>node_modules</code> and <code>*.js</code></li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Подсказка: <code>node_modules</code> огромны и легко восстанавливаются. <code>*.js</code>-файлы — это <em>сборка</em>, они генерируются автоматически из <code>.ts</code>. Хранить «исходник» (TS) и «продукт» (JS) рядом в git — плохая идея.</p>
+            <p data-lang="en">Hint: <code>node_modules</code> is huge and easily restored. <code>*.js</code> files are <em>build output</em>, auto-generated from <code>.ts</code>. Storing "source" (TS) and "product" (JS) together in git is a bad idea.</p>
+        </div>
+    </div>
+
+    <!-- TASK 6 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 6. Запустить TS вообще без TypeScript</div>
+            <div class="task-title" data-lang="en">Task 6. Run TS without TypeScript at all</div>
+            <div class="task-meta">
+                <span class="badge badge-hard" data-lang="ru">Сложно</span>
+                <span class="badge badge-hard" data-lang="en">Hard</span>
+                <span class="badge badge-time">20 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Попробовать современные альтернативы: запустить <code>.ts</code>-файл через native-режим Node.js и (опционально) через Bun.</span>
+            <span data-lang="en">Try modern alternatives: run a <code>.ts</code> file via Node.js native mode and (optionally) via Bun.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Часть А — Node.js native (обязательно):</strong></p>
+        <p data-lang="en"><strong>Part A — Node.js native (required):</strong></p>
+        <ol data-lang="ru">
+            <li>Проверьте версию: <code>node --version</code>.</li>
+            <li>В папке <code>my-first-ts/</code> создайте отдельный файл <code>script.ts</code>:
+                <pre><code>const name: string = "Сейди";
+const age: number = 20;
+console.log(`Привет, ${name}! Тебе ${age} лет.`);</code></pre>
+            </li>
+            <li>Запустите в зависимости от вашей версии Node:
+                <ul>
+                    <li>Если Node 23+: <code>node script.ts</code></li>
+                    <li>Если Node 22.6+: <code>node --experimental-strip-types script.ts</code></li>
+                    <li>Если Node ниже 22.6: задание выполнить нельзя, переходите к части Б или обновите Node.</li>
+                </ul>
+            </li>
+            <li>Запишите в тетрадь: команда, результат, использовался ли флаг.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Check the version: <code>node --version</code>.</li>
+            <li>In the <code>my-first-ts/</code> folder create a separate file <code>script.ts</code>:
+                <pre><code>const name: string = "Seydi";
+const age: number = 20;
+console.log(`Hello, ${name}! You are ${age} years old.`);</code></pre>
+            </li>
+            <li>Run depending on your Node version:
+                <ul>
+                    <li>If Node 23+: <code>node script.ts</code></li>
+                    <li>If Node 22.6+: <code>node --experimental-strip-types script.ts</code></li>
+                    <li>If Node below 22.6: this part can't be done, go to Part B or upgrade Node.</li>
+                </ul>
+            </li>
+            <li>Write down: command used, result, whether the flag was needed.</li>
+        </ol>
+
+        <p data-lang="ru"><strong>Часть Б — Bun (опционально):</strong></p>
+        <p data-lang="en"><strong>Part B — Bun (optional):</strong></p>
+        <ol data-lang="ru">
+            <li>Установите Bun (одна команда, см. <code>bun.sh</code>):
+                <ul>
+                    <li>macOS/Linux: <code>curl -fsSL https://bun.sh/install | bash</code></li>
+                    <li>Windows (PowerShell): <code>powershell -c "irm bun.sh/install.ps1 | iex"</code></li>
+                </ul>
+            </li>
+            <li>Откройте <strong>новый</strong> терминал. Проверьте: <code>bun --version</code>.</li>
+            <li>Запустите тот же файл: <code>bun script.ts</code>.</li>
+            <li>Запишите результат и сравните скорость со <code>npx tsx script.ts</code> (можно прогнать оба несколько раз).</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Install Bun (one command, see <code>bun.sh</code>):
+                <ul>
+                    <li>macOS/Linux: <code>curl -fsSL https://bun.sh/install | bash</code></li>
+                    <li>Windows (PowerShell): <code>powershell -c "irm bun.sh/install.ps1 | iex"</code></li>
+                </ul>
+            </li>
+            <li>Open a <strong>new</strong> terminal. Check: <code>bun --version</code>.</li>
+            <li>Run the same file: <code>bun script.ts</code>.</li>
+            <li>Write down the result and compare speed with <code>npx tsx script.ts</code> (you can run both several times).</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Часть А: запустили <code>.ts</code>-файл через <code>node</code> без установки TypeScript</li>
+                <li>В тетради записаны все 3 способа: <code>npx tsx</code>, <code>node</code>, (опц.) <code>bun</code></li>
+                <li>Сделан вывод: <em>современные раннеры делают «лестницу инструментов» короче</em></li>
+            </ul>
+            <ul data-lang="en">
+                <li>Part A: ran the <code>.ts</code> file via <code>node</code> without installing TypeScript</li>
+                <li>Notebook records all 3 ways: <code>npx tsx</code>, <code>node</code>, (opt.) <code>bun</code></li>
+                <li>Conclusion: <em>modern runners shorten the tool ladder</em></li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Не получилось обновить Node до 22.6+? Используйте <strong>nvm</strong> (Node Version Manager) — это позволит держать несколько версий Node параллельно и переключаться между ними. Это пригодится в реальной работе.</p>
+            <p data-lang="en">Couldn't upgrade Node to 22.6+? Use <strong>nvm</strong> (Node Version Manager) — keep multiple Node versions in parallel and switch between them. Useful in real-world work.</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="write-box">
+        <p data-lang="ru">Запишите сюда, какие шаги установки прошли гладко, а где пришлось гуглить или перезапускать терминал:</p>
+        <p data-lang="en">Write here which install steps went smoothly and where you had to google or restart the terminal:</p>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Занятие 3 — Практические задания</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/tasks.css">
+    <script src="../../js/lang.js" defer></script>
+    <style>
+        h1 { border-bottom-color: #0ea5e9; }
+        h2 { color: #0369a1; background: #f0f9ff; border-left-color: #0ea5e9; }
+    </style>
+</head>
+<body>
+
+<div class="lesson-nav">
+    <a href="../../index.html" class="nav-home" data-lang="ru">&#8592; Главная</a>
+    <a href="../../index.html" class="nav-home" data-lang="en">&#8592; Home</a>
+    <span class="nav-sep">|</span>
+    <span class="nav-title" data-lang="ru">Занятие 3: Первая программа и tsconfig</span>
+    <span class="nav-title" data-lang="en">Lesson 3: First Program and tsconfig</span>
+    <span class="nav-sep">|</span>
+    <a href="lecture.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F3EB; Лекция</a>
+    <a href="lecture.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F3EB; Lecture</a>
+    <a href="student.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F393; Конспект</a>
+    <a href="student.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F393; Notes</a>
+    <span class="nav-active" data-lang="ru">&#x1F4CB; Задания</span>
+    <span class="nav-active" data-lang="en">&#x1F4CB; Tasks</span>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+</div>
+
+<div class="container">
+
+    <h1 data-lang="ru">&#x1F4DD; ПРАКТИЧЕСКИЕ ЗАДАНИЯ</h1>
+    <h1 data-lang="en">&#x1F4DD; PRACTICAL TASKS</h1>
+    <p class="subtitle" data-lang="ru">Занятие 3: Первая программа и tsconfig.json &mdash; 7 заданий по сборке проекта со strict-режимом</p>
+    <p class="subtitle" data-lang="en">Lesson 3: First Program and tsconfig.json &mdash; 7 tasks on building a project with strict mode</p>
+
+    <div class="why" style="background:#f0f9ff;border-left:4px solid #0ea5e9;padding:12px 18px;border-radius:8px;margin:16px 0;">
+        <p data-lang="ru"><strong>Важно:</strong> для всех заданий вам понадобится <strong>установленный Node.js 22+</strong> и <strong>VS Code</strong> из занятия 2. Если что-то не установилось — вернитесь к занятию 2 и пройдите его до конца.</p>
+        <p data-lang="en"><strong>Important:</strong> for all tasks you need <strong>Node.js 22+</strong> and <strong>VS Code</strong> from Lesson 2 installed. If something didn't install — go back to Lesson 2 and complete it.</p>
+    </div>
+
+    <hr>
+
+    <!-- TASK 1 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 1. Создать TS-проект с правильной структурой</div>
+            <div class="task-title" data-lang="en">Task 1. Create a TS project with a proper structure</div>
+            <div class="task-meta">
+                <span class="badge badge-easy" data-lang="ru">Легко</span>
+                <span class="badge badge-easy" data-lang="en">Easy</span>
+                <span class="badge badge-time">10 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Собрать «скелет» настоящего TS-проекта: <code>package.json</code>, <code>tsconfig.json</code>, папки <code>src/</code> и <code>dist/</code>.</span>
+            <span data-lang="en">Build the "skeleton" of a real TS project: <code>package.json</code>, <code>tsconfig.json</code>, folders <code>src/</code> and <code>dist/</code>.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>Создайте на рабочем столе папку <code>ts-strict-demo/</code> и откройте её в VS Code.</li>
+            <li>В терминале выполните по очереди:
+                <pre><code>npm init -y
+npm install -D typescript tsx
+npx tsc --init</code></pre>
+            </li>
+            <li>В дереве файлов VS Code создайте папку <code>src/</code> (правый клик → <em>New Folder</em>).</li>
+            <li>Создайте файл <code>.gitignore</code> в корне с тремя строками:
+                <pre><code>node_modules
+dist
+*.tsbuildinfo</code></pre>
+            </li>
+            <li>Сделайте скриншот файловой структуры проекта.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>On your desktop create a folder <code>ts-strict-demo/</code> and open it in VS Code.</li>
+            <li>In the terminal run in order:
+                <pre><code>npm init -y
+npm install -D typescript tsx
+npx tsc --init</code></pre>
+            </li>
+            <li>In the VS Code file tree create a folder <code>src/</code> (right-click → <em>New Folder</em>).</li>
+            <li>Create a <code>.gitignore</code> file at the root with three lines:
+                <pre><code>node_modules
+dist
+*.tsbuildinfo</code></pre>
+            </li>
+            <li>Screenshot the project file structure.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Папка проекта содержит: <code>package.json</code>, <code>tsconfig.json</code>, <code>.gitignore</code>, <code>node_modules/</code>, <code>src/</code></li>
+                <li><code>package.json</code> имеет секцию <code>devDependencies</code> с typescript и tsx</li>
+                <li>Скриншот сохранён</li>
+            </ul>
+            <ul data-lang="en">
+                <li>Project folder contains: <code>package.json</code>, <code>tsconfig.json</code>, <code>.gitignore</code>, <code>node_modules/</code>, <code>src/</code></li>
+                <li><code>package.json</code> has a <code>devDependencies</code> section with typescript and tsx</li>
+                <li>Screenshot saved</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Файл <code>.gitignore</code> можно создать в VS Code как обычный файл: <em>New File</em> → имя <code>.gitignore</code> (точка в начале обязательна!) → Enter.</p>
+            <p data-lang="en"><code>.gitignore</code> can be created in VS Code as a regular file: <em>New File</em> → name <code>.gitignore</code> (the leading dot is required!) → Enter.</p>
+        </div>
+    </div>
+
+    <!-- TASK 2 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 2. Заменить tsconfig.json на конфиг 2026</div>
+            <div class="task-title" data-lang="en">Task 2. Replace tsconfig.json with the 2026 config</div>
+            <div class="task-meta">
+                <span class="badge badge-easy" data-lang="ru">Легко</span>
+                <span class="badge badge-easy" data-lang="en">Easy</span>
+                <span class="badge badge-time">10 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Заменить сгенерированный «универсальный» <code>tsconfig.json</code> на современный конфиг 2026 года и настроить <code>package.json</code> для ESM.</span>
+            <span data-lang="en">Replace the generated "generic" <code>tsconfig.json</code> with the modern 2026 config and configure <code>package.json</code> for ESM.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>Откройте <code>tsconfig.json</code>. <strong>Удалите всё содержимое</strong> и вставьте:
+                <pre><code>{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "verbatimModuleSyntax": true,
+    "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": true,
+
+    "sourceMap": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}</code></pre>
+            </li>
+            <li>Откройте <code>package.json</code>. Добавьте поле <code>"type": "module"</code> (перед <code>"scripts"</code>) и замените секцию <code>scripts</code>:
+                <pre><code>{
+  "name": "ts-strict-demo",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev":   "tsx src/index.ts",
+    "build": "tsc",
+    "check": "tsc --noEmit",
+    "watch": "tsc --watch"
+  },
+  "devDependencies": { ... }
+}</code></pre>
+            </li>
+            <li>В терминале запустите <code>npx tsc --noEmit</code>. Если ошибок нет — переходите к следующему заданию.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Open <code>tsconfig.json</code>. <strong>Delete all contents</strong> and paste:
+                <pre><code>{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "verbatimModuleSyntax": true,
+    "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": true,
+
+    "sourceMap": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}</code></pre>
+            </li>
+            <li>Open <code>package.json</code>. Add the field <code>"type": "module"</code> (before <code>"scripts"</code>) and replace the <code>scripts</code> section:
+                <pre><code>{
+  "name": "ts-strict-demo",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev":   "tsx src/index.ts",
+    "build": "tsc",
+    "check": "tsc --noEmit",
+    "watch": "tsc --watch"
+  },
+  "devDependencies": { ... }
+}</code></pre>
+            </li>
+            <li>In the terminal run <code>npx tsc --noEmit</code>. If no errors — proceed to the next task.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li><code>tsconfig.json</code> заменён на конфиг 2026 (16 опций)</li>
+                <li><code>package.json</code> содержит <code>"type": "module"</code> и 4 скрипта</li>
+                <li><code>npx tsc --noEmit</code> отрабатывает без ошибок</li>
+            </ul>
+            <ul data-lang="en">
+                <li><code>tsconfig.json</code> replaced with the 2026 config (16 options)</li>
+                <li><code>package.json</code> has <code>"type": "module"</code> and 4 scripts</li>
+                <li><code>npx tsc --noEmit</code> runs without errors</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TASK 3 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 3. Hello, strict TypeScript!</div>
+            <div class="task-title" data-lang="en">Task 3. Hello, strict TypeScript!</div>
+            <div class="task-meta">
+                <span class="badge badge-easy" data-lang="ru">Легко</span>
+                <span class="badge badge-easy" data-lang="en">Easy</span>
+                <span class="badge badge-time">10 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Написать первый файл проекта, запустить через все 4 npm-скрипта и убедиться, что всё работает.</span>
+            <span data-lang="en">Write the first project file, run it via all 4 npm scripts, and verify everything works.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>Создайте файл <code>src/index.ts</code>:
+                <pre><code>const greeting: string = "Hello, strict TypeScript!";
+const year: number = 2026;
+const isFun: boolean = true;
+
+console.log(greeting);
+console.log(`Год: ${year}, и это весело: ${isFun}`);</code></pre>
+            </li>
+            <li>Запустите <code>npm run dev</code>. Запишите вывод.</li>
+            <li>Запустите <code>npm run check</code>. Должен вывести <code>Found 0 errors</code>.</li>
+            <li>Запустите <code>npm run build</code>. Проверьте, что в папке <code>dist/</code> появились файлы.</li>
+            <li>Запустите получившийся JS напрямую: <code>node dist/index.js</code>. Запишите вывод.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Create the file <code>src/index.ts</code>:
+                <pre><code>const greeting: string = "Hello, strict TypeScript!";
+const year: number = 2026;
+const isFun: boolean = true;
+
+console.log(greeting);
+console.log(`Year: ${year}, and this is fun: ${isFun}`);</code></pre>
+            </li>
+            <li>Run <code>npm run dev</code>. Write down the output.</li>
+            <li>Run <code>npm run check</code>. Should print <code>Found 0 errors</code>.</li>
+            <li>Run <code>npm run build</code>. Verify files appeared in <code>dist/</code>.</li>
+            <li>Run the resulting JS directly: <code>node dist/index.js</code>. Write down the output.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Все 4 команды (<code>dev</code>, <code>check</code>, <code>build</code> + прямой <code>node</code>) работают</li>
+                <li>В <code>dist/</code> появились <code>index.js</code>, <code>index.d.ts</code>, <code>index.js.map</code></li>
+                <li>Вывод одинаковый во всех способах запуска</li>
+            </ul>
+            <ul data-lang="en">
+                <li>All 4 commands (<code>dev</code>, <code>check</code>, <code>build</code> + direct <code>node</code>) work</li>
+                <li><code>dist/</code> now contains <code>index.js</code>, <code>index.d.ts</code>, <code>index.js.map</code></li>
+                <li>Output is identical across all run methods</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Если <code>node dist/index.js</code> выдаёт ошибку про модули — проверьте, что в <code>package.json</code> точно есть <code>"type": "module"</code>.</p>
+            <p data-lang="en">If <code>node dist/index.js</code> errors about modules — verify <code>"type": "module"</code> is in <code>package.json</code>.</p>
+        </div>
+    </div>
+
+    <!-- TASK 4 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 4. Поймать 4 ошибки strict-режима</div>
+            <div class="task-title" data-lang="en">Task 4. Catch 4 strict-mode errors</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">20 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Увидеть на живом коде, как именно strict-режим ловит баги, которые в JS остались бы незамеченными до прода.</span>
+            <span data-lang="en">See on real code how strict mode catches bugs that in JS would slip through to production.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>Создайте файл <code>src/demo.ts</code> с этим «плохим» кодом:
+                <pre><code>// 1. Параметр без типа
+function greet(name) {
+    return "Hello, " + name.toUpperCase();
+}
+
+// 2. Map.get() может вернуть undefined
+function findUser(id: number) {
+    const users = new Map&lt;number, string&gt;();
+    return users.get(id);
+}
+const user = findUser(42);
+console.log(user.length);
+
+// 3. Индекс за пределами массива
+const items = ["apple", "banana"];
+const tenth = items[10];
+console.log(tenth.length);
+
+// 4. catch без типа
+try {
+    JSON.parse("{");
+} catch (e) {
+    console.log(e.message);
+}</code></pre>
+            </li>
+            <li>Запустите <code>npm run check</code>. Запишите в тетрадь <strong>все</strong> ошибки, которые показал компилятор (должно быть 4).</li>
+            <li>Для каждой ошибки запишите: <strong>что именно</strong> поломалось бы в продакшене, если бы strict был выключен.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Create <code>src/demo.ts</code> with this "bad" code:
+                <pre><code>// 1. Parameter without type
+function greet(name) {
+    return "Hello, " + name.toUpperCase();
+}
+
+// 2. Map.get() may return undefined
+function findUser(id: number) {
+    const users = new Map&lt;number, string&gt;();
+    return users.get(id);
+}
+const user = findUser(42);
+console.log(user.length);
+
+// 3. Index out of bounds
+const items = ["apple", "banana"];
+const tenth = items[10];
+console.log(tenth.length);
+
+// 4. catch without type
+try {
+    JSON.parse("{");
+} catch (e) {
+    console.log(e.message);
+}</code></pre>
+            </li>
+            <li>Run <code>npm run check</code>. Write down in your notebook <strong>every</strong> error the compiler shows (should be 4).</li>
+            <li>For each error note: <strong>what specifically</strong> would break in production if strict were off.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>В тетради записаны все 4 текста ошибок от компилятора</li>
+                <li>По каждой ошибке — пояснение, какой рантайм-баг был бы в JS</li>
+                <li>Сделан вывод: strict-режим заранее ловит то, что в JS падает только в проде</li>
+            </ul>
+            <ul data-lang="en">
+                <li>All 4 compiler error texts written down</li>
+                <li>For each — an explanation of which runtime bug would happen in JS</li>
+                <li>Conclusion: strict mode catches in advance what crashes in production with JS</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Подсказка по ошибке #3: индекс <code>[10]</code> в массиве из 2 элементов даёт <code>undefined</code> в рантайме. Без флага <code>noUncheckedIndexedAccess</code> TS думает, что это <code>string</code>, и не предупреждает.</p>
+            <p data-lang="en">Hint for error #3: index <code>[10]</code> on a 2-element array returns <code>undefined</code> at runtime. Without <code>noUncheckedIndexedAccess</code> TS thinks it's <code>string</code> and stays silent.</p>
+        </div>
+    </div>
+
+    <!-- TASK 5 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 5. Починить все 4 ошибки</div>
+            <div class="task-title" data-lang="en">Task 5. Fix all 4 errors</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">25 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">По очереди исправить ошибки из задания 4, наблюдая, как меняется вывод <code>npm run check</code>.</span>
+            <span data-lang="en">Fix the errors from Task 4 one by one, watching how <code>npm run check</code> output changes.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Подсказки по исправлению:</strong></p>
+        <p data-lang="en"><strong>Hints for fixing:</strong></p>
+
+        <table>
+            <thead data-lang="ru"><tr><th>Ошибка</th><th>Как исправить</th></tr></thead>
+            <thead data-lang="en"><tr><th>Error</th><th>How to fix</th></tr></thead>
+            <tbody data-lang="ru">
+                <tr><td>#1 параметр без типа</td><td>Добавить <code>: string</code> к параметру <code>name</code></td></tr>
+                <tr><td>#2 может вернуть undefined</td><td>Перед использованием <code>user</code> добавить <code>if (user) { ... }</code></td></tr>
+                <tr><td>#3 индекс может быть undefined</td><td>Аналогично: <code>if (tenth) { ... }</code></td></tr>
+                <tr><td>#4 <code>e</code> имеет тип unknown</td><td>Проверить тип: <code>if (e instanceof Error) { console.log(e.message); }</code></td></tr>
+            </tbody>
+            <tbody data-lang="en">
+                <tr><td>#1 untyped parameter</td><td>Add <code>: string</code> to the <code>name</code> parameter</td></tr>
+                <tr><td>#2 may return undefined</td><td>Wrap usage of <code>user</code> in <code>if (user) { ... }</code></td></tr>
+                <tr><td>#3 index may be undefined</td><td>Same: <code>if (tenth) { ... }</code></td></tr>
+                <tr><td>#4 <code>e</code> is unknown</td><td>Check the type: <code>if (e instanceof Error) { console.log(e.message); }</code></td></tr>
+            </tbody>
+        </table>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>Исправляйте ошибки <strong>по одной</strong>. После каждой запускайте <code>npm run check</code> и смотрите, как число ошибок уменьшается.</li>
+            <li>Когда увидите <code>Found 0 errors</code> — запустите <code>npm run dev</code>. Программа должна выполниться без падений.</li>
+            <li>Сохраните финальный код <code>src/demo.ts</code> — он понадобится в задании 7.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Fix errors <strong>one at a time</strong>. After each fix run <code>npm run check</code> and watch the error count drop.</li>
+            <li>When you see <code>Found 0 errors</code> — run <code>npm run dev</code>. The program should run without crashes.</li>
+            <li>Save the final <code>src/demo.ts</code> code — you'll need it in Task 7.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li><code>npm run check</code> показывает <code>Found 0 errors</code></li>
+                <li><code>npm run dev</code> выполняется без падений в рантайме</li>
+                <li>В тетради записано: какие исправления потребовались</li>
+            </ul>
+            <ul data-lang="en">
+                <li><code>npm run check</code> shows <code>Found 0 errors</code></li>
+                <li><code>npm run dev</code> runs without runtime crashes</li>
+                <li>Notebook records: which fixes were needed</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TASK 6 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 6. Watch-режим в реальном времени</div>
+            <div class="task-title" data-lang="en">Task 6. Watch mode in real time</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">15 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Прочувствовать, как профессионалы работают каждый день: компилятор в watch-режиме реагирует на каждое сохранение файла.</span>
+            <span data-lang="en">Feel how professionals work every day: the compiler in watch mode reacts to every file save.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>В терминале запустите: <code>npm run watch</code>. Терминал «зависнет» в режиме ожидания — это нормально.</li>
+            <li>В дереве файлов VS Code откройте <code>src/index.ts</code> (тот, что из задания 3).</li>
+            <li>Намеренно сломайте: замените <code>const year: number = 2026</code> на <code>const year: number = "две тысячи двадцать шесть"</code>. <strong>Сохраните</strong> (<span class="kbd">Ctrl</span>+<span class="kbd">S</span>).</li>
+            <li>Посмотрите в терминал — компилятор сразу сообщил об ошибке. Запишите её текст.</li>
+            <li>Верните правильный код. Сохраните. В терминале появится <code>Found 0 errors</code>.</li>
+            <li>Попробуйте ещё 2 разных «поломки» (например, добавить вызов несуществующего метода). Запишите оба сообщения.</li>
+            <li>Остановите watch-режим: <span class="kbd">Ctrl</span>+<span class="kbd">C</span> в терминале.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In the terminal run: <code>npm run watch</code>. The terminal "hangs" in wait mode — that's normal.</li>
+            <li>In the VS Code file tree open <code>src/index.ts</code> (the one from Task 3).</li>
+            <li>Intentionally break it: replace <code>const year: number = 2026</code> with <code>const year: number = "two thousand twenty-six"</code>. <strong>Save</strong> (<span class="kbd">Ctrl</span>+<span class="kbd">S</span>).</li>
+            <li>Look at the terminal — the compiler immediately reported an error. Write down its text.</li>
+            <li>Restore the correct code. Save. The terminal will show <code>Found 0 errors</code>.</li>
+            <li>Try 2 more different "breaks" (e.g., add a call to a non-existent method). Write down both messages.</li>
+            <li>Stop watch mode: <span class="kbd">Ctrl</span>+<span class="kbd">C</span> in the terminal.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Watch-режим запущен и реагирует на сохранение файла</li>
+                <li>Записаны тексты <strong>3 разных</strong> ошибок</li>
+                <li>В тетради: вывод о пользе watch для повседневной работы</li>
+            </ul>
+            <ul data-lang="en">
+                <li>Watch mode running and reacting to file saves</li>
+                <li>Recorded texts of <strong>3 different</strong> errors</li>
+                <li>Notebook: a conclusion about watch's value for daily work</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Профессионалы держат watch постоянно открытым в фоновом терминале и боковым зрением видят, когда появляется ошибка. Это экономит часы.</p>
+            <p data-lang="en">Pros keep watch always running in a background terminal and notice errors out of the corner of their eye. Saves hours.</p>
+        </div>
+    </div>
+
+    <!-- TASK 7 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 7. Эксперимент: strict ON vs strict OFF</div>
+            <div class="task-title" data-lang="en">Task 7. Experiment: strict ON vs strict OFF</div>
+            <div class="task-meta">
+                <span class="badge badge-hard" data-lang="ru">Сложно</span>
+                <span class="badge badge-hard" data-lang="en">Hard</span>
+                <span class="badge badge-time">25 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">На одном и том же коде увидеть драматическую разницу: с правильным конфигом баги ловятся до запуска, без него — падают в рантайме.</span>
+            <span data-lang="en">On the same code see the dramatic difference: with the right config bugs are caught before runtime, without it they crash at runtime.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Часть А — сначала ломаем strict:</strong></p>
+        <p data-lang="en"><strong>Part A — first break strict:</strong></p>
+        <ol data-lang="ru">
+            <li>Восстановите «плохую» версию <code>src/demo.ts</code> из задания 4 (с 4 ошибками).</li>
+            <li>В <code>tsconfig.json</code> временно поменяйте:
+                <ul>
+                    <li><code>"strict": true</code> → <code>"strict": false</code></li>
+                    <li><code>"noUncheckedIndexedAccess": true</code> → <code>"noUncheckedIndexedAccess": false</code></li>
+                </ul>
+            </li>
+            <li>Запустите <code>npm run check</code>. Запишите: сколько ошибок?</li>
+            <li>Запустите <code>npm run dev</code>. Запишите: что произошло? (программа упадёт с runtime-ошибками)</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Restore the "bad" version of <code>src/demo.ts</code> from Task 4 (with 4 errors).</li>
+            <li>In <code>tsconfig.json</code> temporarily change:
+                <ul>
+                    <li><code>"strict": true</code> → <code>"strict": false</code></li>
+                    <li><code>"noUncheckedIndexedAccess": true</code> → <code>"noUncheckedIndexedAccess": false</code></li>
+                </ul>
+            </li>
+            <li>Run <code>npm run check</code>. Write down: how many errors?</li>
+            <li>Run <code>npm run dev</code>. Write down: what happened? (program crashes with runtime errors)</li>
+        </ol>
+
+        <p data-lang="ru"><strong>Часть Б — возвращаем strict:</strong></p>
+        <p data-lang="en"><strong>Part B — bring strict back:</strong></p>
+        <ol data-lang="ru">
+            <li>Верните в <code>tsconfig.json</code>: <code>"strict": true</code> и <code>"noUncheckedIndexedAccess": true</code>.</li>
+            <li>Запустите <code>npm run check</code>. Запишите: сколько ошибок теперь?</li>
+            <li>Сравните результаты в таблице:
+                <pre><code>                  Strict OFF    Strict ON
+Ошибки tsc:          0             ___
+Ошибки runtime:      ___           0 (после фикса)</code></pre>
+            </li>
+        </ol>
+        <ol data-lang="en">
+            <li>In <code>tsconfig.json</code> restore: <code>"strict": true</code> and <code>"noUncheckedIndexedAccess": true</code>.</li>
+            <li>Run <code>npm run check</code>. Write down: how many errors now?</li>
+            <li>Compare the results in a table:
+                <pre><code>                   Strict OFF    Strict ON
+tsc errors:          0             ___
+Runtime errors:      ___           0 (after fix)</code></pre>
+            </li>
+        </ol>
+
+        <p data-lang="ru"><strong>Сделайте вывод</strong> в тетради (3-5 предложений): почему важен strict-режим в реальных проектах?</p>
+        <p data-lang="en"><strong>Write a conclusion</strong> in your notebook (3-5 sentences): why strict mode matters in real projects?</p>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Эксперимент проведён для обеих частей</li>
+                <li>Заполнена сравнительная таблица «strict OFF vs strict ON»</li>
+                <li>Вывод записан и содержит мысль: strict переносит баги из рантайма в редактор</li>
+                <li>tsconfig восстановлен к правильному виду</li>
+            </ul>
+            <ul data-lang="en">
+                <li>Experiment done for both parts</li>
+                <li>Comparison table "strict OFF vs strict ON" filled in</li>
+                <li>Conclusion written with the idea: strict moves bugs from runtime to the editor</li>
+                <li>tsconfig restored to the correct state</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Запоминалка дня: <em>«strict OFF — баги в проде; strict ON — баги в редакторе. Лучше второе.»</em></p>
+            <p data-lang="en">Mnemonic of the day: <em>"strict OFF — bugs in production; strict ON — bugs in the editor. The second one is better."</em></p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="write-box">
+        <p data-lang="ru">Запишите сюда, какие опции <code>tsconfig.json</code> были самыми непонятными и какие задания вызвали больше всего вопросов:</p>
+        <p data-lang="en">Write here which <code>tsconfig.json</code> options were the most confusing and which tasks raised the most questions:</p>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Занятие 6 — Конспект ученика</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/student.css">
+    <script src="../../js/lang.js" defer></script>
+    <style>
+        h1 { border-bottom-color: #84cc16; }
+        h2 { color: #4d7c0f; background: #f7fee7; border-left-color: #84cc16; }
+        h3 { color: #365314; }
+        .definition strong { color: #4d7c0f; }
+    </style>
+</head>
+<body>
+
+<div class="lesson-nav">
+    <a href="../../index.html" class="nav-home" data-lang="ru">&#8592; Главная</a>
+    <a href="../../index.html" class="nav-home" data-lang="en">&#8592; Home</a>
+    <span class="nav-sep">|</span>
+    <span class="nav-title" data-lang="ru">Занятие 6: Массивы, readonly и кортежи</span>
+    <span class="nav-title" data-lang="en">Lesson 6: Arrays, Readonly, and Tuples</span>
+    <span class="nav-sep">|</span>
+    <a href="lecture.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F3EB; Лекция</a>
+    <a href="lecture.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F3EB; Lecture</a>
+    <span class="nav-active" data-lang="ru">&#x1F468;&#x200D;&#x1F393; Конспект</span>
+    <span class="nav-active" data-lang="en">&#x1F468;&#x200D;&#x1F393; Notes</span>
+    <a href="tasks.html" class="nav-link" data-lang="ru">&#x1F4CB; Задания</a>
+    <a href="tasks.html" class="nav-link" data-lang="en">&#x1F4CB; Tasks</a>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+</div>
+
+<div class="container">
+
+    <h1 data-lang="ru">&#x1F4D3; КОНСПЕКТ УЧЕНИКА</h1>
+    <h1 data-lang="en">&#x1F4D3; STUDENT NOTES</h1>
+    <p class="subtitle" data-lang="ru">Занятие 6: Массивы, readonly и кортежи</p>
+    <p class="subtitle" data-lang="en">Lesson 6: Arrays, Readonly, and Tuples</p>
+    <p class="date-line" data-lang="ru">Дата: _______________</p>
+    <p class="date-line" data-lang="en">Date: _______________</p>
+
+    <hr>
+
+    <h2 data-lang="ru">1. Массив</h2>
+    <h2 data-lang="en">1. Array</h2>
+
+    <div class="definition">
+        <p data-lang="ru"><strong>Массив</strong> — упорядоченный список значений одного типа. Индекс с 0.</p>
+        <p data-lang="en"><strong>Array</strong> — an ordered list of same-type values. Indexed from 0.</p>
+    </div>
+
+    <p data-lang="ru"><strong>Два синтаксиса (эквивалентны):</strong></p>
+    <p data-lang="en"><strong>Two equivalent syntaxes:</strong></p>
+
+    <pre><code>let a: number[]      = [1, 2, 3];   // стандарт
+let b: Array&lt;number&gt; = [1, 2, 3];   // generic-стиль</code></pre>
+
+    <p data-lang="ru"><strong>Союз типов:</strong> <code>(number | string)[]</code> в скобках.</p>
+    <p data-lang="en"><strong>Union inside:</strong> <code>(number | string)[]</code> in parentheses.</p>
+
+    <p data-lang="ru"><strong>Пустой массив:</strong> всегда аннотируйте, иначе тип <code>any[]</code> / <code>never[]</code>.</p>
+    <p data-lang="en"><strong>Empty array:</strong> always annotate, else type is <code>any[]</code> / <code>never[]</code>.</p>
+
+    <pre><code>const items: string[] = [];   // ✅</code></pre>
+
+    <hr>
+
+    <h2 data-lang="ru">2. Методы массива</h2>
+    <h2 data-lang="en">2. Array methods</h2>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Тип</th><th>Методы</th></tr></thead>
+        <thead data-lang="en"><tr><th>Type</th><th>Methods</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td><strong>Мутирующие</strong></td><td><code>push</code>, <code>pop</code>, <code>shift</code>, <code>unshift</code>, <code>sort</code>, <code>reverse</code>, <code>splice</code></td></tr>
+            <tr><td><strong>Возвращающие новое</strong></td><td><code>slice</code>, <code>concat</code>, <code>join</code>, <code>includes</code>, <code>indexOf</code></td></tr>
+            <tr><td><strong>Функциональные</strong></td><td><code>map</code>, <code>filter</code>, <code>find</code>, <code>reduce</code>, <code>some</code>, <code>every</code></td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td><strong>Mutating</strong></td><td><code>push</code>, <code>pop</code>, <code>shift</code>, <code>unshift</code>, <code>sort</code>, <code>reverse</code>, <code>splice</code></td></tr>
+            <tr><td><strong>Returning new</strong></td><td><code>slice</code>, <code>concat</code>, <code>join</code>, <code>includes</code>, <code>indexOf</code></td></tr>
+            <tr><td><strong>Functional</strong></td><td><code>map</code>, <code>filter</code>, <code>find</code>, <code>reduce</code>, <code>some</code>, <code>every</code></td></tr>
+        </tbody>
+    </table>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>В 2026 году</strong> предпочитайте функциональные методы вместо <code>for</code>. <code>map</code>+<code>filter</code>+<code>reduce</code> решают 90% задач со списками.</p>
+        <p data-lang="en"><strong>In 2026</strong> prefer functional methods over <code>for</code>. <code>map</code>+<code>filter</code>+<code>reduce</code> solve 90% of list problems.</p>
+    </div>
+
+    <hr>
+
+    <h2 data-lang="ru">3. map / filter / find / reduce</h2>
+    <h2 data-lang="en">3. map / filter / find / reduce</h2>
+
+    <pre><code>const numbers = [1, 2, 3, 4, 5];
+
+numbers.map(n =&gt; n * 2);              // [2, 4, 6, 8, 10] — преобразовать каждый
+numbers.filter(n =&gt; n &gt; 2);            // [3, 4, 5]        — оставить подходящие
+numbers.find(n =&gt; n &gt; 2);              // 3                — первый подходящий (или undefined)
+numbers.reduce((acc, n) =&gt; acc + n, 0); // 15              — свернуть в одно значение</code></pre>
+
+    <p data-lang="ru"><strong>find</strong> возвращает <code>T | undefined</code> — обязательно проверяйте результат.</p>
+    <p data-lang="en"><strong>find</strong> returns <code>T | undefined</code> — always check the result.</p>
+
+    <hr>
+
+    <h2 data-lang="ru">4. noUncheckedIndexedAccess</h2>
+    <h2 data-lang="en">4. noUncheckedIndexedAccess</h2>
+
+    <p data-lang="ru">Флаг (включён в нашем конфиге): обращение <code>arr[i]</code> даёт тип <code>T | undefined</code>. TS заставит проверить перед использованием.</p>
+    <p data-lang="en">The flag (enabled in our config): accessing <code>arr[i]</code> gives type <code>T | undefined</code>. TS forces a check before use.</p>
+
+    <pre><code>const cities: string[] = ["A", "B"];
+const tenth = cities[100];     // тип: string | undefined
+
+console.log(tenth.length);      // ❌ Object is possibly 'undefined'
+if (tenth) console.log(tenth.length);  // ✅
+console.log(tenth?.length);     // ✅ optional chaining</code></pre>
+
+    <hr>
+
+    <h2 data-lang="ru">5. readonly-массивы</h2>
+    <h2 data-lang="en">5. Readonly arrays</h2>
+
+    <div class="definition">
+        <p data-lang="ru"><strong>readonly T[]</strong> (или <code>ReadonlyArray&lt;T&gt;</code>) — массив без мутирующих методов. Нельзя <code>push</code>, <code>pop</code>, <code>arr[0] = ...</code>.</p>
+        <p data-lang="en"><strong>readonly T[]</strong> (or <code>ReadonlyArray&lt;T&gt;</code>) — an array with no mutating methods. No <code>push</code>, <code>pop</code>, <code>arr[0] = ...</code>.</p>
+    </div>
+
+    <p data-lang="ru"><strong>Зачем:</strong></p>
+    <p data-lang="en"><strong>Why:</strong></p>
+
+    <ul data-lang="ru">
+        <li>В параметрах функций — гарантия «не мутирует»</li>
+        <li>В конфигах и константах</li>
+        <li>Защита от мутации извне</li>
+    </ul>
+    <ul data-lang="en">
+        <li>In function parameters — "does not mutate" guarantee</li>
+        <li>In configs and constants</li>
+        <li>Protection from external mutation</li>
+    </ul>
+
+    <pre><code>function logAll(items: readonly string[]) {
+    items.forEach(x =&gt; console.log(x));
+    // items.push("x");  // ❌
+}</code></pre>
+
+    <hr>
+
+    <h2 data-lang="ru">6. Tuple — массив с фиксированной длиной</h2>
+    <h2 data-lang="en">6. Tuple — fixed-length array</h2>
+
+    <div class="definition">
+        <p data-lang="ru"><strong>Tuple</strong> — массив с <strong>фиксированной</strong> длиной и <strong>разными</strong> типами на каждой позиции.</p>
+        <p data-lang="en"><strong>Tuple</strong> — an array with <strong>fixed</strong> length and <strong>per-position</strong> types.</p>
+    </div>
+
+    <pre><code>let person: [string, number, string] = ["Сейди", 20, "Ашхабад"];
+
+person[0];   // string
+person[1];   // number
+person[3];   // ❌ нет такого индекса
+
+const [name, age, city] = person;   // деструктуризация работает</code></pre>
+
+    <p data-lang="ru"><strong>Где встретите:</strong></p>
+    <p data-lang="en"><strong>Where you'll meet them:</strong></p>
+
+    <ul data-lang="ru">
+        <li>Координаты: <code>[x, y]</code></li>
+        <li>Возврат нескольких значений: <code>[error, result]</code></li>
+        <li>Пары ключ-значение из <code>Object.entries()</code></li>
+        <li>React hooks: <code>const [state, setState] = useState(0)</code></li>
+    </ul>
+    <ul data-lang="en">
+        <li>Coordinates: <code>[x, y]</code></li>
+        <li>Returning multiple values: <code>[error, result]</code></li>
+        <li>Key-value pairs from <code>Object.entries()</code></li>
+        <li>React hooks: <code>const [state, setState] = useState(0)</code></li>
+    </ul>
+
+    <hr>
+
+    <h2 data-lang="ru">7. Named tuples</h2>
+    <h2 data-lang="en">7. Named tuples</h2>
+
+    <p data-lang="ru">Имена для позиций — для документации (в рантайме исчезают):</p>
+    <p data-lang="en">Position names — documentation only (vanish at runtime):</p>
+
+    <pre><code>type Point = [x: number, y: number];
+type Person = [name: string, age: number, city: string];</code></pre>
+
+    <p data-lang="ru">VS Code показывает имена в autocomplete — пишите их всегда, когда позиции неочевидны.</p>
+    <p data-lang="en">VS Code shows names in autocomplete — use them any time positions aren't obvious.</p>
+
+    <hr>
+
+    <h2 data-lang="ru">8. Опциональные и rest в tuple</h2>
+    <h2 data-lang="en">8. Optional and rest in tuples</h2>
+
+    <pre><code>// Опциональный последний элемент
+type Range = [start: number, end: number, step?: number];
+
+// Rest-элемент
+type StringFirstThenNumbers = [string, ...number[]];
+
+// Rest в середине
+type Wrapped = [string, ...number[], boolean];</code></pre>
+
+    <hr>
+
+    <h2 data-lang="ru">9. as const + массив</h2>
+    <h2 data-lang="en">9. as const + array</h2>
+
+    <pre><code>const a = [1, 2, 3];               // тип: number[]
+const b = [1, 2, 3] as const;      // тип: readonly [1, 2, 3]</code></pre>
+
+    <p data-lang="ru"><strong>Главный паттерн</strong> — «список значений → union-тип»:</p>
+    <p data-lang="en"><strong>Headline pattern</strong> — "list of values → union type":</p>
+
+    <pre><code>const COLORS = ["red", "green", "blue"] as const;
+type Color = typeof COLORS[number];
+// type Color = "red" | "green" | "blue"</code></pre>
+
+    <p data-lang="ru">Один источник правды: и список для рантайма, и union для типов.</p>
+    <p data-lang="en">One source of truth: a list for runtime AND a union for types.</p>
+
+    <hr>
+
+    <h2 data-lang="ru">10. Массив vs tuple</h2>
+    <h2 data-lang="en">10. Array vs tuple</h2>
+
+    <table>
+        <thead data-lang="ru"><tr><th></th><th>Массив</th><th>Tuple</th></tr></thead>
+        <thead data-lang="en"><tr><th></th><th>Array</th><th>Tuple</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td>Длина</td><td>Меняется</td><td>Фиксирована</td></tr>
+            <tr><td>Тип</td><td>Один</td><td>Разный по позициям</td></tr>
+            <tr><td>Когда</td><td>Однородный список</td><td>Фиксированная группа</td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td>Length</td><td>Variable</td><td>Fixed</td></tr>
+            <tr><td>Type</td><td>Same</td><td>Per-position</td></tr>
+            <tr><td>When</td><td>Homogeneous list</td><td>Fixed group</td></tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <div class="remember">
+        <ul data-lang="ru">
+            <li>Массив: <code>T[]</code> или <code>Array&lt;T&gt;</code>. Союз — в скобках: <code>(number | string)[]</code>.</li>
+            <li>Пустой массив всегда аннотируем: <code>const items: string[] = []</code>.</li>
+            <li>Функциональные методы (главное в TS 2026): <code>map</code>, <code>filter</code>, <code>find</code>, <code>reduce</code>.</li>
+            <li><code>find</code> возвращает <code>T | undefined</code> — обязательно проверяем.</li>
+            <li>С <code>noUncheckedIndexedAccess</code>: <code>arr[i]</code> → <code>T | undefined</code>.</li>
+            <li><code>readonly T[]</code> — иммутабельный массив. Используем в параметрах функций по умолчанию.</li>
+            <li><strong>Tuple</strong> = массив с фиксированной длиной и типами по позициям.</li>
+            <li>Named tuple: <code>[x: number, y: number]</code> — для документации.</li>
+            <li>В tuple можно: опциональные (<code>?</code>) и rest (<code>...T[]</code>) элементы.</li>
+            <li><code>[1, 2, 3] as const</code> → <code>readonly [1, 2, 3]</code> (литералы + readonly).</li>
+            <li>Паттерн: <code>const X = [...] as const</code> + <code>type Y = typeof X[number]</code>.</li>
+            <li>Однородный список — массив; фиксированная группа разных — tuple.</li>
+        </ul>
+        <ul data-lang="en">
+            <li>Array: <code>T[]</code> or <code>Array&lt;T&gt;</code>. Union — in parens: <code>(number | string)[]</code>.</li>
+            <li>Always annotate empty arrays: <code>const items: string[] = []</code>.</li>
+            <li>Functional methods (TS 2026 headline): <code>map</code>, <code>filter</code>, <code>find</code>, <code>reduce</code>.</li>
+            <li><code>find</code> returns <code>T | undefined</code> — always check.</li>
+            <li>With <code>noUncheckedIndexedAccess</code>: <code>arr[i]</code> → <code>T | undefined</code>.</li>
+            <li><code>readonly T[]</code> — immutable array. Default in function parameters.</li>
+            <li><strong>Tuple</strong> = array with fixed length and per-position types.</li>
+            <li>Named tuple: <code>[x: number, y: number]</code> — documentation.</li>
+            <li>Tuple can have: optional (<code>?</code>) and rest (<code>...T[]</code>) elements.</li>
+            <li><code>[1, 2, 3] as const</code> → <code>readonly [1, 2, 3]</code> (literals + readonly).</li>
+            <li>Pattern: <code>const X = [...] as const</code> + <code>type Y = typeof X[number]</code>.</li>
+            <li>Homogeneous list — array; fixed group of different things — tuple.</li>
+        </ul>
+    </div>
+
+    <div class="homework">
+        <ol data-lang="ru">
+            <li>В <code>src/arrays.ts</code> создайте 4 массива в разных синтаксисах: <code>number[]</code>, <code>Array&lt;string&gt;</code>, <code>(number | string)[]</code>, пустой <code>boolean[]</code>. Запустите и убедитесь, что код работает.</li>
+            <li>Создайте массив <code>const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</code>. Напишите цепочку: оставить чётные → возвести в квадрат → сложить. Запишите результат.</li>
+            <li>Создайте <code>const cities = ["Ашхабад", "Стамбул"]</code>. Обратитесь к <code>cities[10]</code>. Опишите, что показывает VS Code (тип + ошибка при попытке использовать).</li>
+            <li>Напишите функцию <code>printAll(items: readonly string[]): void</code>. Внутри попробуйте <code>items.push("новый")</code>. Запишите ошибку TS.</li>
+            <li>Создайте tuple <code>type Coord = [x: number, y: number]</code>. Создайте 3 координаты. Напишите функцию <code>distance(a: Coord, b: Coord): number</code> через формулу <code>Math.sqrt((b[0]-a[0])**2 + (b[1]-a[1])**2)</code>.</li>
+            <li>Создайте <code>const STATUSES = ["todo", "in-progress", "done"] as const</code>. Через <code>type Status = typeof STATUSES[number]</code> получите union. Наведите курсор на <code>Status</code> и запишите тип. Проверьте, что присвоение <code>let s: Status = "bug"</code> вызывает ошибку.</li>
+            <li>Создайте tuple <code>type Result = [error: string | null, value: number | null]</code>. Напишите функцию <code>safeDivide(a: number, b: number): Result</code>, которая возвращает <code>[null, a/b]</code> при успехе и <code>["Деление на 0", null]</code> при <code>b === 0</code>.</li>
+            <li>Подготовьте устные ответы на все 12 вопросов «Проверь себя» из лекции.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In <code>src/arrays.ts</code> create 4 arrays in different syntaxes: <code>number[]</code>, <code>Array&lt;string&gt;</code>, <code>(number | string)[]</code>, empty <code>boolean[]</code>. Run and verify it works.</li>
+            <li>Create <code>const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</code>. Write a chain: keep evens → square them → sum. Record the result.</li>
+            <li>Create <code>const cities = ["Ashgabat", "Istanbul"]</code>. Access <code>cities[10]</code>. Describe what VS Code shows (type + error when trying to use it).</li>
+            <li>Write a function <code>printAll(items: readonly string[]): void</code>. Inside try <code>items.push("new")</code>. Record the TS error.</li>
+            <li>Create a tuple <code>type Coord = [x: number, y: number]</code>. Create 3 coordinates. Write a function <code>distance(a: Coord, b: Coord): number</code> with the formula <code>Math.sqrt((b[0]-a[0])**2 + (b[1]-a[1])**2)</code>.</li>
+            <li>Create <code>const STATUSES = ["todo", "in-progress", "done"] as const</code>. Use <code>type Status = typeof STATUSES[number]</code> to get the union. Hover over <code>Status</code> and record the type. Verify that assigning <code>let s: Status = "bug"</code> errors.</li>
+            <li>Create tuple <code>type Result = [error: string | null, value: number | null]</code>. Write a function <code>safeDivide(a: number, b: number): Result</code> returning <code>[null, a/b]</code> on success and <code>["Division by 0", null]</code> when <code>b === 0</code>.</li>
+            <li>Prepare oral answers to all 12 "Test yourself" questions from the lecture.</li>
+        </ol>
+    </div>
+
+</div>
+
+</body>
+</html>

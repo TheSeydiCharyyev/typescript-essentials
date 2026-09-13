@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Занятие 6 — Практические задания</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/tasks.css">
+    <script src="../../js/lang.js" defer></script>
+    <style>
+        h1 { border-bottom-color: #84cc16; }
+        h2 { color: #4d7c0f; background: #f7fee7; border-left-color: #84cc16; }
+    </style>
+</head>
+<body>
+
+<div class="lesson-nav">
+    <a href="../../index.html" class="nav-home" data-lang="ru">&#8592; Главная</a>
+    <a href="../../index.html" class="nav-home" data-lang="en">&#8592; Home</a>
+    <span class="nav-sep">|</span>
+    <span class="nav-title" data-lang="ru">Занятие 6: Массивы, readonly и кортежи</span>
+    <span class="nav-title" data-lang="en">Lesson 6: Arrays, Readonly, and Tuples</span>
+    <span class="nav-sep">|</span>
+    <a href="lecture.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F3EB; Лекция</a>
+    <a href="lecture.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F3EB; Lecture</a>
+    <a href="student.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F393; Конспект</a>
+    <a href="student.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F393; Notes</a>
+    <span class="nav-active" data-lang="ru">&#x1F4CB; Задания</span>
+    <span class="nav-active" data-lang="en">&#x1F4CB; Tasks</span>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+</div>
+
+<div class="container">
+
+    <h1 data-lang="ru">&#x1F4DD; ПРАКТИЧЕСКИЕ ЗАДАНИЯ</h1>
+    <h1 data-lang="en">&#x1F4DD; PRACTICAL TASKS</h1>
+    <p class="subtitle" data-lang="ru">Занятие 6: Массивы, readonly и кортежи &mdash; 7 заданий от базовых массивов до tuple-pattern</p>
+    <p class="subtitle" data-lang="en">Lesson 6: Arrays, Readonly, and Tuples &mdash; 7 tasks from basic arrays to the tuple pattern</p>
+
+    <div class="why" style="background:#f7fee7;border-left:4px solid #84cc16;padding:12px 18px;border-radius:8px;margin:16px 0;">
+        <p data-lang="ru"><strong>Где работаем:</strong> в проекте <code>ts-strict-demo/</code>. Каждое задание — отдельный файл в <code>src/</code>.</p>
+        <p data-lang="en"><strong>Where:</strong> in the <code>ts-strict-demo/</code> project. Each task — a separate file in <code>src/</code>.</p>
+    </div>
+
+    <hr>
+
+    <!-- TASK 1 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 1. Базовые массивы и методы</div>
+            <div class="task-title" data-lang="en">Task 1. Basic arrays and methods</div>
+            <div class="task-meta">
+                <span class="badge badge-easy" data-lang="ru">Легко</span>
+                <span class="badge badge-easy" data-lang="en">Easy</span>
+                <span class="badge badge-time">15 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Освоить базовые методы массива: <code>push</code>, <code>pop</code>, <code>length</code>, <code>includes</code>, <code>join</code>, <code>slice</code>.</span>
+            <span data-lang="en">Get comfortable with basic array methods: <code>push</code>, <code>pop</code>, <code>length</code>, <code>includes</code>, <code>join</code>, <code>slice</code>.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>В <code>src/arrays-basic.ts</code> создайте 4 массива в разных стилях:
+                <pre><code>const numbers: number[] = [10, 20, 30];
+const cities: Array&lt;string&gt; = ["Ашхабад", "Стамбул"];
+const mixed: (number | string)[] = [1, "two", 3];
+const flags: boolean[] = [];</code></pre>
+            </li>
+            <li>Выполните 6 операций и выведите результат каждой:
+                <ul>
+                    <li>Добавьте <code>40</code> в <code>numbers</code> и выведите массив</li>
+                    <li>Удалите последний элемент из <code>cities</code></li>
+                    <li>Проверьте, есть ли <code>20</code> в <code>numbers</code></li>
+                    <li>Соберите <code>cities</code> в строку через <code>" - "</code></li>
+                    <li>Возьмите <code>slice(1, 3)</code> из <code>numbers</code></li>
+                    <li>Добавьте 3 значения в <code>flags</code> и выведите длину</li>
+                </ul>
+            </li>
+            <li>Запустите <code>npm run dev</code>. Запишите 6 результатов в тетрадь.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In <code>src/arrays-basic.ts</code> create 4 arrays in different styles:
+                <pre><code>const numbers: number[] = [10, 20, 30];
+const cities: Array&lt;string&gt; = ["Ashgabat", "Istanbul"];
+const mixed: (number | string)[] = [1, "two", 3];
+const flags: boolean[] = [];</code></pre>
+            </li>
+            <li>Perform 6 operations and print each result:
+                <ul>
+                    <li>Push <code>40</code> into <code>numbers</code> and print the array</li>
+                    <li>Pop the last from <code>cities</code></li>
+                    <li>Check if <code>20</code> is in <code>numbers</code></li>
+                    <li>Join <code>cities</code> with <code>" - "</code></li>
+                    <li>Take <code>slice(1, 3)</code> from <code>numbers</code></li>
+                    <li>Push 3 values into <code>flags</code> and print length</li>
+                </ul>
+            </li>
+            <li>Run <code>npm run dev</code>. Record all 6 results in your notebook.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Все 4 массива объявлены правильно</li>
+                <li>Все 6 операций выполнены, результаты записаны</li>
+                <li>Понятна разница между мутирующими (<code>push</code>) и возвращающими (<code>slice</code>) методами</li>
+            </ul>
+            <ul data-lang="en">
+                <li>All 4 arrays declared correctly</li>
+                <li>All 6 operations done, results recorded</li>
+                <li>Clear: difference between mutating (<code>push</code>) and returning (<code>slice</code>) methods</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TASK 2 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 2. Цепочка map → filter → reduce</div>
+            <div class="task-title" data-lang="en">Task 2. Chain map → filter → reduce</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">20 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Освоить функциональный стиль работы с массивами — самый частый стиль в TypeScript 2026.</span>
+            <span data-lang="en">Master the functional array style — the most common style in TypeScript 2026.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>В <code>src/chains.ts</code> создайте массив:
+                <pre><code>const prices = [120, 45, 800, 30, 1500, 250, 99];</code></pre>
+            </li>
+            <li>Решите 4 задачи <strong>через цепочки методов</strong> (без <code>for</code>):
+                <ul>
+                    <li><strong>А.</strong> Получить массив цен <strong>больше 100</strong></li>
+                    <li><strong>Б.</strong> Получить общую сумму всех цен через <code>reduce</code></li>
+                    <li><strong>В.</strong> Получить массив цен с НДС (+18%), округлённый до целых. Подсказка: <code>Math.round(price * 1.18)</code></li>
+                    <li><strong>Г.</strong> Получить сумму цен только тех товаров, что дороже 100: <code>filter</code> → <code>reduce</code></li>
+                </ul>
+            </li>
+            <li>Выведите 4 результата с подписями.</li>
+            <li>В тетради запишите цепочку для задачи Г — это типовой паттерн.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In <code>src/chains.ts</code> create the array:
+                <pre><code>const prices = [120, 45, 800, 30, 1500, 250, 99];</code></pre>
+            </li>
+            <li>Solve 4 problems <strong>using method chains</strong> (no <code>for</code>):
+                <ul>
+                    <li><strong>A.</strong> Get prices <strong>greater than 100</strong></li>
+                    <li><strong>B.</strong> Get the total sum via <code>reduce</code></li>
+                    <li><strong>C.</strong> Get prices with VAT (+18%), rounded. Hint: <code>Math.round(price * 1.18)</code></li>
+                    <li><strong>D.</strong> Get the sum of only items more expensive than 100: <code>filter</code> → <code>reduce</code></li>
+                </ul>
+            </li>
+            <li>Print 4 results with labels.</li>
+            <li>In your notebook write the chain for D — it's a canonical pattern.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Все 4 задачи решены <strong>без <code>for</code></strong></li>
+                <li>Использованы все три метода: <code>map</code>, <code>filter</code>, <code>reduce</code></li>
+                <li>Цепочка filter→reduce записана в тетрадь</li>
+            </ul>
+            <ul data-lang="en">
+                <li>All 4 tasks solved <strong>without <code>for</code></strong></li>
+                <li>All three methods used: <code>map</code>, <code>filter</code>, <code>reduce</code></li>
+                <li>The filter→reduce chain written down</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Подсказка для Г: <code>prices.filter(p =&gt; p &gt; 100).reduce((sum, p) =&gt; sum + p, 0)</code></p>
+            <p data-lang="en">Hint for D: <code>prices.filter(p =&gt; p &gt; 100).reduce((sum, p) =&gt; sum + p, 0)</code></p>
+        </div>
+    </div>
+
+    <!-- TASK 3 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 3. find и undefined</div>
+            <div class="task-title" data-lang="en">Task 3. find and undefined</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">15 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Понять, как TS заставляет правильно работать с возможным <code>undefined</code> от <code>find</code> и индекса.</span>
+            <span data-lang="en">Understand how TS forces correct handling of possible <code>undefined</code> from <code>find</code> and index access.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>В <code>src/find-undefined.ts</code> вставьте:
+                <pre><code>const users = ["Anna", "Boris", "Cyrus"];
+
+// 1. find — может вернуть undefined
+const u = users.find(x =&gt; x.startsWith("A"));
+console.log(u.toUpperCase());
+
+// 2. индекс — может быть out of bounds
+const tenth = users[10];
+console.log(tenth.length);
+
+// 3. find без результата
+const x = users.find(x =&gt; x === "Daria");
+console.log(x);</code></pre>
+            </li>
+            <li>Запустите <code>npm run check</code>. Запишите все ошибки.</li>
+            <li>Исправьте код тремя разными способами:
+                <ul>
+                    <li><strong>Способ А</strong>: явная проверка <code>if (u) { ... }</code></li>
+                    <li><strong>Способ Б</strong>: optional chaining <code>u?.toUpperCase()</code></li>
+                    <li><strong>Способ В</strong>: значение по умолчанию <code>(u ?? "не найдено").toUpperCase()</code></li>
+                </ul>
+            </li>
+            <li>Запустите <code>npm run dev</code>. Убедитесь, что все 3 строки выводятся без падений.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In <code>src/find-undefined.ts</code> paste:
+                <pre><code>const users = ["Anna", "Boris", "Cyrus"];
+
+// 1. find — may return undefined
+const u = users.find(x =&gt; x.startsWith("A"));
+console.log(u.toUpperCase());
+
+// 2. index — may be out of bounds
+const tenth = users[10];
+console.log(tenth.length);
+
+// 3. find with no result
+const x = users.find(x =&gt; x === "Daria");
+console.log(x);</code></pre>
+            </li>
+            <li>Run <code>npm run check</code>. Record all errors.</li>
+            <li>Fix the code in three different ways:
+                <ul>
+                    <li><strong>Way A</strong>: explicit check <code>if (u) { ... }</code></li>
+                    <li><strong>Way B</strong>: optional chaining <code>u?.toUpperCase()</code></li>
+                    <li><strong>Way C</strong>: default value <code>(u ?? "not found").toUpperCase()</code></li>
+                </ul>
+            </li>
+            <li>Run <code>npm run dev</code>. Verify all 3 lines print without crashes.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Зафиксированы ошибки TS до исправления</li>
+                <li>Применены все 3 способа исправления</li>
+                <li>Программа работает без падений в рантайме</li>
+            </ul>
+            <ul data-lang="en">
+                <li>TS errors recorded before fixing</li>
+                <li>All 3 fix approaches applied</li>
+                <li>Program runs without runtime crashes</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TASK 4 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 4. readonly как защита</div>
+            <div class="task-title" data-lang="en">Task 4. readonly as protection</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">15 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Использовать <code>readonly</code>, чтобы защитить массив от случайной мутации внутри функции.</span>
+            <span data-lang="en">Use <code>readonly</code> to protect an array from accidental mutation inside a function.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Стартовый «опасный» код:</strong></p>
+        <p data-lang="en"><strong>Starter "dangerous" code:</strong></p>
+
+        <pre><code>function printSorted(items: string[]) {
+    items.sort();              // ← мутирует исходный массив!
+    items.forEach(x =&gt; console.log(x));
+}
+
+const cities = ["Стамбул", "Ашхабад", "Ташкент"];
+console.log("ДО:", cities);
+printSorted(cities);
+console.log("ПОСЛЕ:", cities);  // ← массив изменился!</code></pre>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>Положите код в <code>src/readonly-fn.ts</code>. Запустите. Запишите вывод. Заметьте: <code>cities</code> поменялся после вызова функции — это плохо.</li>
+            <li>Поменяйте сигнатуру функции на <code>function printSorted(items: readonly string[])</code>. Запустите <code>npm run check</code>. Запишите ошибку.</li>
+            <li>Перепишите функцию без мутации. Подсказка: <code>const sorted = [...items].sort()</code> — создаст копию, потом отсортирует копию.</li>
+            <li>Запустите снова. Убедитесь: вывод отсортированный, но исходный <code>cities</code> <strong>не поменялся</strong>.</li>
+            <li>В тетради опишите, какую защиту даёт <code>readonly</code>.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Place the code in <code>src/readonly-fn.ts</code>. Run. Record the output. Notice: <code>cities</code> changed after the call — that's bad.</li>
+            <li>Change the signature to <code>function printSorted(items: readonly string[])</code>. Run <code>npm run check</code>. Record the error.</li>
+            <li>Rewrite the function without mutation. Hint: <code>const sorted = [...items].sort()</code> — copy first, then sort the copy.</li>
+            <li>Run again. Verify: output is sorted but original <code>cities</code> <strong>didn't change</strong>.</li>
+            <li>In your notebook describe the protection <code>readonly</code> provides.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Сначала зафиксирована мутация (cities поменялся)</li>
+                <li>С <code>readonly</code> TS поймал мутацию (записали ошибку)</li>
+                <li>Функция переписана: <code>[...items].sort()</code>, мутации нет</li>
+                <li>В тетради описана польза readonly</li>
+            </ul>
+            <ul data-lang="en">
+                <li>Mutation observed first (cities changed)</li>
+                <li>With <code>readonly</code> TS caught the mutation (error recorded)</li>
+                <li>Function rewritten: <code>[...items].sort()</code>, no mutation</li>
+                <li>Notebook describes the benefit of readonly</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TASK 5 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 5. Tuple для координат и пар</div>
+            <div class="task-title" data-lang="en">Task 5. Tuples for coordinates and pairs</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">20 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">На двух классических примерах освоить tuple и named tuple.</span>
+            <span data-lang="en">Master tuple and named tuple on two classic examples.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Часть А — координаты:</strong></p>
+        <p data-lang="en"><strong>Part A — coordinates:</strong></p>
+        <ol data-lang="ru">
+            <li>В <code>src/tuples.ts</code> создайте тип <code>type Coord = [x: number, y: number]</code>.</li>
+            <li>Создайте 3 точки: <code>(0, 0)</code>, <code>(3, 4)</code>, <code>(6, 8)</code>.</li>
+            <li>Напишите функцию <code>distance(a: Coord, b: Coord): number</code> по формуле:
+                <pre><code>Math.sqrt((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2)</code></pre>
+            </li>
+            <li>Вычислите расстояния между всеми парами и выведите.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In <code>src/tuples.ts</code> create the type <code>type Coord = [x: number, y: number]</code>.</li>
+            <li>Create 3 points: <code>(0, 0)</code>, <code>(3, 4)</code>, <code>(6, 8)</code>.</li>
+            <li>Write the function <code>distance(a: Coord, b: Coord): number</code> using:
+                <pre><code>Math.sqrt((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2)</code></pre>
+            </li>
+            <li>Compute distances between all pairs and print them.</li>
+        </ol>
+
+        <p data-lang="ru"><strong>Часть Б — пара «результат или ошибка» (паттерн из Go):</strong></p>
+        <p data-lang="en"><strong>Part B — "result or error" pair (the Go-style pattern):</strong></p>
+        <ol data-lang="ru">
+            <li>Создайте тип <code>type Result = [error: string | null, value: number | null]</code>.</li>
+            <li>Напишите <code>function safeDivide(a: number, b: number): Result</code>:
+                <ul>
+                    <li>Если <code>b === 0</code> → <code>["Деление на 0", null]</code></li>
+                    <li>Иначе → <code>[null, a / b]</code></li>
+                </ul>
+            </li>
+            <li>Вызовите функцию 3 раза с разными аргументами (включая <code>b = 0</code>).</li>
+            <li>Деструктурируйте результат: <code>const [error, value] = safeDivide(10, 2)</code> и выведите.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Create the type <code>type Result = [error: string | null, value: number | null]</code>.</li>
+            <li>Write <code>function safeDivide(a: number, b: number): Result</code>:
+                <ul>
+                    <li>If <code>b === 0</code> → <code>["Division by 0", null]</code></li>
+                    <li>Else → <code>[null, a / b]</code></li>
+                </ul>
+            </li>
+            <li>Call the function 3 times with different args (including <code>b = 0</code>).</li>
+            <li>Destructure the result: <code>const [error, value] = safeDivide(10, 2)</code> and print.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Тип <code>Coord</code> — named tuple <code>[x: number, y: number]</code></li>
+                <li>Функция <code>distance</code> работает на трёх парах точек</li>
+                <li>Тип <code>Result</code> — named tuple с двумя вариантами</li>
+                <li>Деструктуризация работает: <code>const [error, value] = ...</code></li>
+                <li>Все вызовы выводят корректный результат</li>
+            </ul>
+            <ul data-lang="en">
+                <li>Type <code>Coord</code> — named tuple <code>[x: number, y: number]</code></li>
+                <li>Function <code>distance</code> works on three pairs of points</li>
+                <li>Type <code>Result</code> — named tuple with two cases</li>
+                <li>Destructuring works: <code>const [error, value] = ...</code></li>
+                <li>All calls produce correct output</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Если поставите курсор внутрь <code>distance(</code> — VS Code покажет подсказки с именами <code>x</code>, <code>y</code>. Это то, что даёт named tuple.</p>
+            <p data-lang="en">If you place the cursor inside <code>distance(</code> — VS Code shows hints with names <code>x</code>, <code>y</code>. That's the named-tuple benefit.</p>
+        </div>
+    </div>
+
+    <!-- TASK 6 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 6. Паттерн «список → union»</div>
+            <div class="task-title" data-lang="en">Task 6. The "list → union" pattern</div>
+            <div class="task-meta">
+                <span class="badge badge-hard" data-lang="ru">Сложно</span>
+                <span class="badge badge-hard" data-lang="en">Hard</span>
+                <span class="badge badge-time">20 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Освоить главный идиоматический паттерн TS 2026: один источник правды для списка и union-типа.</span>
+            <span data-lang="en">Master the headline 2026 idiom: one source of truth for both a list and a union type.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>В <code>src/colors.ts</code> создайте:
+                <pre><code>const COLORS = ["red", "green", "blue", "yellow"] as const;
+type Color = typeof COLORS[number];</code></pre>
+            </li>
+            <li>Наведите курсор на <code>Color</code> — должно появиться: <code>type Color = "red" | "green" | "blue" | "yellow"</code>. Запишите в тетрадь.</li>
+            <li>Напишите функцию <code>describe(c: Color): string</code>, которая возвращает <code>`Цвет: ${c}`</code>.</li>
+            <li>Вызовите <code>describe</code> для всех 4 цветов через <code>COLORS.forEach(c =&gt; console.log(describe(c)))</code>.</li>
+            <li>Попробуйте <code>describe("purple")</code> — запишите ошибку TS.</li>
+            <li>Теперь <strong>добавьте</strong> в массив <code>"purple"</code>. <strong>Тип Color обновится автоматически!</strong> Вызов <code>describe("purple")</code> станет валидным. Проверьте.</li>
+            <li>В тетради запишите вывод: почему этот паттерн лучше, чем «два списка» (один для рантайма, второй вручную как тип).</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In <code>src/colors.ts</code> create:
+                <pre><code>const COLORS = ["red", "green", "blue", "yellow"] as const;
+type Color = typeof COLORS[number];</code></pre>
+            </li>
+            <li>Hover over <code>Color</code> — should show: <code>type Color = "red" | "green" | "blue" | "yellow"</code>. Record in your notebook.</li>
+            <li>Write a function <code>describe(c: Color): string</code> returning <code>`Color: ${c}`</code>.</li>
+            <li>Call <code>describe</code> for all 4 colors via <code>COLORS.forEach(c =&gt; console.log(describe(c)))</code>.</li>
+            <li>Try <code>describe("purple")</code> — record the TS error.</li>
+            <li>Now <strong>add</strong> <code>"purple"</code> to the array. <strong>Type Color updates automatically!</strong> <code>describe("purple")</code> becomes valid. Verify.</li>
+            <li>In your notebook write: why this pattern beats "two lists" (one for runtime, the other manually as a type).</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Тип <code>Color</code> правильно выведен из массива (записан)</li>
+                <li>Функция <code>describe</code> работает для всех цветов</li>
+                <li>Ошибка для <code>"purple"</code> зафиксирована — потом исчезла после добавления в массив</li>
+                <li>В тетради записано: одна правка списка обновляет тип</li>
+            </ul>
+            <ul data-lang="en">
+                <li>Type <code>Color</code> correctly derived from the array (recorded)</li>
+                <li>Function <code>describe</code> works for all colors</li>
+                <li>Error for <code>"purple"</code> recorded — then disappeared after adding to the array</li>
+                <li>Notebook records: one list edit updates the type</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TASK 7 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 7. Мини-программа «Лидерборд»</div>
+            <div class="task-title" data-lang="en">Task 7. Mini-program "Leaderboard"</div>
+            <div class="task-meta">
+                <span class="badge badge-hard" data-lang="ru">Сложно</span>
+                <span class="badge badge-hard" data-lang="en">Hard</span>
+                <span class="badge badge-time">30 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Соединить всё: массивы, tuple, named tuple, <code>readonly</code>, цепочки методов, <code>as const</code>.</span>
+            <span data-lang="en">Combine everything: arrays, tuples, named tuples, <code>readonly</code>, method chains, <code>as const</code>.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Задача:</strong> «Турнирная таблица». Программа принимает список игроков с результатами, выводит топ-3 и среднее. Файл — <code>src/leaderboard.ts</code>.</p>
+        <p data-lang="en"><strong>Task:</strong> "Tournament leaderboard". Takes a list of players with scores, prints top-3 and the average. File — <code>src/leaderboard.ts</code>.</p>
+
+        <p data-lang="ru"><strong>Требования:</strong></p>
+        <p data-lang="en"><strong>Requirements:</strong></p>
+        <ol data-lang="ru">
+            <li>Создайте тип игрока через named tuple:
+                <pre><code>type Player = [name: string, score: number];</code></pre>
+            </li>
+            <li>Создайте массив игроков (минимум 7):
+                <pre><code>const players: readonly Player[] = [
+    ["Anna", 850],
+    ["Boris", 920],
+    ["Cyrus", 600],
+    ["Daria", 1100],
+    ["Egor", 450],
+    ["Fatima", 980],
+    ["Grigory", 720]
+];</code></pre>
+            </li>
+            <li>Через цепочку методов:
+                <ul>
+                    <li><strong>А.</strong> Отсортируйте копию по убыванию <code>score</code>. Подсказка: <code>[...players].sort((a, b) =&gt; b[1] - a[1])</code></li>
+                    <li><strong>Б.</strong> Возьмите <code>.slice(0, 3)</code> — топ-3</li>
+                    <li><strong>В.</strong> Выведите их через <code>.forEach</code> с template literals</li>
+                    <li><strong>Г.</strong> Через <code>reduce</code> посчитайте средний score всех игроков</li>
+                </ul>
+            </li>
+            <li>Создайте константу-категорий:
+                <pre><code>const TIERS = ["bronze", "silver", "gold", "platinum"] as const;
+type Tier = typeof TIERS[number];</code></pre>
+                Напишите функцию <code>tierFor(score: number): Tier</code>: до 500 — bronze, до 800 — silver, до 1000 — gold, выше — platinum.
+            </li>
+            <li>Для топ-3 выведите ещё и их tier.</li>
+            <li>Запустите <code>npm run dev</code> и <code>npm run check</code>. Должно быть 0 ошибок.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Create a player type via named tuple:
+                <pre><code>type Player = [name: string, score: number];</code></pre>
+            </li>
+            <li>Create a players array (at least 7):
+                <pre><code>const players: readonly Player[] = [
+    ["Anna", 850],
+    ["Boris", 920],
+    ["Cyrus", 600],
+    ["Daria", 1100],
+    ["Egor", 450],
+    ["Fatima", 980],
+    ["Grigory", 720]
+];</code></pre>
+            </li>
+            <li>Via a method chain:
+                <ul>
+                    <li><strong>A.</strong> Sort a copy descending by <code>score</code>. Hint: <code>[...players].sort((a, b) =&gt; b[1] - a[1])</code></li>
+                    <li><strong>B.</strong> Take <code>.slice(0, 3)</code> — top-3</li>
+                    <li><strong>C.</strong> Print them with <code>.forEach</code> and template literals</li>
+                    <li><strong>D.</strong> Compute the average score via <code>reduce</code></li>
+                </ul>
+            </li>
+            <li>Create a tier constant:
+                <pre><code>const TIERS = ["bronze", "silver", "gold", "platinum"] as const;
+type Tier = typeof TIERS[number];</code></pre>
+                Write <code>tierFor(score: number): Tier</code>: under 500 — bronze, under 800 — silver, under 1000 — gold, higher — platinum.
+            </li>
+            <li>For top-3 also print their tier.</li>
+            <li>Run <code>npm run dev</code> and <code>npm run check</code>. Must be 0 errors.</li>
+        </ol>
+
+        <p data-lang="ru"><strong>Ожидаемый вывод (пример):</strong></p>
+        <p data-lang="en"><strong>Expected output (example):</strong></p>
+
+        <pre><code>🏆 Топ-3:
+1. Daria — 1100 (platinum)
+2. Fatima — 980 (gold)
+3. Boris — 920 (gold)
+Средний score: 803</code></pre>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Тип <code>Player</code> — named tuple</li>
+                <li><code>players</code> объявлен как <code>readonly Player[]</code></li>
+                <li>Сортировка через <strong>копию</strong>, без мутации (использован spread <code>[...players]</code>)</li>
+                <li>Топ-3 получен через <code>slice</code>, выведен через <code>forEach</code></li>
+                <li>Средний — через <code>reduce</code></li>
+                <li>Тип <code>Tier</code> получен через паттерн <code>as const</code> + <code>typeof[number]</code></li>
+                <li>Функция <code>tierFor</code> возвращает <code>Tier</code> (не <code>string</code>)</li>
+                <li><code>npm run check</code> — 0 ошибок</li>
+            </ul>
+            <ul data-lang="en">
+                <li>Type <code>Player</code> — named tuple</li>
+                <li><code>players</code> declared as <code>readonly Player[]</code></li>
+                <li>Sorting on a <strong>copy</strong>, no mutation (spread <code>[...players]</code> used)</li>
+                <li>Top-3 via <code>slice</code>, printed via <code>forEach</code></li>
+                <li>Average — via <code>reduce</code></li>
+                <li>Type <code>Tier</code> derived via the <code>as const</code> + <code>typeof[number]</code> pattern</li>
+                <li>Function <code>tierFor</code> returns <code>Tier</code> (not <code>string</code>)</li>
+                <li><code>npm run check</code> — 0 errors</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru"><strong>Подсказка:</strong> деструктуризация в forEach: <code>topThree.forEach(([name, score], i) =&gt; { ... })</code>. <code>i</code> — индекс (0, 1, 2), для «места» используйте <code>i + 1</code>.</p>
+            <p data-lang="en"><strong>Hint:</strong> destructure in forEach: <code>topThree.forEach(([name, score], i) =&gt; { ... })</code>. <code>i</code> is the index (0, 1, 2); for "rank" use <code>i + 1</code>.</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="write-box">
+        <p data-lang="ru">Запишите сюда, какой паттерн с этого занятия вам показался самым полезным (readonly, named tuple, <code>as const</code>+typeof) и где вы планируете его применить:</p>
+        <p data-lang="en">Write here which pattern from this lesson seemed most useful (readonly, named tuple, <code>as const</code>+typeof) and where you plan to use it:</p>
+    </div>
+
+</div>
+
+</body>
+</html>

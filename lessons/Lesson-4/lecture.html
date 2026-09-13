@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Занятие 4 — Переменные и аннотации типов</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/lecture.css">
+    <script src="../../js/lang.js" defer></script>
+    <style>
+        h1 { border-bottom-color: #10b981; }
+        h2 { color: #047857; background: #ecfdf5; border-left-color: #10b981; }
+        h3 { color: #064e3b; }
+        .timeline { border-left-color: #10b981; }
+        .timeline-item::before { background: #10b981; }
+        .timeline-year { color: #047857; }
+        .person-card .role { color: #047857; }
+        .step-number { background: #10b981; }
+        .toc a { color: #047857; }
+    </style>
+</head>
+<body>
+
+<div class="lesson-nav">
+    <a href="../../index.html" class="nav-home" data-lang="ru">&#8592; Главная</a>
+    <a href="../../index.html" class="nav-home" data-lang="en">&#8592; Home</a>
+    <span class="nav-sep">|</span>
+    <span class="nav-title" data-lang="ru">Занятие 4: Переменные и аннотации типов</span>
+    <span class="nav-title" data-lang="en">Lesson 4: Variables and Type Annotations</span>
+    <span class="nav-sep">|</span>
+    <span class="nav-active" data-lang="ru">&#x1F468;&#x200D;&#x1F3EB; Лекция</span>
+    <span class="nav-active" data-lang="en">&#x1F468;&#x200D;&#x1F3EB; Lecture</span>
+    <a href="student.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F393; Конспект</a>
+    <a href="student.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F393; Notes</a>
+    <a href="tasks.html" class="nav-link" data-lang="ru">&#x1F4CB; Задания</a>
+    <a href="tasks.html" class="nav-link" data-lang="en">&#x1F4CB; Tasks</a>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+</div>
+
+<div class="container">
+
+    <h1 data-lang="ru">Занятие 4: Переменные и аннотации типов</h1>
+    <h1 data-lang="en">Lesson 4: Variables and Type Annotations</h1>
+    <p class="subtitle" data-lang="ru">Учимся хранить данные правильно: <code>let</code> vs <code>const</code>, аннотации типов, type inference и главное правило 2026 года — «доверяй inference, аннотируй границы»</p>
+    <p class="subtitle" data-lang="en">Learn to store data the right way: <code>let</code> vs <code>const</code>, type annotations, type inference, and the headline 2026 rule — "trust inference, annotate boundaries"</p>
+
+    <div class="why">
+        <p data-lang="ru">Это <strong>первое настоящее занятие по коду на TypeScript</strong>. До этого мы устанавливали инструменты и настраивали конфиг. Сейчас начинаем писать. И первое, что нужно понять — как в TypeScript создаются и хранятся данные. Это базовый кирпич: переменные, типы, и магия по имени <em>type inference</em>, благодаря которой TypeScript часто «угадывает» тип сам — без единой явной аннотации.</p>
+        <p data-lang="en">This is the <strong>first real coding lesson in TypeScript</strong>. Before now we were installing tools and configuring the project. Now we start writing. And the first thing to understand is how data is created and stored in TypeScript. This is the basic brick: variables, types, and a piece of magic called <em>type inference</em> — thanks to which TypeScript often "guesses" the type without a single explicit annotation.</p>
+        <p data-lang="ru"><strong>После этого занятия вы сможете:</strong></p>
+        <p data-lang="en"><strong>After this lesson you will be able to:</strong></p>
+        <ul data-lang="ru">
+            <li>Объяснить, что такое переменная в JavaScript/TypeScript</li>
+            <li>Различать <code>let</code>, <code>const</code> и <code>var</code> — и понимать, почему <code>var</code> не используется</li>
+            <li>Писать аннотации типов: <code>let age: number = 18</code></li>
+            <li>Объяснить, что такое <strong>type inference</strong> и где TypeScript выводит тип сам</li>
+            <li>Понимать разницу: <code>let x = 5</code> → <code>number</code>, но <code>const x = 5</code> → <code>5</code> (литеральный тип)</li>
+            <li>Применять <strong>главное правило 2026</strong>: «аннотируй границы, доверяй inference внутри»</li>
+            <li>Видеть, где аннотация типа нужна, а где — лишний шум</li>
+            <li>Понимать и читать ошибку <code>Type 'X' is not assignable to type 'Y'</code></li>
+        </ul>
+        <ul data-lang="en">
+            <li>Explain what a variable is in JavaScript/TypeScript</li>
+            <li>Tell <code>let</code>, <code>const</code>, and <code>var</code> apart — and know why <code>var</code> is gone</li>
+            <li>Write type annotations: <code>let age: number = 18</code></li>
+            <li>Explain <strong>type inference</strong> and where TypeScript figures out types on its own</li>
+            <li>Understand the difference: <code>let x = 5</code> → <code>number</code>, but <code>const x = 5</code> → <code>5</code> (literal type)</li>
+            <li>Apply the <strong>headline 2026 rule</strong>: "annotate boundaries, trust inference inside"</li>
+            <li>See where a type annotation is necessary and where it's just noise</li>
+            <li>Understand and read the error <code>Type 'X' is not assignable to type 'Y'</code></li>
+        </ul>
+    </div>
+
+    <div class="toc">
+        <div class="toc-title" data-lang="ru">Содержание</div>
+        <div class="toc-title" data-lang="en">Contents</div>
+        <ol data-lang="ru">
+            <li><a href="#what-is-var">Что такое переменная</a></li>
+            <li><a href="#let-const-var">let, const и почему не var</a></li>
+            <li><a href="#annotation">Аннотация типа — синтаксис</a></li>
+            <li><a href="#inference">Type inference — TypeScript «угадывает» тип</a></li>
+            <li><a href="#widening">Widening: <code>let</code> vs <code>const</code> с литералами</a></li>
+            <li><a href="#rule-2026">Главное правило 2026: «аннотируй границы»</a></li>
+            <li><a href="#when-to-annotate">Когда аннотировать, а когда нет</a></li>
+            <li><a href="#errors">Чтение TS-ошибок: «is not assignable to»</a></li>
+            <li><a href="#hoisting">Hoisting и Temporal Dead Zone</a></li>
+            <li><a href="#naming">Правила именования переменных</a></li>
+        </ol>
+        <ol data-lang="en">
+            <li><a href="#what-is-var">What a variable is</a></li>
+            <li><a href="#let-const-var">let, const, and why not var</a></li>
+            <li><a href="#annotation">Type annotation — syntax</a></li>
+            <li><a href="#inference">Type inference — TypeScript "guesses" the type</a></li>
+            <li><a href="#widening">Widening: <code>let</code> vs <code>const</code> with literals</a></li>
+            <li><a href="#rule-2026">The 2026 headline rule: "annotate boundaries"</a></li>
+            <li><a href="#when-to-annotate">When to annotate and when not to</a></li>
+            <li><a href="#errors">Reading TS errors: "is not assignable to"</a></li>
+            <li><a href="#hoisting">Hoisting and the Temporal Dead Zone</a></li>
+            <li><a href="#naming">Variable naming rules</a></li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <h2 id="what-is-var" data-lang="ru">1. Что такое переменная</h2>
+    <h2 id="what-is-var" data-lang="en">1. What a variable is</h2>
+
+    <p data-lang="ru"><strong>Переменная</strong> — это именованный «контейнер» для хранения данных. Вы даёте контейнеру имя, кладёте туда значение, а потом обращаетесь к нему по имени.</p>
+    <p data-lang="en">A <strong>variable</strong> is a named "container" for holding data. You give the container a name, put a value inside, then refer to it by name.</p>
+
+    <pre><code>let age = 18;          // создали контейнер "age", положили в него число 18
+console.log(age);      // обратились к контейнеру по имени → выведет 18
+age = 19;              // заменили значение в контейнере на 19
+console.log(age);      // → 19</code></pre>
+
+    <div class="analogy">
+        <p data-lang="ru">Аналогия: переменная — это <strong>ящик в гардеробе</strong>. На ящике написано имя (<em>«age»</em>), внутри лежит ваша вещь (<em>18</em>). Когда вам нужна эта вещь — вы говорите её имя, и вам её достают. Можно положить новую вещь — старая выкинется.</p>
+        <p data-lang="en">Analogy: a variable is <strong>a locker in a coatroom</strong>. The locker has a name (<em>"age"</em>) and your stuff inside (<em>18</em>). When you need it, you say the name and they fetch it. You can put a new item in — the old one is thrown out.</p>
+    </div>
+
+    <p data-lang="ru">В JavaScript (а значит и в TypeScript) переменные объявляются <strong>тремя ключевыми словами</strong>: <code>let</code>, <code>const</code> и <code>var</code>. Они выглядят похоже, но ведут себя по-разному.</p>
+    <p data-lang="en">In JavaScript (and therefore TypeScript) variables are declared with <strong>three keywords</strong>: <code>let</code>, <code>const</code>, and <code>var</code>. They look similar but behave differently.</p>
+
+    <hr>
+
+    <h2 id="let-const-var" data-lang="ru">2. let, const и почему не var</h2>
+    <h2 id="let-const-var" data-lang="en">2. let, const, and why not var</h2>
+
+    <h3 data-lang="ru"><code>let</code> — переменная, значение которой можно менять</h3>
+    <h3 data-lang="en"><code>let</code> — a variable whose value can change</h3>
+
+    <pre><code>let score = 0;
+score = 10;       // ✅ можно
+score = 100;      // ✅ снова можно
+console.log(score);  // → 100</code></pre>
+
+    <h3 data-lang="ru"><code>const</code> — константа, значение нельзя переназначить</h3>
+    <h3 data-lang="en"><code>const</code> — a constant, value cannot be reassigned</h3>
+
+    <pre><code>const pi = 3.14;
+pi = 3.15;        // ❌ Cannot assign to 'pi' because it is a constant.</code></pre>
+
+    <div class="important">
+        <p data-lang="ru"><strong>Важная тонкость:</strong> <code>const</code> запрещает <em>переназначение</em>, но не <em>изменение содержимого</em>. Для объектов и массивов это значит: ссылку поменять нельзя, а вот сам объект — можно.</p>
+        <p data-lang="en"><strong>Subtle point:</strong> <code>const</code> forbids <em>reassignment</em>, not <em>mutation</em>. For objects and arrays this means: you can't swap the reference, but the object itself can still change.</p>
+    </div>
+
+    <pre><code>const user = { name: "Anna" };
+user = { name: "Boris" };   // ❌ нельзя — это переназначение
+user.name = "Boris";        // ✅ можно — это изменение поля внутри объекта
+
+const list = [1, 2, 3];
+list = [4, 5, 6];           // ❌ нельзя
+list.push(4);               // ✅ можно — добавили элемент в существующий массив</code></pre>
+
+    <h3 data-lang="ru"><code>var</code> — устаревший способ, в 2026 году <strong>не используется</strong></h3>
+    <h3 data-lang="en"><code>var</code> — the legacy way, <strong>not used</strong> in 2026</h3>
+
+    <p data-lang="ru">До 2015 года <code>var</code> был единственным способом объявить переменную в JavaScript. У него были серьёзные проблемы:</p>
+    <p data-lang="en">Before 2015, <code>var</code> was the only way to declare a variable in JavaScript. It had serious problems:</p>
+
+    <ul data-lang="ru">
+        <li><strong>Function scope:</strong> <code>var</code> видна во всей функции, даже если объявлена внутри <code>if</code> или <code>for</code></li>
+        <li><strong>Hoisting:</strong> переменную можно использовать <em>до</em> её объявления (часто ведёт к багам)</li>
+        <li><strong>Можно повторно объявить:</strong> <code>var x = 1; var x = 2;</code> — никакой ошибки</li>
+    </ul>
+    <ul data-lang="en">
+        <li><strong>Function scope:</strong> <code>var</code> is visible across the whole function, even if declared inside <code>if</code> or <code>for</code></li>
+        <li><strong>Hoisting:</strong> the variable can be used <em>before</em> its declaration (a common source of bugs)</li>
+        <li><strong>Re-declaration allowed:</strong> <code>var x = 1; var x = 2;</code> — no error</li>
+    </ul>
+
+    <div class="mistake">
+        <p data-lang="ru"><strong>Правило 2026:</strong> в новом коде <strong>никогда</strong> не используйте <code>var</code>. По умолчанию пишите <code>const</code>; если значение реально нужно менять — <code>let</code>. Если в коллеге увидели <code>var</code> — это знак, что код древний или его автор не следил за стандартами.</p>
+        <p data-lang="en"><strong>2026 rule:</strong> in new code <strong>never</strong> use <code>var</code>. Default to <code>const</code>; if the value really needs to change — use <code>let</code>. If you see <code>var</code> in a colleague's code, it's a sign the code is ancient or the author isn't following modern standards.</p>
+    </div>
+
+    <h3 data-lang="ru">Сравнение в таблице</h3>
+    <h3 data-lang="en">Comparison table</h3>
+
+    <table>
+        <thead data-lang="ru"><tr><th></th><th><code>var</code></th><th><code>let</code></th><th><code>const</code></th></tr></thead>
+        <thead data-lang="en"><tr><th></th><th><code>var</code></th><th><code>let</code></th><th><code>const</code></th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td>Можно переназначить</td><td>✅ да</td><td>✅ да</td><td>❌ нет</td></tr>
+            <tr><td>Видимость</td><td>Function scope</td><td>Block scope <code>{ }</code></td><td>Block scope <code>{ }</code></td></tr>
+            <tr><td>Hoisting</td><td>✅ есть</td><td>⚠ TDZ</td><td>⚠ TDZ</td></tr>
+            <tr><td>Повторное объявление</td><td>✅ можно</td><td>❌ нельзя</td><td>❌ нельзя</td></tr>
+            <tr><td>Использовать в 2026?</td><td>❌ <strong>никогда</strong></td><td>⚠ только если нужно менять</td><td>✅ <strong>по умолчанию</strong></td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td>Reassignable</td><td>✅ yes</td><td>✅ yes</td><td>❌ no</td></tr>
+            <tr><td>Scope</td><td>Function scope</td><td>Block scope <code>{ }</code></td><td>Block scope <code>{ }</code></td></tr>
+            <tr><td>Hoisting</td><td>✅ yes</td><td>⚠ TDZ</td><td>⚠ TDZ</td></tr>
+            <tr><td>Re-declaration</td><td>✅ allowed</td><td>❌ no</td><td>❌ no</td></tr>
+            <tr><td>Use in 2026?</td><td>❌ <strong>never</strong></td><td>⚠ only when reassignment needed</td><td>✅ <strong>by default</strong></td></tr>
+        </tbody>
+    </table>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Запоминалка:</strong> «<em>const сначала, let если надо менять, var никогда</em>». Это правило сэкономит вам сотни багов.</p>
+        <p data-lang="en"><strong>Mnemonic:</strong> "<em>const first, let if it must change, var never</em>". This rule saves you hundreds of bugs.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="annotation" data-lang="ru">3. Аннотация типа — синтаксис</h2>
+    <h2 id="annotation" data-lang="en">3. Type annotation — syntax</h2>
+
+    <p data-lang="ru">До сих пор мы писали как в JavaScript. Теперь — главное отличие TypeScript: <strong>аннотация типа</strong>. Вы пишете <em>после имени переменной</em> двоеточие и тип, который ожидаете.</p>
+    <p data-lang="en">Up to here we wrote pure JavaScript. Now — the main TypeScript difference: <strong>type annotation</strong>. You write a colon and the expected type <em>after the variable name</em>.</p>
+
+    <pre><code>let age: number = 18;            // тип number
+let userName: string = "Anna";   // тип string
+let isAdmin: boolean = false;    // тип boolean</code></pre>
+
+    <p data-lang="ru">Формула: <code>let &lt;имя&gt;: &lt;тип&gt; = &lt;значение&gt;;</code></p>
+    <p data-lang="en">Formula: <code>let &lt;name&gt;: &lt;type&gt; = &lt;value&gt;;</code></p>
+
+    <p data-lang="ru">Теперь TypeScript <strong>гарантирует</strong>, что в эту переменную никогда не попадёт значение другого типа:</p>
+    <p data-lang="en">Now TypeScript <strong>guarantees</strong> that a value of another type can never get into this variable:</p>
+
+    <pre><code>let age: number = 18;
+age = 19;              // ✅
+age = "девятнадцать";  // ❌ Type 'string' is not assignable to type 'number'.</code></pre>
+
+    <div class="important">
+        <p data-lang="ru"><strong>Эта ошибка появится прямо в редакторе</strong>, ещё до запуска кода. Это и есть главная суперспособность TypeScript — ловить такие баги <em>до</em> того, как они доберутся до пользователя.</p>
+        <p data-lang="en"><strong>This error shows up right in the editor</strong>, before the code even runs. That's TypeScript's main superpower — catching such bugs <em>before</em> they reach a user.</p>
+    </div>
+
+    <h3 data-lang="ru">3 базовых примитивных типа</h3>
+    <h3 data-lang="en">3 basic primitive types</h3>
+
+    <p data-lang="ru">Подробно типы разберём в занятии 5, но три самых частых познакомимся уже сейчас:</p>
+    <p data-lang="en">We'll cover types in detail in Lesson 5, but let's meet the three most common ones now:</p>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Тип</th><th>Что хранит</th><th>Пример</th></tr></thead>
+        <thead data-lang="en"><tr><th>Type</th><th>Stores</th><th>Example</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td><code>number</code></td><td>Любое число: целое, дробное, отрицательное</td><td><code>18</code>, <code>3.14</code>, <code>-7</code></td></tr>
+            <tr><td><code>string</code></td><td>Строку (текст), в кавычках</td><td><code>"Hello"</code>, <code>'TS'</code>, <code>`шаблон`</code></td></tr>
+            <tr><td><code>boolean</code></td><td>Логическое значение: да/нет</td><td><code>true</code>, <code>false</code></td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td><code>number</code></td><td>Any number: integer, decimal, negative</td><td><code>18</code>, <code>3.14</code>, <code>-7</code></td></tr>
+            <tr><td><code>string</code></td><td>A string (text), in quotes</td><td><code>"Hello"</code>, <code>'TS'</code>, <code>`template`</code></td></tr>
+            <tr><td><code>boolean</code></td><td>A logical value: yes/no</td><td><code>true</code>, <code>false</code></td></tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h2 id="inference" data-lang="ru">4. Type inference — TypeScript «угадывает» тип</h2>
+    <h2 id="inference" data-lang="en">4. Type inference — TypeScript "guesses" the type</h2>
+
+    <p data-lang="ru">А теперь — главный сюрприз для новичков: <strong>в большинстве случаев аннотацию типа писать не нужно</strong>. TypeScript умеет сам определить тип по значению, которое вы присваиваете. Это называется <strong>type inference</strong> («вывод типа»).</p>
+    <p data-lang="en">And now — a surprise for beginners: <strong>in most cases you don't need to write a type annotation</strong>. TypeScript can determine the type itself from the value you assign. This is called <strong>type inference</strong>.</p>
+
+    <pre><code>let age = 18;            // TS сам понял: age — это number
+let userName = "Anna";   // TS сам понял: userName — это string
+let isAdmin = false;     // TS сам понял: isAdmin — это boolean
+
+age = "нет";             // ❌ Type 'string' is not assignable to type 'number'.
+userName = 42;           // ❌ Type 'number' is not assignable to type 'string'.</code></pre>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Это удивляет всех, кто только пришёл в TypeScript:</strong> вы не писали <code>: number</code>, но защита от ошибок типов работает. Это и есть type inference в действии. TypeScript «смотрит» на значение <code>18</code>, понимает «это число», и навсегда фиксирует за переменной тип <code>number</code>.</p>
+        <p data-lang="en"><strong>This surprises every TypeScript newcomer:</strong> you didn't write <code>: number</code>, but type safety still works. That's type inference in action. TypeScript "looks" at the value <code>18</code>, decides "that's a number", and pins the type <code>number</code> to the variable forever.</p>
+    </div>
+
+    <p data-lang="ru">Проверьте сами в VS Code: <strong>наведите курсор</strong> на <code>age</code>. Появится подсказка: <code>let age: number</code>. Это TypeScript показывает, какой тип он <em>вывел</em>.</p>
+    <p data-lang="en">See for yourself in VS Code: <strong>hover the cursor</strong> over <code>age</code>. A tooltip appears: <code>let age: number</code>. That's TypeScript showing the type it <em>inferred</em>.</p>
+
+    <h3 data-lang="ru">Где inference работает</h3>
+    <h3 data-lang="en">Where inference works</h3>
+
+    <ol data-lang="ru">
+        <li>При объявлении переменной с инициализацией: <code>let x = 5</code></li>
+        <li>При возврате значения из функции: TS выводит тип возврата автоматически</li>
+        <li>При обращении к свойству объекта: <code>const u = { name: "Anna" }; u.name</code> → <code>string</code></li>
+        <li>В большинстве выражений: <code>const sum = 2 + 3</code> → <code>number</code></li>
+    </ol>
+    <ol data-lang="en">
+        <li>When declaring a variable with initializer: <code>let x = 5</code></li>
+        <li>When returning from a function: TS infers the return type automatically</li>
+        <li>When accessing an object's property: <code>const u = { name: "Anna" }; u.name</code> → <code>string</code></li>
+        <li>In most expressions: <code>const sum = 2 + 3</code> → <code>number</code></li>
+    </ol>
+
+    <h3 data-lang="ru">Где inference НЕ работает (нужна аннотация)</h3>
+    <h3 data-lang="en">Where inference does NOT work (annotation required)</h3>
+
+    <ol data-lang="ru">
+        <li>Объявление без значения: <code>let x;</code> → TS думает: <code>any</code> (плохо). Нужно <code>let x: number;</code></li>
+        <li>Параметры функции: <code>function f(x) { ... }</code> — TS не знает тип <code>x</code>, надо писать <code>function f(x: number)</code></li>
+        <li>Когда у значения <strong>несколько возможных типов</strong>: <code>let id = Math.random() > 0.5 ? 1 : "one";</code> → можно явно указать <code>let id: number | string = ...</code></li>
+    </ol>
+    <ol data-lang="en">
+        <li>Declaration without a value: <code>let x;</code> → TS assumes <code>any</code> (bad). You need <code>let x: number;</code></li>
+        <li>Function parameters: <code>function f(x) { ... }</code> — TS doesn't know <code>x</code>'s type, write <code>function f(x: number)</code></li>
+        <li>When the value has <strong>several possible types</strong>: <code>let id = Math.random() > 0.5 ? 1 : "one";</code> → you can spell it out <code>let id: number | string = ...</code></li>
+    </ol>
+
+    <hr>
+
+    <h2 id="widening" data-lang="ru">5. Widening: <code>let</code> vs <code>const</code> с литералами</h2>
+    <h2 id="widening" data-lang="en">5. Widening: <code>let</code> vs <code>const</code> with literals</h2>
+
+    <p data-lang="ru">Тонкий, но <strong>очень важный</strong> момент. Inference ведёт себя по-разному для <code>let</code> и <code>const</code>:</p>
+    <p data-lang="en">A subtle but <strong>very important</strong> point. Inference behaves differently for <code>let</code> and <code>const</code>:</p>
+
+    <pre><code>let x = "hello";    // тип: string  ← «расширенный» (widened) тип
+const y = "hello";  // тип: "hello"  ← литеральный (literal) тип</code></pre>
+
+    <div style="background:#ecfdf5;border:1px solid #6ee7b7;padding:16px 20px;border-radius:8px;margin:16px 0;">
+        <p data-lang="ru"><strong>Почему так:</strong> <code>let</code> можно переназначить, поэтому TS «расширяет» (widening) тип до общего — <code>string</code> вместо точного <code>"hello"</code>. А <code>const</code> переназначить нельзя — значит, в переменной навсегда будет <em>именно</em> <code>"hello"</code>, и TS использует литеральный тип.</p>
+        <p data-lang="en"><strong>Why:</strong> <code>let</code> can be reassigned, so TS "widens" the type to a more general one — <code>string</code> instead of the exact <code>"hello"</code>. <code>const</code> can't be reassigned — so the variable will forever hold <em>exactly</em> <code>"hello"</code>, and TS uses the literal type.</p>
+    </div>
+
+    <p data-lang="ru">Зачем это знать? Литеральные типы — это сила. Они позволяют создавать переменные с <strong>точным значением</strong>, что критично для union-типов в будущих занятиях:</p>
+    <p data-lang="en">Why does this matter? Literal types are powerful. They let you create variables with an <strong>exact value</strong>, which is crucial for union types in upcoming lessons:</p>
+
+    <pre><code>const direction = "left";   // тип: "left" (литеральный)
+
+// В будущем:
+type Direction = "left" | "right" | "up" | "down";
+const move: Direction = "left";  // ✅
+const move: Direction = "diagonal";  // ❌ — нет в списке</code></pre>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Запомните:</strong></p>
+        <ul>
+            <li><code>let x = 5</code> → <code>number</code></li>
+            <li><code>const x = 5</code> → <code>5</code></li>
+            <li><code>let s = "hi"</code> → <code>string</code></li>
+            <li><code>const s = "hi"</code> → <code>"hi"</code></li>
+        </ul>
+        <p data-lang="en"><strong>Remember:</strong></p>
+        <ul>
+            <li><code>let x = 5</code> → <code>number</code></li>
+            <li><code>const x = 5</code> → <code>5</code></li>
+            <li><code>let s = "hi"</code> → <code>string</code></li>
+            <li><code>const s = "hi"</code> → <code>"hi"</code></li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h2 id="rule-2026" data-lang="ru">6. Главное правило 2026: «аннотируй границы»</h2>
+    <h2 id="rule-2026" data-lang="en">6. The 2026 headline rule: "annotate boundaries"</h2>
+
+    <p data-lang="ru">Вы только что узнали, что TypeScript часто сам угадывает тип. Возникает вопрос: <em>а когда вообще писать <code>: number</code>, если можно не писать?</em></p>
+    <p data-lang="en">You just learned that TypeScript often guesses types on its own. So when do you ever write <code>: number</code>, if you can skip it?</p>
+
+    <div style="background:#ecfdf5;border:2px solid #10b981;padding:16px 20px;border-radius:8px;margin:16px 0;">
+        <p data-lang="ru"><strong>Правило 2026 года:</strong> <em>«Аннотируй границы — параметры функций и явный возврат. Доверяй inference внутри.»</em></p>
+        <p data-lang="en"><strong>2026 rule:</strong> <em>"Annotate the boundaries — function parameters and explicit returns. Trust inference inside."</em></p>
+    </div>
+
+    <h3 data-lang="ru">Что значит «границы»</h3>
+    <h3 data-lang="en">What "boundaries" means</h3>
+
+    <p data-lang="ru">Границы — это места, где код <strong>принимает или отдаёт данные</strong>: параметры функций, тип возвращаемого значения, экспорт из модуля. В этих местах аннотации <strong>обязательны</strong> — иначе TS не сможет проверять, что внешний код передаёт правильные данные.</p>
+    <p data-lang="en">Boundaries are places where code <strong>receives or returns data</strong>: function parameters, return type, module exports. Annotations there are <strong>mandatory</strong> — otherwise TS can't verify that external code passes the right data.</p>
+
+    <pre><code>// ✅ Границы: параметры и возврат — аннотированы
+function calculatePrice(price: number, quantity: number): number {
+    // ✅ Внутри: доверяем inference
+    const total = price * quantity;  // total: number (выведено)
+    const message = `Итого: ${total}`;  // message: string (выведено)
+    return total;
+}</code></pre>
+
+    <h3 data-lang="ru">Антипример: «всё подряд аннотируем»</h3>
+    <h3 data-lang="en">Anti-example: "annotate everything"</h3>
+
+    <pre><code>// ❌ Слишком много аннотаций — шум, ничего не добавляет
+function calculatePrice(price: number, quantity: number): number {
+    const total: number = price * quantity;
+    const message: string = `Итого: ${total}`;
+    const taxRate: number = 0.13;
+    const taxed: number = total * (1 + taxRate);
+    return taxed;
+}</code></pre>
+
+    <p data-lang="ru">Все эти внутренние <code>: number</code> и <code>: string</code> — лишние. TS и так бы их вывел. Хорошие разработчики пишут код <em>лаконичнее</em>:</p>
+    <p data-lang="en">All those inner <code>: number</code> and <code>: string</code> are unnecessary. TS would infer them anyway. Good developers write more concisely:</p>
+
+    <pre><code>// ✅ Идиоматический TypeScript 2026
+function calculatePrice(price: number, quantity: number): number {
+    const total = price * quantity;
+    const taxRate = 0.13;
+    const taxed = total * (1 + taxRate);
+    return taxed;
+}</code></pre>
+
+    <div class="pro-tip">
+        <p data-lang="ru"><strong>Профессионалы говорят:</strong> «<em>TypeScript — это не больше кода, а меньше багов</em>». Если вы пишете в два раза больше TS, чем JS, — что-то не так с подходом. Хорошо настроенный TS добавляет 5-10% объёма за счёт аннотаций границ — и убирает 90% багов.</p>
+        <p data-lang="en"><strong>Pros say:</strong> "<em>TypeScript isn't more code, it's fewer bugs</em>". If your TS is twice the size of equivalent JS — your approach is off. Well-tuned TS adds 5-10% volume via boundary annotations — and removes 90% of bugs.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="when-to-annotate" data-lang="ru">7. Когда аннотировать, а когда нет</h2>
+    <h2 id="when-to-annotate" data-lang="en">7. When to annotate and when not to</h2>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Ситуация</th><th>Аннотация?</th><th>Почему</th></tr></thead>
+        <thead data-lang="en"><tr><th>Situation</th><th>Annotate?</th><th>Why</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td><code>const x = 5</code></td><td>❌ нет</td><td>TS сам выведет <code>5</code></td></tr>
+            <tr><td><code>let x = 5</code></td><td>❌ нет</td><td>TS сам выведет <code>number</code></td></tr>
+            <tr><td><code>let x;</code> (без значения)</td><td>✅ да</td><td>Иначе будет <code>any</code> — это плохо</td></tr>
+            <tr><td><code>function f(x)</code></td><td>✅ да</td><td>Параметры — это «граница» функции</td></tr>
+            <tr><td>Возврат из функции</td><td>⚠ часто да</td><td>Чтобы случайно не вернуть «не то»</td></tr>
+            <tr><td>Внутренние переменные функции</td><td>❌ нет</td><td>Inference справляется идеально</td></tr>
+            <tr><td>Объект на границе системы (API-ответ)</td><td>✅ да</td><td>TS не знает форму внешних данных</td></tr>
+            <tr><td>Constants для union-типов</td><td>⚠ обычно <code>const</code> + literal</td><td>Литеральный тип точнее</td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td><code>const x = 5</code></td><td>❌ no</td><td>TS infers <code>5</code></td></tr>
+            <tr><td><code>let x = 5</code></td><td>❌ no</td><td>TS infers <code>number</code></td></tr>
+            <tr><td><code>let x;</code> (no value)</td><td>✅ yes</td><td>Otherwise it becomes <code>any</code> — bad</td></tr>
+            <tr><td><code>function f(x)</code></td><td>✅ yes</td><td>Parameters are the function's "boundary"</td></tr>
+            <tr><td>Function return</td><td>⚠ often yes</td><td>To not accidentally return "the wrong thing"</td></tr>
+            <tr><td>Local variables inside a function</td><td>❌ no</td><td>Inference handles it perfectly</td></tr>
+            <tr><td>An object at the system boundary (API response)</td><td>✅ yes</td><td>TS doesn't know the shape of external data</td></tr>
+            <tr><td>Constants for union types</td><td>⚠ usually <code>const</code> + literal</td><td>The literal type is more precise</td></tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h2 id="errors" data-lang="ru">8. Чтение TS-ошибок: «is not assignable to»</h2>
+    <h2 id="errors" data-lang="en">8. Reading TS errors: "is not assignable to"</h2>
+
+    <p data-lang="ru">Самая частая ошибка в TypeScript — <code>Type 'X' is not assignable to type 'Y'</code>. Разберём, как её читать.</p>
+    <p data-lang="en">The most common TypeScript error is <code>Type 'X' is not assignable to type 'Y'</code>. Let's learn how to read it.</p>
+
+    <pre><code>let age: number = 18;
+age = "девятнадцать";
+//    ~~~~~~~~~~~~~~~
+// Type 'string' is not assignable to type 'number'.</code></pre>
+
+    <p data-lang="ru">Расшифровка слово за словом:</p>
+    <p data-lang="en">Word-by-word breakdown:</p>
+
+    <ul data-lang="ru">
+        <li><strong>Type 'string'</strong> — тип того, что вы <em>пытаетесь положить</em></li>
+        <li><strong>is not assignable to</strong> — «нельзя присвоить»</li>
+        <li><strong>type 'number'</strong> — тип переменной, <em>в которую кладёте</em></li>
+    </ul>
+    <ul data-lang="en">
+        <li><strong>Type 'string'</strong> — the type of the value you're <em>trying to put in</em></li>
+        <li><strong>is not assignable to</strong> — "cannot be assigned to"</li>
+        <li><strong>type 'number'</strong> — the type of the variable you're <em>putting it into</em></li>
+    </ul>
+
+    <p data-lang="ru">Перевод на человеческий: <em>«вы пытаетесь положить строку в переменную, которая ожидает число»</em>.</p>
+    <p data-lang="en">Translation to human: <em>"you're trying to put a string into a variable that expects a number"</em>.</p>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Как чинить:</strong></p>
+        <ol>
+            <li>Если вы передаёте <em>не то</em> значение — поправьте значение.</li>
+            <li>Если у переменной <em>неправильный тип</em> — поправьте тип.</li>
+            <li>Если действительно надо разные типы — используйте union (об этом в занятии 18).</li>
+        </ol>
+        <p data-lang="en"><strong>How to fix:</strong></p>
+        <ol>
+            <li>If you're passing the <em>wrong</em> value — fix the value.</li>
+            <li>If the variable has the <em>wrong</em> type — fix the type.</li>
+            <li>If you really need multiple types — use a union (we'll see that in Lesson 18).</li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <h2 id="hoisting" data-lang="ru">9. Hoisting и Temporal Dead Zone</h2>
+    <h2 id="hoisting" data-lang="en">9. Hoisting and the Temporal Dead Zone</h2>
+
+    <p data-lang="ru">Короткий, но важный раздел. JavaScript «поднимает» (hoists) объявления переменных в начало скоупа. Поведение разное для <code>var</code> и <code>let/const</code>.</p>
+    <p data-lang="en">A short but important section. JavaScript "hoists" variable declarations to the top of the scope. The behavior differs for <code>var</code> and <code>let/const</code>.</p>
+
+    <pre><code>// var: можно использовать ДО объявления — значение undefined
+console.log(x);   // → undefined (не ошибка!)
+var x = 5;
+
+// let/const: ошибка при использовании до объявления (TDZ)
+console.log(y);   // ❌ ReferenceError: Cannot access 'y' before initialization
+let y = 5;</code></pre>
+
+    <p data-lang="ru"><strong>TDZ (Temporal Dead Zone)</strong> — это «мёртвая зона» с начала скоупа до строки объявления <code>let</code>/<code>const</code>. В этой зоне переменная существует, но обращаться к ней нельзя. Это <strong>защитный механизм</strong> — он не даёт случайно использовать переменную «до создания».</p>
+    <p data-lang="en"><strong>TDZ (Temporal Dead Zone)</strong> is the "dead zone" between the start of the scope and the <code>let</code>/<code>const</code> declaration line. In this zone the variable exists but can't be accessed. This is a <strong>safety mechanism</strong> — it stops you from accidentally using a variable "before it's born".</p>
+
+    <div class="pro-tip">
+        <p data-lang="ru">Это ещё одна причина не использовать <code>var</code>: с ним легко случайно прочитать переменную до её объявления и получить тихий <code>undefined</code> вместо понятной ошибки.</p>
+        <p data-lang="en">Yet another reason to avoid <code>var</code>: it makes it easy to accidentally read a variable before its declaration and get a silent <code>undefined</code> instead of a clear error.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="naming" data-lang="ru">10. Правила именования переменных</h2>
+    <h2 id="naming" data-lang="en">10. Variable naming rules</h2>
+
+    <p data-lang="ru">Имя переменной — это первое, что увидит читатель кода (включая «будущего вас» через 3 месяца). Хорошее имя экономит часы понимания.</p>
+    <p data-lang="en">A variable name is the first thing a code reader sees (including "future you" three months from now). A good name saves hours of reading.</p>
+
+    <h3 data-lang="ru">Технические правила (заставит TS)</h3>
+    <h3 data-lang="en">Technical rules (enforced by TS)</h3>
+
+    <ul data-lang="ru">
+        <li>Имя начинается с буквы, <code>_</code> или <code>$</code></li>
+        <li>Дальше — буквы, цифры, <code>_</code>, <code>$</code> (без пробелов и дефисов)</li>
+        <li>Нельзя совпадать с ключевыми словами (<code>let</code>, <code>const</code>, <code>function</code>, <code>class</code>...)</li>
+        <li>Чувствительно к регистру: <code>age</code> и <code>Age</code> — разные переменные</li>
+    </ul>
+    <ul data-lang="en">
+        <li>Name starts with a letter, <code>_</code>, or <code>$</code></li>
+        <li>Then — letters, digits, <code>_</code>, <code>$</code> (no spaces or hyphens)</li>
+        <li>Can't match keywords (<code>let</code>, <code>const</code>, <code>function</code>, <code>class</code>...)</li>
+        <li>Case-sensitive: <code>age</code> and <code>Age</code> are different variables</li>
+    </ul>
+
+    <h3 data-lang="ru">Стилистические правила (по соглашению индустрии)</h3>
+    <h3 data-lang="en">Style rules (by industry convention)</h3>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Стиль</th><th>Когда применять</th><th>Пример</th></tr></thead>
+        <thead data-lang="en"><tr><th>Style</th><th>When</th><th>Example</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td><strong>camelCase</strong></td><td>Все обычные переменные и функции</td><td><code>userName</code>, <code>calculateTotal</code></td></tr>
+            <tr><td><strong>PascalCase</strong></td><td>Типы, интерфейсы, классы</td><td><code>User</code>, <code>HttpClient</code></td></tr>
+            <tr><td><strong>UPPER_SNAKE_CASE</strong></td><td>Константы-значения</td><td><code>MAX_RETRIES</code>, <code>API_URL</code></td></tr>
+            <tr><td><strong>_underscorePrefix</strong></td><td>Приватные/«внутренние» переменные (по соглашению)</td><td><code>_internalState</code></td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td><strong>camelCase</strong></td><td>All regular variables and functions</td><td><code>userName</code>, <code>calculateTotal</code></td></tr>
+            <tr><td><strong>PascalCase</strong></td><td>Types, interfaces, classes</td><td><code>User</code>, <code>HttpClient</code></td></tr>
+            <tr><td><strong>UPPER_SNAKE_CASE</strong></td><td>Constant values</td><td><code>MAX_RETRIES</code>, <code>API_URL</code></td></tr>
+            <tr><td><strong>_underscorePrefix</strong></td><td>Private/"internal" variables (by convention)</td><td><code>_internalState</code></td></tr>
+        </tbody>
+    </table>
+
+    <h3 data-lang="ru">Хорошие vs плохие имена</h3>
+    <h3 data-lang="en">Good vs bad names</h3>
+
+    <div class="compare">
+        <div class="wrong">
+            <div class="label" data-lang="ru">❌ Плохо</div>
+            <div class="label" data-lang="en">❌ Bad</div>
+            <pre><code>let x = 25;        // что за x?
+let d = new Date();// d?
+let arr = [...];   // массив чего?
+let temp;          // временное что?
+let data;          // данные о чём?</code></pre>
+        </div>
+        <div class="right">
+            <div class="label" data-lang="ru">✅ Хорошо</div>
+            <div class="label" data-lang="en">✅ Good</div>
+            <pre><code>let userAge = 25;
+let createdAt = new Date();
+let users = [...];
+let unsavedChanges;
+let userProfile;</code></pre>
+        </div>
+    </div>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Правило:</strong> «<em>код читается в 10 раз чаще, чем пишется</em>». Сэкономили секунду на наборе <code>d</code> вместо <code>createdAt</code> — потратили 10 минут на понимание через неделю.</p>
+        <p data-lang="en"><strong>Rule:</strong> "<em>code is read 10x more often than it's written</em>". You saved a second typing <code>d</code> instead of <code>createdAt</code> — and spent 10 minutes a week later figuring out what it means.</p>
+    </div>
+
+    <hr>
+
+    <div class="summary">
+        <ul data-lang="ru">
+            <li><strong>Переменная</strong> — именованный контейнер для значения.</li>
+            <li><strong>const</strong> по умолчанию, <strong>let</strong> если нужно менять, <strong>var</strong> — никогда.</li>
+            <li><strong>const</strong> запрещает переназначение, но не изменение полей объекта/массива.</li>
+            <li><strong>Аннотация типа</strong>: <code>let x: number = 5</code>. Гарантирует, что TS будет проверять тип.</li>
+            <li><strong>Type inference</strong> — TS сам определяет тип по значению. Работает почти везде.</li>
+            <li><strong>Widening:</strong> <code>let x = "hi"</code> → <code>string</code>, но <code>const x = "hi"</code> → <code>"hi"</code> (литерал).</li>
+            <li><strong>Правило 2026:</strong> аннотируй границы (параметры, возврат), доверяй inference внутри.</li>
+            <li><strong>Аннотируй обязательно:</strong> параметры функций, объявления без значения, данные с границы системы.</li>
+            <li><strong>Не аннотируй:</strong> внутренние переменные функций, очевидные литералы.</li>
+            <li>Ошибка <code>Type 'X' is not assignable to type 'Y'</code> = «вы передаёте X туда, где ждут Y».</li>
+            <li><strong>TDZ</strong> защищает от использования <code>let/const</code> до их объявления.</li>
+            <li><strong>camelCase</strong> для переменных, <strong>PascalCase</strong> для типов, <strong>UPPER_SNAKE_CASE</strong> для констант.</li>
+        </ul>
+        <ul data-lang="en">
+            <li><strong>A variable</strong> is a named container for a value.</li>
+            <li><strong>const</strong> by default, <strong>let</strong> if it needs to change, <strong>var</strong> — never.</li>
+            <li><strong>const</strong> forbids reassignment but not mutation of object/array fields.</li>
+            <li><strong>Type annotation</strong>: <code>let x: number = 5</code>. Forces TS to check the type.</li>
+            <li><strong>Type inference</strong> — TS figures out the type from the value. Works almost everywhere.</li>
+            <li><strong>Widening:</strong> <code>let x = "hi"</code> → <code>string</code>, but <code>const x = "hi"</code> → <code>"hi"</code> (literal).</li>
+            <li><strong>2026 rule:</strong> annotate boundaries (parameters, returns), trust inference inside.</li>
+            <li><strong>Must annotate:</strong> function parameters, declarations with no value, data from the system boundary.</li>
+            <li><strong>Don't annotate:</strong> local variables inside functions, obvious literals.</li>
+            <li>The error <code>Type 'X' is not assignable to type 'Y'</code> = "you're passing X where Y is expected".</li>
+            <li><strong>TDZ</strong> prevents using <code>let/const</code> before declaration.</li>
+            <li><strong>camelCase</strong> for variables, <strong>PascalCase</strong> for types, <strong>UPPER_SNAKE_CASE</strong> for constants.</li>
+        </ul>
+    </div>
+
+    <div class="quiz">
+        <ol data-lang="ru">
+            <li>В чём разница между <code>let</code> и <code>const</code>?</li>
+            <li>Почему в 2026 году не используют <code>var</code>?</li>
+            <li>Что такое аннотация типа? Покажите синтаксис.</li>
+            <li>Что такое type inference? Где он работает, а где — нет?</li>
+            <li>Почему <code>let x = 5</code> даёт тип <code>number</code>, а <code>const x = 5</code> — тип <code>5</code>?</li>
+            <li>Сформулируйте «правило 2026» об аннотациях.</li>
+            <li>В каких ситуациях аннотация типа обязательна?</li>
+            <li>Как читать ошибку <code>Type 'string' is not assignable to type 'number'</code>?</li>
+            <li>Что такое TDZ и зачем она нужна?</li>
+            <li>Какой стиль именования используется для переменных, типов и констант?</li>
+            <li>Можно ли изменить поле объекта, если он объявлен через <code>const</code>?</li>
+        </ol>
+        <ol data-lang="en">
+            <li>What's the difference between <code>let</code> and <code>const</code>?</li>
+            <li>Why isn't <code>var</code> used in 2026?</li>
+            <li>What is a type annotation? Show the syntax.</li>
+            <li>What is type inference? Where does it work, where doesn't it?</li>
+            <li>Why does <code>let x = 5</code> give type <code>number</code> but <code>const x = 5</code> give type <code>5</code>?</li>
+            <li>State the "2026 rule" about annotations.</li>
+            <li>In which situations is a type annotation mandatory?</li>
+            <li>How do you read the error <code>Type 'string' is not assignable to type 'number'</code>?</li>
+            <li>What is TDZ and why does it exist?</li>
+            <li>What naming style is used for variables, types, and constants?</li>
+            <li>Can you mutate an object's field if it's declared with <code>const</code>?</li>
+        </ol>
+    </div>
+
+</div>
+
+</body>
+</html>

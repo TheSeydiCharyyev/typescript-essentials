@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Занятие 2 — Установка инструментов (2026)</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/lecture.css">
+    <script src="../../js/lang.js" defer></script>
+    <style>
+        h1 { border-bottom-color: #a855f7; }
+        h2 { color: #7e22ce; background: #faf5ff; border-left-color: #a855f7; }
+        h3 { color: #581c87; }
+        .timeline { border-left-color: #a855f7; }
+        .timeline-item::before { background: #a855f7; }
+        .timeline-year { color: #7e22ce; }
+        .person-card .role { color: #7e22ce; }
+        .step-number { background: #a855f7; }
+        .toc a { color: #7e22ce; }
+    </style>
+</head>
+<body>
+
+<div class="lesson-nav">
+    <a href="../../index.html" class="nav-home" data-lang="ru">&#8592; Главная</a>
+    <a href="../../index.html" class="nav-home" data-lang="en">&#8592; Home</a>
+    <span class="nav-sep">|</span>
+    <span class="nav-title" data-lang="ru">Занятие 2: Установка инструментов</span>
+    <span class="nav-title" data-lang="en">Lesson 2: Tools Setup</span>
+    <span class="nav-sep">|</span>
+    <span class="nav-active" data-lang="ru">&#x1F468;&#x200D;&#x1F3EB; Лекция</span>
+    <span class="nav-active" data-lang="en">&#x1F468;&#x200D;&#x1F3EB; Lecture</span>
+    <a href="student.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F393; Конспект</a>
+    <a href="student.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F393; Notes</a>
+    <a href="tasks.html" class="nav-link" data-lang="ru">&#x1F4CB; Задания</a>
+    <a href="tasks.html" class="nav-link" data-lang="en">&#x1F4CB; Tasks</a>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+</div>
+
+<div class="container">
+
+    <h1 data-lang="ru">Занятие 2: Установка инструментов</h1>
+    <h1 data-lang="en">Lesson 2: Tools Setup</h1>
+    <p class="subtitle" data-lang="ru">Настраиваем рабочее место TypeScript-разработчика 2026 года: VS Code, Node.js 22+, npm, локальный TypeScript и раннер tsx</p>
+    <p class="subtitle" data-lang="en">Setting up a 2026 TypeScript developer's workstation: VS Code, Node.js 22+, npm, local TypeScript, and the tsx runner</p>
+
+    <div class="why">
+        <p data-lang="ru">В прошлом занятии мы разобрались, <em>что такое</em> TypeScript. Сегодня — настроим компьютер так, чтобы можно было писать на TS «по-настоящему», а не только в онлайн-песочнице. Хороший инструментарий экономит <strong>часы</strong> времени каждую неделю — без него программирование превращается в мучение.</p>
+        <p data-lang="en">Last lesson we figured out <em>what</em> TypeScript is. Today we'll set up the computer so we can write TS "for real", not just in the online playground. Good tooling saves <strong>hours</strong> every week — without it, programming becomes a chore.</p>
+        <p data-lang="ru"><strong>После этого занятия вы сможете:</strong></p>
+        <p data-lang="en"><strong>After this lesson you will be able to:</strong></p>
+        <ul data-lang="ru">
+            <li>Установить и настроить <strong>VS Code</strong> с нуля</li>
+            <li>Установить <strong>Node.js 22+ LTS</strong> и проверить версию</li>
+            <li>Объяснить, что такое <strong>npm</strong> и в чём разница локальной vs глобальной установки</li>
+            <li>Инициализировать проект: <code>npm init -y</code></li>
+            <li>Установить TypeScript <strong>локально</strong>: <code>npm install -D typescript tsx</code></li>
+            <li>Объяснить, почему в 2026 году ставят <strong>локально</strong>, а не <code>-g</code></li>
+            <li>Запустить <code>.ts</code>-файл одной командой: <code>npx tsx app.ts</code></li>
+            <li>Понимать роль современных альтернатив: <strong>Bun</strong> и <strong>Node 22+</strong> с <code>--experimental-strip-types</code></li>
+            <li>Установить 4 рекомендуемых расширения VS Code для TypeScript</li>
+            <li>Скомпилировать <code>hello.ts → hello.js</code> и запустить его через <code>node</code></li>
+        </ul>
+        <ul data-lang="en">
+            <li>Install and set up <strong>VS Code</strong> from scratch</li>
+            <li>Install <strong>Node.js 22+ LTS</strong> and check the version</li>
+            <li>Explain what <strong>npm</strong> is and the difference between local vs global installs</li>
+            <li>Initialize a project: <code>npm init -y</code></li>
+            <li>Install TypeScript <strong>locally</strong>: <code>npm install -D typescript tsx</code></li>
+            <li>Explain why in 2026 we install <strong>locally</strong>, not with <code>-g</code></li>
+            <li>Run a <code>.ts</code> file with one command: <code>npx tsx app.ts</code></li>
+            <li>Understand the role of modern alternatives: <strong>Bun</strong> and <strong>Node 22+</strong> with <code>--experimental-strip-types</code></li>
+            <li>Install 4 recommended VS Code extensions for TypeScript</li>
+            <li>Compile <code>hello.ts → hello.js</code> and run it via <code>node</code></li>
+        </ul>
+    </div>
+
+    <div class="toc">
+        <div class="toc-title" data-lang="ru">Содержание</div>
+        <div class="toc-title" data-lang="en">Contents</div>
+        <ol data-lang="ru">
+            <li><a href="#stack">Стек TypeScript-разработчика в 2026 году</a></li>
+            <li><a href="#vscode">Установка VS Code</a></li>
+            <li><a href="#node">Что такое Node.js и почему нужна версия 22+</a></li>
+            <li><a href="#install-node">Установка Node.js LTS</a></li>
+            <li><a href="#npm">npm: локально vs глобально</a></li>
+            <li><a href="#init">Инициализация проекта: npm init</a></li>
+            <li><a href="#install-ts">Установка TypeScript и tsx локально</a></li>
+            <li><a href="#extensions">4 расширения VS Code для TypeScript</a></li>
+            <li><a href="#first-run">Первый запуск: hello.ts</a></li>
+            <li><a href="#alternatives">Современные альтернативы: Bun и Node 22+ native</a></li>
+            <li><a href="#troubleshoot">Если что-то пошло не так</a></li>
+        </ol>
+        <ol data-lang="en">
+            <li><a href="#stack">The TypeScript developer's stack in 2026</a></li>
+            <li><a href="#vscode">Installing VS Code</a></li>
+            <li><a href="#node">What Node.js is and why version 22+ matters</a></li>
+            <li><a href="#install-node">Installing Node.js LTS</a></li>
+            <li><a href="#npm">npm: local vs global</a></li>
+            <li><a href="#init">Initializing a project: npm init</a></li>
+            <li><a href="#install-ts">Installing TypeScript and tsx locally</a></li>
+            <li><a href="#extensions">4 VS Code extensions for TypeScript</a></li>
+            <li><a href="#first-run">First run: hello.ts</a></li>
+            <li><a href="#alternatives">Modern alternatives: Bun and native Node 22+</a></li>
+            <li><a href="#troubleshoot">If something goes wrong</a></li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <h2 id="stack" data-lang="ru">1. Стек TypeScript-разработчика в 2026 году</h2>
+    <h2 id="stack" data-lang="en">1. The TypeScript developer's stack in 2026</h2>
+
+    <p data-lang="ru">«Стек» — это набор инструментов, которыми пользуется разработчик. Для современного TypeScript минимальный стек выглядит так:</p>
+    <p data-lang="en">A "stack" is the set of tools a developer uses. The minimum modern TypeScript stack looks like this:</p>
+
+    <div class="diagram">    ┌──────────────────────────────────────────────────┐
+    │       Стек TypeScript-разработчика (2026)        │
+    ├──────────────────────────────────────────────────┤
+    │  1. VS Code              — редактор, где пишем   │
+    │  2. Node.js 22+ LTS      — среда исполнения JS   │
+    │  3. npm                  — менеджер пакетов      │
+    │  4. typescript (локально)— компилятор tsc        │
+    │  5. tsx (локально)       — раннер .ts напрямую   │
+    │  6. 4 расширения VS Code — улучшают опыт работы  │
+    └──────────────────────────────────────────────────┘</div>
+
+    <p data-lang="ru">Все эти инструменты <strong>бесплатны</strong> и работают на Windows, macOS и Linux. Установим их по очереди.</p>
+    <p data-lang="en">All these tools are <strong>free</strong> and work on Windows, macOS, and Linux. We'll install them one by one.</p>
+
+    <div class="important">
+        <p data-lang="ru"><strong>Главное отличие от устаревших гайдов (2018-2022):</strong></p>
+        <ul>
+            <li>TypeScript ставим <strong>локально</strong> в проект (<code>-D</code>), а <strong>не глобально</strong> (<code>-g</code>) — так каждый проект использует свою версию компилятора</li>
+            <li>Вместо устаревшего <code>ts-node</code> — современный <code>tsx</code> (быстрее, проще, активно поддерживается)</li>
+            <li>Используем Node.js <strong>22+</strong> — он умеет запускать <code>.ts</code> напрямую через флаг <code>--experimental-strip-types</code></li>
+        </ul>
+        <p data-lang="en"><strong>The key difference from older guides (2018-2022):</strong></p>
+        <ul>
+            <li>Install TypeScript <strong>locally</strong> in the project (<code>-D</code>), <strong>not globally</strong> (<code>-g</code>) — so each project uses its own compiler version</li>
+            <li>Use modern <code>tsx</code> instead of legacy <code>ts-node</code> (faster, simpler, actively maintained)</li>
+            <li>Use Node.js <strong>22+</strong> — it can run <code>.ts</code> directly via the <code>--experimental-strip-types</code> flag</li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h2 id="vscode" data-lang="ru">2. Установка VS Code</h2>
+    <h2 id="vscode" data-lang="en">2. Installing VS Code</h2>
+
+    <p data-lang="ru"><strong>Visual Studio Code</strong> (VS Code) — самый популярный редактор кода в мире. Бесплатный, разработан Microsoft, имеет <em>встроенную</em> поддержку TypeScript «из коробки». Сам VS Code на 95% написан на TypeScript — поэтому работа с TS в нём идеальная.</p>
+    <p data-lang="en"><strong>Visual Studio Code</strong> (VS Code) is the most popular code editor in the world. Free, made by Microsoft, has <em>built-in</em> TypeScript support out of the box. VS Code itself is 95% TypeScript — so TS development in it is excellent.</p>
+
+    <div class="important">
+        <p data-lang="ru">Не путайте <strong>VS Code</strong> с <strong>Visual Studio</strong>. Это разные продукты Microsoft. Visual Studio — тяжёлая среда для C#/C++, нам она не нужна. Нам нужен лёгкий редактор <strong>VS Code</strong>.</p>
+        <p data-lang="en">Don't confuse <strong>VS Code</strong> with <strong>Visual Studio</strong>. These are different Microsoft products. Visual Studio is a heavy IDE for C#/C++, we don't need it. We need the lightweight <strong>VS Code</strong>.</p>
+    </div>
+
+    <h3 data-lang="ru">Пошаговая установка</h3>
+    <h3 data-lang="en">Step-by-step installation</h3>
+
+    <div class="step">
+        <div class="step-number">1</div>
+        <div>
+            <p data-lang="ru">Откройте <strong>code.visualstudio.com</strong> в браузере.</p>
+            <p data-lang="en">Open <strong>code.visualstudio.com</strong> in your browser.</p>
+        </div>
+    </div>
+    <div class="step">
+        <div class="step-number">2</div>
+        <div>
+            <p data-lang="ru">Нажмите большую синюю кнопку <strong>Download</strong> — сайт сам определит вашу ОС.</p>
+            <p data-lang="en">Click the big blue <strong>Download</strong> button — the site auto-detects your OS.</p>
+        </div>
+    </div>
+    <div class="step">
+        <div class="step-number">3</div>
+        <div>
+            <p data-lang="ru">Запустите установщик. На Windows в мастере поставьте галочки:</p>
+            <p data-lang="en">Run the installer. On Windows, in the wizard, check these boxes:</p>
+            <ul data-lang="ru">
+                <li><strong>Add "Open with Code" action to Windows Explorer file context menu</strong> — открытие файла правым кликом</li>
+                <li><strong>Add "Open with Code" action to Windows Explorer directory context menu</strong> — то же для папок</li>
+                <li><strong>Add to PATH</strong> — позволит запускать VS Code из терминала командой <code>code .</code></li>
+            </ul>
+            <ul data-lang="en">
+                <li><strong>Add "Open with Code" action to Windows Explorer file context menu</strong> — open files via right-click</li>
+                <li><strong>Add "Open with Code" action to Windows Explorer directory context menu</strong> — same for folders</li>
+                <li><strong>Add to PATH</strong> — lets you launch VS Code from the terminal via <code>code .</code></li>
+            </ul>
+        </div>
+    </div>
+    <div class="step">
+        <div class="step-number">4</div>
+        <div>
+            <p data-lang="ru">Дождитесь окончания установки и запустите VS Code. При первом запуске выберите тему (светлая/тёмная) — её можно поменять потом.</p>
+            <p data-lang="en">Wait for installation to finish, then launch VS Code. On first run pick a theme (light/dark) — you can change it later.</p>
+        </div>
+    </div>
+
+    <h3 data-lang="ru">Знакомство с интерфейсом VS Code</h3>
+    <h3 data-lang="en">Getting familiar with the VS Code interface</h3>
+
+    <ul data-lang="ru">
+        <li><strong>Activity Bar</strong> (левая полоска иконок) — Files, Search, Git, Debug, Extensions</li>
+        <li><strong>Side Bar</strong> — дерево файлов проекта</li>
+        <li><strong>Editor</strong> — главное окно, где вы пишете код</li>
+        <li><strong>Status Bar</strong> (внизу) — язык файла, кодировка, ошибки, позиция курсора</li>
+        <li><strong>Terminal</strong> (открыть: <span class="kbd">Ctrl</span>+<span class="kbd">`</span>) — встроенная командная строка, нам она нужна для npm, tsc и tsx</li>
+    </ul>
+    <ul data-lang="en">
+        <li><strong>Activity Bar</strong> (left vertical strip) — Files, Search, Git, Debug, Extensions</li>
+        <li><strong>Side Bar</strong> — project file tree</li>
+        <li><strong>Editor</strong> — main window for writing code</li>
+        <li><strong>Status Bar</strong> (bottom) — file language, encoding, errors, cursor position</li>
+        <li><strong>Terminal</strong> (open with <span class="kbd">Ctrl</span>+<span class="kbd">`</span>) — built-in command line, we need it for npm, tsc, and tsx</li>
+    </ul>
+
+    <div class="pro-tip">
+        <p data-lang="ru">Работайте с <strong>папкой проекта</strong>, а не с отдельными файлами: <em>File → Open Folder</em>. Тогда VS Code видит весь проект, расширения работают правильно, а встроенная поддержка TypeScript читает <code>tsconfig.json</code> и подсказки становятся точными.</p>
+        <p data-lang="en">Work with a <strong>project folder</strong>, not single files: <em>File → Open Folder</em>. This way VS Code sees the whole project, extensions work correctly, and the built-in TypeScript support reads <code>tsconfig.json</code> for accurate hints.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="node" data-lang="ru">3. Что такое Node.js и почему нужна версия 22+</h2>
+    <h2 id="node" data-lang="en">3. What Node.js is and why version 22+ matters</h2>
+
+    <p data-lang="ru">Подождите — мы же учим TypeScript для браузера? Зачем нам Node.js?</p>
+    <p data-lang="en">Wait — we're learning TypeScript for the browser, right? Why do we need Node.js?</p>
+
+    <div style="background:#faf5ff;border:1px solid #d8b4fe;padding:16px 20px;border-radius:8px;margin:16px 0;">
+        <p data-lang="ru"><strong>Node.js</strong> — это <strong>среда исполнения JavaScript вне браузера</strong>. Создана в 2009 году Райаном Далем. Использует тот же движок V8, что и Chrome. С её помощью можно: запускать JS-файлы прямо из терминала, ставить пакеты через npm, писать серверы и CLI-утилиты.</p>
+        <p data-lang="en"><strong>Node.js</strong> is a <strong>JavaScript runtime that works outside the browser</strong>. Created in 2009 by Ryan Dahl. It uses the same V8 engine as Chrome. With it you can: run JS files from the terminal, install packages via npm, write servers and CLI tools.</p>
+    </div>
+
+    <p data-lang="ru">Для нас Node.js нужен по <strong>трём причинам</strong>:</p>
+    <p data-lang="en">For us, Node.js is needed for <strong>three reasons</strong>:</p>
+
+    <ol data-lang="ru">
+        <li><strong>Чтобы установить компилятор TypeScript.</strong> Сам <code>tsc</code> — это пакет npm, а npm идёт вместе с Node.js. Нет Node — нет npm — нет tsc.</li>
+        <li><strong>Чтобы запускать <code>.ts</code>/<code>.js</code>-файлы вне браузера.</strong> Через <code>node hello.js</code> (или <code>npx tsx hello.ts</code>) прямо в терминале, без HTML-страницы.</li>
+        <li><strong>Чтобы устанавливать любые TS-пакеты для будущих проектов.</strong> React, Express, Vite, NestJS, Zod — всё ставится через npm.</li>
+    </ol>
+    <ol data-lang="en">
+        <li><strong>To install the TypeScript compiler.</strong> <code>tsc</code> itself is an npm package, and npm comes with Node.js. No Node — no npm — no tsc.</li>
+        <li><strong>To run <code>.ts</code>/<code>.js</code> files outside the browser.</strong> Via <code>node hello.js</code> (or <code>npx tsx hello.ts</code>) right in the terminal, no HTML page needed.</li>
+        <li><strong>To install any TS packages for future projects.</strong> React, Express, Vite, NestJS, Zod — everything installs through npm.</li>
+    </ol>
+
+    <h3 data-lang="ru">Почему именно Node.js 22+</h3>
+    <h3 data-lang="en">Why specifically Node.js 22+</h3>
+
+    <p data-lang="ru">В 2024 году Node.js научился запускать TypeScript-файлы <strong>напрямую</strong> через флаг <code>--experimental-strip-types</code>. Это работает в Node.js версии <strong>22.6+</strong>. В Node.js <strong>23+</strong> этот режим включён по умолчанию.</p>
+    <p data-lang="en">In 2024 Node.js learned to run TypeScript files <strong>directly</strong> via the <code>--experimental-strip-types</code> flag. This works in Node.js <strong>22.6+</strong>. In Node.js <strong>23+</strong> this mode is on by default.</p>
+
+    <pre><code># Node.js 22+ умеет это:
+node --experimental-strip-types hello.ts
+
+# Node.js 23+ умеет это:
+node hello.ts</code></pre>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Что это значит:</strong> для маленьких скриптов вообще не нужны <code>tsc</code> или <code>tsx</code> — достаточно одного <code>node</code>. Но для реальных проектов мы всё равно ставим TypeScript локально, потому что нужны полная проверка типов, генерация <code>.d.ts</code> и работа с конфигом.</p>
+        <p data-lang="en"><strong>What this means:</strong> for small scripts you don't need <code>tsc</code> or <code>tsx</code> at all — just <code>node</code>. But for real projects we still install TypeScript locally because we need full type checking, <code>.d.ts</code> generation, and config support.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="install-node" data-lang="ru">4. Установка Node.js LTS</h2>
+    <h2 id="install-node" data-lang="en">4. Installing Node.js LTS</h2>
+
+    <div class="step">
+        <div class="step-number">1</div>
+        <div>
+            <p data-lang="ru">Откройте <strong>nodejs.org</strong> в браузере.</p>
+            <p data-lang="en">Open <strong>nodejs.org</strong> in your browser.</p>
+        </div>
+    </div>
+    <div class="step">
+        <div class="step-number">2</div>
+        <div>
+            <p data-lang="ru">Вы увидите две большие зелёные кнопки. Нажмите <strong>«LTS»</strong> (Long Term Support, «долгосрочная поддержка») — это стабильная версия для ежедневной работы. В 2026 году LTS — это Node.js 22 или новее.</p>
+            <p data-lang="en">You'll see two big green buttons. Click <strong>"LTS"</strong> (Long Term Support) — the stable version for everyday work. In 2026, LTS means Node.js 22 or newer.</p>
+        </div>
+    </div>
+    <div class="step">
+        <div class="step-number">3</div>
+        <div>
+            <p data-lang="ru">Запустите скачанный установщик. На каждом шаге нажимайте <em>Next</em>, ничего не меняйте. На последнем экране — <em>Install</em>.</p>
+            <p data-lang="en">Run the installer. Click <em>Next</em> on each step without changing defaults. On the final screen — <em>Install</em>.</p>
+        </div>
+    </div>
+    <div class="step">
+        <div class="step-number">4</div>
+        <div>
+            <p data-lang="ru"><strong>Проверьте установку.</strong> Откройте новый терминал (например, в VS Code: <span class="kbd">Ctrl</span>+<span class="kbd">`</span>) и выполните:</p>
+            <p data-lang="en"><strong>Verify the installation.</strong> Open a fresh terminal (e.g., in VS Code: <span class="kbd">Ctrl</span>+<span class="kbd">`</span>) and run:</p>
+            <pre><code>node --version    # должно вывести v22.x.x или новее
+npm --version     # должно вывести 10.x.x или новее</code></pre>
+            <p data-lang="ru">Если обе команды показали версии — поздравляю, у вас на компьютере теперь есть Node.js и npm.</p>
+            <p data-lang="en">If both commands show versions — congratulations, your computer now has Node.js and npm.</p>
+        </div>
+    </div>
+
+    <div class="mistake">
+        <p data-lang="ru"><strong>Частая ошибка:</strong> терминал был открыт <em>до</em> установки Node.js. Тогда команда <code>node</code> не найдётся. Решение — закрыть терминал и открыть новый. Если не помогает — перезагрузите компьютер.</p>
+        <p data-lang="en"><strong>Common mistake:</strong> the terminal was open <em>before</em> Node.js was installed. Then the <code>node</code> command won't be found. Fix — close the terminal and open a new one. If that doesn't help — restart your computer.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="npm" data-lang="ru">5. npm: локально vs глобально</h2>
+    <h2 id="npm" data-lang="en">5. npm: local vs global</h2>
+
+    <p data-lang="ru"><strong>npm</strong> расшифровывается как <em>Node Package Manager</em>. Это программа, которая <strong>устанавливается вместе с Node.js</strong> и позволяет скачивать и обновлять <em>пакеты</em> — готовые библиотеки чужого кода.</p>
+    <p data-lang="en"><strong>npm</strong> stands for <em>Node Package Manager</em>. It's a program that <strong>ships together with Node.js</strong> and lets you download and update <em>packages</em> — ready-made libraries of other people's code.</p>
+
+    <div class="analogy">
+        <p data-lang="ru">Аналогия: npm — это <strong>App Store / Google Play для разработчиков</strong>. На сегодня в реестре npm — <strong>больше 3 миллионов пакетов</strong>.</p>
+        <p data-lang="en">Analogy: npm is the <strong>App Store / Google Play for developers</strong>. The npm registry today has <strong>over 3 million packages</strong>.</p>
+    </div>
+
+    <h3 data-lang="ru">Два режима установки</h3>
+    <h3 data-lang="en">Two install modes</h3>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Режим</th><th>Команда</th><th>Куда ставится</th><th>Когда использовать</th></tr></thead>
+        <thead data-lang="en"><tr><th>Mode</th><th>Command</th><th>Where it goes</th><th>When to use</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td><strong>Локально</strong> <span style="color:#16a34a;">✓ рекомендуется</span></td><td><code>npm install -D &lt;package&gt;</code></td><td>В папку <code>node_modules/</code> внутри проекта</td><td><strong>Всегда</strong> — для компилятора, раннера и любых библиотек проекта</td></tr>
+            <tr><td><strong>Глобально</strong> <span style="color:#dc2626;">⚠ редко</span></td><td><code>npm install -g &lt;package&gt;</code></td><td>В системную папку, доступно из любого места</td><td>Только для системных утилит (например, <code>pnpm</code> или <code>nodemon</code>)</td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td><strong>Local</strong> <span style="color:#16a34a;">✓ recommended</span></td><td><code>npm install -D &lt;package&gt;</code></td><td>To <code>node_modules/</code> inside the project</td><td><strong>Always</strong> — for the compiler, runner, and any project library</td></tr>
+            <tr><td><strong>Global</strong> <span style="color:#dc2626;">⚠ rarely</span></td><td><code>npm install -g &lt;package&gt;</code></td><td>To a system folder, available everywhere</td><td>Only for system utilities (e.g., <code>pnpm</code> or <code>nodemon</code>)</td></tr>
+        </tbody>
+    </table>
+
+    <h3 data-lang="ru">Почему в 2026 году ставят локально</h3>
+    <h3 data-lang="en">Why we install locally in 2026</h3>
+
+    <p data-lang="ru">В старых гайдах вы увидите <code>npm install -g typescript</code>. Это всё ещё работает, но <strong>устарело</strong>. Современный подход — ставить компилятор <strong>в каждый проект отдельно</strong>:</p>
+    <p data-lang="en">Old guides will show <code>npm install -g typescript</code>. That still works but is <strong>outdated</strong>. The modern approach is to install the compiler <strong>per project</strong>:</p>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Проблема глобальной установки</th><th>Решение через локальную</th></tr></thead>
+        <thead data-lang="en"><tr><th>Problem with global install</th><th>Local install fixes it</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td>На компьютере одна версия TS — все проекты её делят. Старый проект на TS 4.x ломается, если вы обновили глобальный TS до 5.x.</td><td>Каждый проект фиксирует свою версию в <code>package.json</code>. Старые проекты работают как работали.</td></tr>
+            <tr><td>Коллега клонирует ваш проект — у него нет тех же глобальных пакетов. Проект «не собирается».</td><td>Один раз <code>npm install</code> — и все нужные пакеты автоматически установятся в проект.</td></tr>
+            <tr><td>На macOS/Linux нужны права <code>sudo</code> для глобальной установки.</td><td>Локально — никаких <code>sudo</code>, всё в папке проекта.</td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td>One TS version on the computer — all projects share it. An old TS 4.x project breaks when you upgrade the global TS to 5.x.</td><td>Each project pins its own version in <code>package.json</code>. Old projects keep working.</td></tr>
+            <tr><td>A colleague clones your project — they don't have your global packages. The project "won't build".</td><td>A single <code>npm install</code> brings in every needed package automatically.</td></tr>
+            <tr><td>On macOS/Linux global installs need <code>sudo</code>.</td><td>Local installs need no <code>sudo</code> — everything stays in the project folder.</td></tr>
+        </tbody>
+    </table>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Запомните флаги npm install:</strong></p>
+        <ul>
+            <li><code>-D</code> (или <code>--save-dev</code>) — пакет нужен только при разработке (компилятор, тесты, форматтер). Это наш случай.</li>
+            <li>без флага — пакет нужен в продакшене (например, <code>express</code>, <code>react</code>).</li>
+            <li><code>-g</code> — глобально (старайтесь не использовать).</li>
+        </ul>
+        <p data-lang="en"><strong>Remember the npm install flags:</strong></p>
+        <ul>
+            <li><code>-D</code> (or <code>--save-dev</code>) — package needed only at development time (compiler, tests, formatter). Our case.</li>
+            <li>no flag — package needed in production (e.g., <code>express</code>, <code>react</code>).</li>
+            <li><code>-g</code> — globally (try not to use it).</li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h2 id="init" data-lang="ru">6. Инициализация проекта: npm init</h2>
+    <h2 id="init" data-lang="en">6. Initializing a project: npm init</h2>
+
+    <p data-lang="ru">Прежде чем ставить TypeScript локально, нужно <strong>создать проект</strong> — папку с файлом <code>package.json</code>, в котором npm будет хранить список зависимостей.</p>
+    <p data-lang="en">Before installing TypeScript locally, we need to <strong>create a project</strong> — a folder with a <code>package.json</code> file where npm tracks dependencies.</p>
+
+    <div class="step">
+        <div class="step-number">1</div>
+        <div>
+            <p data-lang="ru">Создайте на рабочем столе папку <code>hello-ts/</code> и откройте её в VS Code (<em>File → Open Folder</em>).</p>
+            <p data-lang="en">Create a folder <code>hello-ts/</code> on your desktop and open it in VS Code (<em>File → Open Folder</em>).</p>
+        </div>
+    </div>
+    <div class="step">
+        <div class="step-number">2</div>
+        <div>
+            <p data-lang="ru">Откройте терминал в VS Code (<span class="kbd">Ctrl</span>+<span class="kbd">`</span>) и выполните:</p>
+            <p data-lang="en">Open the terminal in VS Code (<span class="kbd">Ctrl</span>+<span class="kbd">`</span>) and run:</p>
+            <pre><code>npm init -y</code></pre>
+            <p data-lang="ru">Флаг <code>-y</code> означает «согласиться на все настройки по умолчанию». В папке появится файл <code>package.json</code>:</p>
+            <p data-lang="en">The <code>-y</code> flag means "accept all defaults". A <code>package.json</code> file appears in the folder:</p>
+            <pre><code>{
+  "name": "hello-ts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" &amp;&amp; exit 1"
+  }
+}</code></pre>
+        </div>
+    </div>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>package.json — это «паспорт» проекта.</strong> В нём хранится: имя, версия, скрипты для запуска (<code>npm run ...</code>) и список зависимостей. Этот файл должен быть в каждом TS/JS-проекте.</p>
+        <p data-lang="en"><strong>package.json is the project's "passport".</strong> It stores: name, version, scripts (<code>npm run ...</code>), and the dependency list. Every TS/JS project must have this file.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="install-ts" data-lang="ru">7. Установка TypeScript и tsx локально</h2>
+    <h2 id="install-ts" data-lang="en">7. Installing TypeScript and tsx locally</h2>
+
+    <p data-lang="ru">Главное событие занятия. Две библиотеки одной командой:</p>
+    <p data-lang="en">The main event of the lesson. Two libraries in one command:</p>
+
+    <pre><code>npm install -D typescript tsx</code></pre>
+
+    <p data-lang="ru">Расшифровка:</p>
+    <p data-lang="en">Breakdown:</p>
+
+    <ul data-lang="ru">
+        <li><code>npm</code> — вызываем npm</li>
+        <li><code>install</code> — установить (можно сократить до <code>i</code>)</li>
+        <li><code>-D</code> — флаг «dev dependency», только для разработки</li>
+        <li><code>typescript</code> — пакет с компилятором <code>tsc</code></li>
+        <li><code>tsx</code> — пакет с раннером для прямого запуска <code>.ts</code>-файлов</li>
+    </ul>
+    <ul data-lang="en">
+        <li><code>npm</code> — invoke npm</li>
+        <li><code>install</code> — install (can be shortened to <code>i</code>)</li>
+        <li><code>-D</code> — "dev dependency" flag, development-only</li>
+        <li><code>typescript</code> — package with the <code>tsc</code> compiler</li>
+        <li><code>tsx</code> — package with the runner that executes <code>.ts</code> files directly</li>
+    </ul>
+
+    <p data-lang="ru">После установки <code>package.json</code> обновится — там появится секция <code>devDependencies</code>:</p>
+    <p data-lang="en">After install, <code>package.json</code> updates — a <code>devDependencies</code> section appears:</p>
+
+    <pre><code>{
+  "name": "hello-ts",
+  "version": "1.0.0",
+  "devDependencies": {
+    "typescript": "^5.x.x",
+    "tsx": "^4.x.x"
+  }
+}</code></pre>
+
+    <p data-lang="ru">А в папке появится <code>node_modules/</code> — туда скачались все пакеты.</p>
+    <p data-lang="en">And a <code>node_modules/</code> folder appears — that's where all packages were downloaded.</p>
+
+    <h3 data-lang="ru">Проверка</h3>
+    <h3 data-lang="en">Verification</h3>
+
+    <pre><code>npx tsc --version
+# Output: Version 5.x.x
+
+npx tsx --version
+# Output: tsx v4.x.x</code></pre>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Что такое <code>npx</code>:</strong> утилита, которая идёт вместе с npm и умеет запускать любой <em>локально установленный</em> пакет. Без <code>npx</code> терминал не найдёт <code>tsc</code> или <code>tsx</code>, потому что они стоят в <code>node_modules/.bin/</code>, а не в системном PATH.</p>
+        <p data-lang="en"><strong>What <code>npx</code> is:</strong> a utility shipped with npm that can run any <em>locally installed</em> package. Without <code>npx</code> the terminal won't find <code>tsc</code> or <code>tsx</code> because they live in <code>node_modules/.bin/</code>, not the system PATH.</p>
+    </div>
+
+    <div class="pro-tip">
+        <p data-lang="ru"><strong>Что в <code>.gitignore</code>:</strong> папку <code>node_modules/</code> не коммитят в git — она восстанавливается командой <code>npm install</code> из <code>package.json</code>. Создайте в проекте файл <code>.gitignore</code> со строкой <code>node_modules</code>.</p>
+        <p data-lang="en"><strong>About <code>.gitignore</code>:</strong> the <code>node_modules/</code> folder is never committed to git — it's restored by <code>npm install</code> from <code>package.json</code>. Create a <code>.gitignore</code> file in the project with the line <code>node_modules</code>.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="extensions" data-lang="ru">8. 4 расширения VS Code для TypeScript</h2>
+    <h2 id="extensions" data-lang="en">8. 4 VS Code extensions for TypeScript</h2>
+
+    <p data-lang="ru">Хорошая новость: <strong>основная поддержка TypeScript в VS Code уже встроена</strong>. Подсветка синтаксиса, подсказки, переход к определению, проверка ошибок — всё работает «из коробки», без расширений. Но 4 расширения сделают опыт ещё приятнее.</p>
+    <p data-lang="en">Good news: <strong>VS Code already has built-in TypeScript support</strong>. Syntax highlighting, IntelliSense, "go to definition", error checking — everything works out of the box, no extensions needed. But 4 extensions will make the experience even nicer.</p>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Расширение</th><th>Что делает</th><th>Зачем нужно</th></tr></thead>
+        <thead data-lang="en"><tr><th>Extension</th><th>What it does</th><th>Why you need it</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td><strong>Pretty TypeScript Errors</strong><br><small>YoavBls.pretty-ts-errors</small></td><td>Превращает страшные TS-ошибки в человеческие</td><td>Учиться по понятным сообщениям в 10 раз проще</td></tr>
+            <tr><td><strong>Error Lens</strong><br><small>usernamehw.errorlens</small></td><td>Показывает текст ошибки прямо в строке кода</td><td>Не надо наводить курсор — ошибка видна сразу</td></tr>
+            <tr><td><strong>Prettier</strong><br><small>esbenp.prettier-vscode</small></td><td>Авто-форматирование кода: пробелы, кавычки, отступы</td><td>Код всегда выглядит одинаково аккуратно</td></tr>
+            <tr><td><strong>Code Runner</strong><br><small>formulahendry.code-runner</small></td><td>Запуск файла одним кликом (кнопка «play»)</td><td>Удобно для быстрых экспериментов с <code>.ts</code></td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td><strong>Pretty TypeScript Errors</strong><br><small>YoavBls.pretty-ts-errors</small></td><td>Turns scary TS errors into human-readable messages</td><td>Learning is 10x easier with clear errors</td></tr>
+            <tr><td><strong>Error Lens</strong><br><small>usernamehw.errorlens</small></td><td>Shows error text right in the code line</td><td>No need to hover — errors visible instantly</td></tr>
+            <tr><td><strong>Prettier</strong><br><small>esbenp.prettier-vscode</small></td><td>Auto-formats code: spaces, quotes, indents</td><td>Code always looks consistently neat</td></tr>
+            <tr><td><strong>Code Runner</strong><br><small>formulahendry.code-runner</small></td><td>Run a file with one click (the "play" button)</td><td>Convenient for quick <code>.ts</code> experiments</td></tr>
+        </tbody>
+    </table>
+
+    <h3 data-lang="ru">Как установить расширение</h3>
+    <h3 data-lang="en">How to install an extension</h3>
+
+    <div class="step">
+        <div class="step-number">1</div>
+        <div>
+            <p data-lang="ru">Нажмите иконку <strong>Extensions</strong> в Activity Bar (или <span class="kbd">Ctrl</span>+<span class="kbd">Shift</span>+<span class="kbd">X</span>).</p>
+            <p data-lang="en">Click the <strong>Extensions</strong> icon in the Activity Bar (or <span class="kbd">Ctrl</span>+<span class="kbd">Shift</span>+<span class="kbd">X</span>).</p>
+        </div>
+    </div>
+    <div class="step">
+        <div class="step-number">2</div>
+        <div>
+            <p data-lang="ru">В строке поиска введите название, например <code>Pretty TypeScript Errors</code>. Сверьтесь с автором (см. таблицу выше).</p>
+            <p data-lang="en">In the search box, type the name, e.g. <code>Pretty TypeScript Errors</code>. Verify the author (see table above).</p>
+        </div>
+    </div>
+    <div class="step">
+        <div class="step-number">3</div>
+        <div>
+            <p data-lang="ru">Нажмите <strong>Install</strong>. Повторите для остальных трёх расширений.</p>
+            <p data-lang="en">Click <strong>Install</strong>. Repeat for the other three extensions.</p>
+        </div>
+    </div>
+
+    <div class="mistake">
+        <p data-lang="ru">Не ставьте «всё подряд», что попадается в магазине расширений. Каждое расширение замедляет VS Code и может конфликтовать с другими. Хорошее правило: <em>ставьте только то, что реально используете</em>.</p>
+        <p data-lang="en">Don't install "everything you see" in the extensions marketplace. Each extension slows VS Code down and can conflict with others. Good rule: <em>install only what you actually use</em>.</p>
+    </div>
+
+    <hr>
+
+    <h2 id="first-run" data-lang="ru">9. Первый запуск: hello.ts</h2>
+    <h2 id="first-run" data-lang="en">9. First run: hello.ts</h2>
+
+    <p data-lang="ru">Установка проверяется одним способом — реально что-то запустить. Сделаем самый простой «Hello, TypeScript!».</p>
+    <p data-lang="en">There's one way to verify the installation — actually run something. We'll do the simplest "Hello, TypeScript!".</p>
+
+    <div class="step">
+        <div class="step-number">1</div>
+        <div>
+            <p data-lang="ru">В папке проекта (<code>hello-ts/</code>) создайте файл <code>hello.ts</code> и вставьте:</p>
+            <p data-lang="en">In the project folder (<code>hello-ts/</code>) create a file <code>hello.ts</code> and paste:</p>
+            <pre><code>const greeting: string = "Hello, TypeScript!";
+const year: number = 2026;
+
+console.log(greeting);
+console.log("Год: " + year);</code></pre>
+        </div>
+    </div>
+    <div class="step">
+        <div class="step-number">2</div>
+        <div>
+            <p data-lang="ru"><strong>Способ A — через tsx (быстро и для экспериментов):</strong></p>
+            <p data-lang="en"><strong>Way A — via tsx (fast, for experiments):</strong></p>
+            <pre><code>npx tsx hello.ts</code></pre>
+            <p data-lang="ru">В терминале сразу появится:</p>
+            <p data-lang="en">The terminal immediately shows:</p>
+            <pre><code>Hello, TypeScript!
+Год: 2026</code></pre>
+        </div>
+    </div>
+    <div class="step">
+        <div class="step-number">3</div>
+        <div>
+            <p data-lang="ru"><strong>Способ Б — через tsc + node (как для настоящего проекта):</strong></p>
+            <p data-lang="en"><strong>Way B — via tsc + node (production-style):</strong></p>
+            <pre><code>npx tsc hello.ts
+node hello.js</code></pre>
+            <p data-lang="ru">После <code>npx tsc hello.ts</code> рядом появится <code>hello.js</code> — чистый JavaScript без типов. Откройте его и сравните с <code>hello.ts</code>: видите, как <code>: string</code> и <code>: number</code> исчезли?</p>
+            <p data-lang="en">After <code>npx tsc hello.ts</code> a <code>hello.js</code> appears next to it — plain JavaScript with no types. Open it and compare to <code>hello.ts</code>: see how <code>: string</code> and <code>: number</code> are gone?</p>
+        </div>
+    </div>
+
+    <div class="result-box">
+        <p data-lang="ru"><strong>Поздравляю!</strong> Вы только что прошли полный цикл современной TS-разработки: <em>проект → npm install → написал TS → запустил через tsx (или скомпилировал в JS)</em>. Это та схема, по которой работают <strong>все</strong> TypeScript-проекты 2026 года.</p>
+        <p data-lang="en"><strong>Congratulations!</strong> You just went through the full modern TS dev cycle: <em>project → npm install → write TS → run via tsx (or compile to JS)</em>. This is the schema <strong>every</strong> 2026 TypeScript project follows.</p>
+    </div>
+
+    <h3 data-lang="ru">Когда tsx, а когда tsc</h3>
+    <h3 data-lang="en">When tsx, when tsc</h3>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Ситуация</th><th>Чем запускать</th></tr></thead>
+        <thead data-lang="en"><tr><th>Situation</th><th>What to use</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td>Эксперименты, обучение, скрипты</td><td><code>npx tsx file.ts</code> — быстро, одной командой</td></tr>
+            <tr><td>Реальный проект на продакшен</td><td><code>npx tsc</code> — собрать <code>.js</code> для деплоя</td></tr>
+            <tr><td>Большой проект с автосборкой при сохранении</td><td><code>npx tsc --watch</code> — компилятор следит за изменениями</td></tr>
+            <tr><td>Только хочу проверить типы, не запускать</td><td><code>npx tsc --noEmit</code> — только проверка, без генерации <code>.js</code></td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td>Experiments, learning, scripts</td><td><code>npx tsx file.ts</code> — fast, one command</td></tr>
+            <tr><td>Real project going to production</td><td><code>npx tsc</code> — build <code>.js</code> for deployment</td></tr>
+            <tr><td>Big project with auto-rebuild on save</td><td><code>npx tsc --watch</code> — compiler watches changes</td></tr>
+            <tr><td>Just want to check types, not run</td><td><code>npx tsc --noEmit</code> — type-check only, no <code>.js</code></td></tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h2 id="alternatives" data-lang="ru">10. Современные альтернативы: Bun и Node 22+ native</h2>
+    <h2 id="alternatives" data-lang="en">10. Modern alternatives: Bun and native Node 22+</h2>
+
+    <p data-lang="ru">В 2024-2025 годах появились два способа запускать TypeScript <strong>вообще без установки</strong> отдельного компилятора или раннера.</p>
+    <p data-lang="en">In 2024-2025 two ways appeared to run TypeScript <strong>without installing</strong> a separate compiler or runner at all.</p>
+
+    <h3 data-lang="ru">Вариант 1: Node.js 22+ native TypeScript</h3>
+    <h3 data-lang="en">Option 1: Node.js 22+ native TypeScript</h3>
+
+    <pre><code># Node.js 22.6+
+node --experimental-strip-types hello.ts
+
+# Node.js 23+ (включено по умолчанию)
+node hello.ts</code></pre>
+
+    <p data-lang="ru">Node просто «стирает» аннотации типов и запускает то, что осталось — как обычный JS. Подходит для маленьких скриптов.</p>
+    <p data-lang="en">Node simply "strips" type annotations and runs what's left — like regular JS. Good for small scripts.</p>
+
+    <div class="important">
+        <p data-lang="ru"><strong>Ограничение:</strong> native-режим Node не понимает <code>enum</code>, namespaces и параметры конструктора с модификаторами (например, <code>constructor(private name: string)</code>). Поэтому в 2026 году эти возможности TypeScript считаются <em>legacy</em> — мы их будем разбирать в курсе, но писать новый код стоит без них.</p>
+        <p data-lang="en"><strong>Limitation:</strong> Node's native mode doesn't understand <code>enum</code>, namespaces, or parameter properties (e.g. <code>constructor(private name: string)</code>). That's why these TS features are considered <em>legacy</em> in 2026 — we'll cover them in the course but write new code without them.</p>
+    </div>
+
+    <h3 data-lang="ru">Вариант 2: Bun</h3>
+    <h3 data-lang="en">Option 2: Bun</h3>
+
+    <p data-lang="ru"><strong>Bun</strong> — альтернативный JavaScript-рантайм (как Node.js, но другой), который умеет запускать TypeScript «из коробки» без всяких флагов:</p>
+    <p data-lang="en"><strong>Bun</strong> is an alternative JavaScript runtime (like Node.js, but different) that runs TypeScript out of the box with no flags:</p>
+
+    <pre><code># Установить Bun (один раз)
+# macOS/Linux: curl -fsSL https://bun.sh/install | bash
+# Windows:     powershell -c "irm bun.sh/install.ps1 | iex"
+
+# Запустить TS
+bun hello.ts</code></pre>
+
+    <p data-lang="ru">Bun быстрее Node.js на тестах, имеет встроенный пакетный менеджер (заменяет npm), бандлер и тест-раннер. Минус: пока не каждая библиотека работает на Bun одинаково хорошо.</p>
+    <p data-lang="en">Bun is faster than Node.js in benchmarks, has a built-in package manager (replaces npm), a bundler, and a test runner. Downside: not every library works equally well on Bun yet.</p>
+
+    <div class="pro-tip">
+        <p data-lang="ru"><strong>Что выбрать для курса:</strong> остаёмся на <strong>npm + tsx + Node.js 22+</strong>. Это самый стандартный стек, который работает везде и которым пользуется 90% компаний. Bun — попробуйте после курса как «следующий шаг».</p>
+        <p data-lang="en"><strong>What to use for this course:</strong> we stick with <strong>npm + tsx + Node.js 22+</strong>. The most standard stack, works everywhere, used by 90% of companies. Try Bun after the course as a "next step".</p>
+    </div>
+
+    <hr>
+
+    <h2 id="troubleshoot" data-lang="ru">11. Если что-то пошло не так</h2>
+    <h2 id="troubleshoot" data-lang="en">11. If something goes wrong</h2>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Ошибка</th><th>Причина</th><th>Решение</th></tr></thead>
+        <thead data-lang="en"><tr><th>Error</th><th>Cause</th><th>Fix</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td><code>'node' is not recognized</code></td><td>Терминал был открыт до установки Node.js, или Node не добавился в PATH</td><td>Закрыть терминал, открыть заново. Если не помогло — переустановить Node.js</td></tr>
+            <tr><td><code>'npm' is not recognized</code></td><td>То же самое</td><td>То же самое</td></tr>
+            <tr><td><code>'tsc' is not recognized</code></td><td>Вы пытаетесь запустить <code>tsc</code> напрямую, но он стоит локально</td><td>Запускайте через <code>npx tsc</code>, а не просто <code>tsc</code></td></tr>
+            <tr><td><code>'tsx' is not recognized</code></td><td>То же самое</td><td>Запускайте через <code>npx tsx</code></td></tr>
+            <tr><td><code>Cannot find module 'typescript'</code></td><td>Забыли <code>npm install</code> в новой папке проекта</td><td>В папке проекта: <code>npm install</code></td></tr>
+            <tr><td><code>EACCES: permission denied</code> (Mac/Linux)</td><td>Пытаетесь поставить пакет глобально без <code>sudo</code></td><td><strong>Ставьте локально (<code>-D</code>) — нет проблемы.</strong> Или <code>sudo npm install -g ...</code></td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td><code>'node' is not recognized</code></td><td>Terminal was open before Node.js install, or Node didn't get into PATH</td><td>Close and reopen terminal. If that fails — reinstall Node.js</td></tr>
+            <tr><td><code>'npm' is not recognized</code></td><td>Same as above</td><td>Same as above</td></tr>
+            <tr><td><code>'tsc' is not recognized</code></td><td>You're trying to run <code>tsc</code> directly, but it's installed locally</td><td>Use <code>npx tsc</code>, not bare <code>tsc</code></td></tr>
+            <tr><td><code>'tsx' is not recognized</code></td><td>Same as above</td><td>Use <code>npx tsx</code></td></tr>
+            <tr><td><code>Cannot find module 'typescript'</code></td><td>Forgot <code>npm install</code> in a new project folder</td><td>In the project folder: <code>npm install</code></td></tr>
+            <tr><td><code>EACCES: permission denied</code> (Mac/Linux)</td><td>Trying to install a package globally without <code>sudo</code></td><td><strong>Install locally (<code>-D</code>) — no problem.</strong> Or use <code>sudo npm install -g ...</code></td></tr>
+        </tbody>
+    </table>
+
+    <div class="important">
+        <p data-lang="ru"><strong>Универсальный совет:</strong> 80% «странных» проблем при установке решаются перезапуском терминала или перезагрузкой компьютера. ОС не всегда сразу замечает новые программы в PATH.</p>
+        <p data-lang="en"><strong>Universal advice:</strong> 80% of "weird" install issues are solved by restarting the terminal or rebooting the computer. The OS doesn't always immediately notice new programs in PATH.</p>
+    </div>
+
+    <hr>
+
+    <div class="summary">
+        <ul data-lang="ru">
+            <li><strong>Стек 2026:</strong> VS Code + Node.js 22+ + npm + <strong>локальный</strong> typescript + tsx.</li>
+            <li><strong>VS Code</strong> — редактор Microsoft с встроенной поддержкой TS. Бесплатный, кросс-платформенный.</li>
+            <li><strong>Node.js 22+</strong> — современная LTS. Версия 22.6+ умеет запускать <code>.ts</code> через <code>--experimental-strip-types</code>.</li>
+            <li><strong>npm</strong> — менеджер пакетов, идёт вместе с Node.js. Команда <code>npm init -y</code> создаёт <code>package.json</code>.</li>
+            <li><strong>Локальная установка вместо глобальной:</strong> <code>npm install -D typescript tsx</code> — каждый проект использует свою версию.</li>
+            <li><strong>Запуск через npx:</strong> <code>npx tsc</code>, <code>npx tsx</code> — npm находит локальный пакет.</li>
+            <li><strong>tsx</strong> заменяет устаревший <code>ts-node</code>: быстрее, проще, активно поддерживается.</li>
+            <li><strong>4 расширения VS Code:</strong> Pretty TypeScript Errors, Error Lens, Prettier, Code Runner.</li>
+            <li><strong>Цикл работы:</strong> <code>npm init -y</code> → <code>npm install -D typescript tsx</code> → пишем <code>file.ts</code> → <code>npx tsx file.ts</code>.</li>
+            <li><strong>Альтернативы:</strong> Bun (полная замена Node) и Node 22+ native (без tsx). Стандарт пока — Node + tsx.</li>
+            <li><strong>80% проблем установки</strong> решаются перезапуском терминала.</li>
+        </ul>
+        <ul data-lang="en">
+            <li><strong>2026 stack:</strong> VS Code + Node.js 22+ + npm + <strong>local</strong> typescript + tsx.</li>
+            <li><strong>VS Code</strong> — Microsoft editor with built-in TS support. Free, cross-platform.</li>
+            <li><strong>Node.js 22+</strong> — current LTS. Version 22.6+ runs <code>.ts</code> via <code>--experimental-strip-types</code>.</li>
+            <li><strong>npm</strong> — package manager bundled with Node.js. <code>npm init -y</code> creates <code>package.json</code>.</li>
+            <li><strong>Local install over global:</strong> <code>npm install -D typescript tsx</code> — each project pins its own version.</li>
+            <li><strong>Run via npx:</strong> <code>npx tsc</code>, <code>npx tsx</code> — npm finds the local package.</li>
+            <li><strong>tsx replaces legacy <code>ts-node</code>:</strong> faster, simpler, actively maintained.</li>
+            <li><strong>4 VS Code extensions:</strong> Pretty TypeScript Errors, Error Lens, Prettier, Code Runner.</li>
+            <li><strong>Workflow:</strong> <code>npm init -y</code> → <code>npm install -D typescript tsx</code> → write <code>file.ts</code> → <code>npx tsx file.ts</code>.</li>
+            <li><strong>Alternatives:</strong> Bun (full Node replacement) and Node 22+ native (no tsx). The standard for now is Node + tsx.</li>
+            <li><strong>80% of install issues</strong> are solved by restarting the terminal.</li>
+        </ul>
+    </div>
+
+    <div class="quiz">
+        <ol data-lang="ru">
+            <li>Из чего состоит стек TypeScript-разработчика 2026 года?</li>
+            <li>Зачем нужен Node.js, если мы пишем для браузера?</li>
+            <li>В чём разница между <code>npm install -D typescript</code> и <code>npm install -g typescript</code>? Почему в 2026 году ставят локально?</li>
+            <li>Что делает команда <code>npm init -y</code>?</li>
+            <li>Что такое <code>npx</code> и зачем он нужен для запуска <code>tsc</code> и <code>tsx</code>?</li>
+            <li>Чем <code>tsx</code> отличается от <code>ts-node</code>?</li>
+            <li>Какие два способа запустить файл <code>hello.ts</code>? Когда какой использовать?</li>
+            <li>Как запустить <code>.ts</code>-файл вообще без установки TypeScript? Назовите оба способа.</li>
+            <li>Что обычно помогает, если команда <code>node</code> не находится в терминале?</li>
+        </ol>
+        <ol data-lang="en">
+            <li>What's in the 2026 TypeScript developer's stack?</li>
+            <li>Why do we need Node.js if we're writing for the browser?</li>
+            <li>What's the difference between <code>npm install -D typescript</code> and <code>npm install -g typescript</code>? Why install locally in 2026?</li>
+            <li>What does <code>npm init -y</code> do?</li>
+            <li>What is <code>npx</code> and why is it needed to run <code>tsc</code> and <code>tsx</code>?</li>
+            <li>How is <code>tsx</code> different from <code>ts-node</code>?</li>
+            <li>What are two ways to run <code>hello.ts</code>? When to use each?</li>
+            <li>How can you run a <code>.ts</code> file without installing TypeScript at all? Name both ways.</li>
+            <li>What usually helps if the <code>node</code> command isn't found in the terminal?</li>
+        </ol>
+    </div>
+
+</div>
+
+</body>
+</html>

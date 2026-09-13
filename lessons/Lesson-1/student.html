@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Занятие 1 — Конспект ученика</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/student.css">
+    <script src="../../js/lang.js" defer></script>
+    <style>
+        h1 { border-bottom-color: #3178c6; }
+        h2 { color: #1d4ed8; background: #eff6ff; border-left-color: #3178c6; }
+        h3 { color: #1e3a8a; }
+        .definition strong { color: #1d4ed8; }
+    </style>
+</head>
+<body>
+
+<div class="lesson-nav">
+    <a href="../../index.html" class="nav-home" data-lang="ru">&#8592; Главная</a>
+    <a href="../../index.html" class="nav-home" data-lang="en">&#8592; Home</a>
+    <span class="nav-sep">|</span>
+    <span class="nav-title" data-lang="ru">Занятие 1: Что такое TypeScript</span>
+    <span class="nav-title" data-lang="en">Lesson 1: What is TypeScript</span>
+    <span class="nav-sep">|</span>
+    <a href="lecture.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F3EB; Лекция</a>
+    <a href="lecture.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F3EB; Lecture</a>
+    <span class="nav-active" data-lang="ru">&#x1F468;&#x200D;&#x1F393; Конспект</span>
+    <span class="nav-active" data-lang="en">&#x1F468;&#x200D;&#x1F393; Notes</span>
+    <a href="tasks.html" class="nav-link" data-lang="ru">&#x1F4CB; Задания</a>
+    <a href="tasks.html" class="nav-link" data-lang="en">&#x1F4CB; Tasks</a>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+</div>
+
+<div class="container">
+
+    <h1 data-lang="ru">&#x1F4D3; КОНСПЕКТ УЧЕНИКА</h1>
+    <h1 data-lang="en">&#x1F4D3; STUDENT NOTES</h1>
+    <p class="subtitle" data-lang="ru">Занятие 1: Что такое TypeScript</p>
+    <p class="subtitle" data-lang="en">Lesson 1: What is TypeScript</p>
+    <p class="date-line" data-lang="ru">Дата: _______________</p>
+    <p class="date-line" data-lang="en">Date: _______________</p>
+
+    <hr>
+
+    <h2 data-lang="ru">1. Что такое TypeScript</h2>
+    <h2 data-lang="en">1. What is TypeScript</h2>
+
+    <div class="definition">
+        <p data-lang="ru"><strong>TypeScript (TS)</strong> — строго-типизированная <strong>надстройка</strong> над JavaScript, разработанная Microsoft. Добавляет к JS систему типов, которая проверяется ещё до запуска кода. Браузер TypeScript <strong>не понимает</strong> — каждый <code>.ts</code>-файл сначала компилируется в <code>.js</code>.</p>
+        <p data-lang="en"><strong>TypeScript (TS)</strong> is a strongly-typed <strong>superset</strong> of JavaScript developed by Microsoft. It adds a type system to JS that is checked before the code runs. Browsers <strong>don't understand</strong> TypeScript — each <code>.ts</code> file is first compiled to <code>.js</code>.</p>
+    </div>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Главная идея:</strong> любой валидный JavaScript-код — это уже валидный TypeScript-код. TS только <em>добавляет</em> возможности, ничего не отнимая.</p>
+        <p data-lang="en"><strong>Main idea:</strong> any valid JavaScript code is already valid TypeScript. TS only <em>adds</em> features, taking nothing away.</p>
+    </div>
+
+    <hr>
+
+    <h2 data-lang="ru">2. История</h2>
+    <h2 data-lang="en">2. History</h2>
+
+    <ul data-lang="ru">
+        <li><strong>2010</strong> — Microsoft начала разработку (внутри проекта Visual Studio Online)</li>
+        <li><strong>Октябрь 2012</strong> — TypeScript 0.8, первый публичный релиз на GitHub</li>
+        <li><strong>2014</strong> — TypeScript 1.0, первая стабильная версия</li>
+        <li><strong>2016</strong> — Google Angular 2 переходит на TypeScript — переломный момент</li>
+        <li><strong>2018-2020</strong> — массовая миграция: Slack, Airbnb, Netflix, Lyft</li>
+        <li><strong>Сегодня</strong> — 80%+ профессиональных JS-разработчиков используют TS</li>
+    </ul>
+    <ul data-lang="en">
+        <li><strong>2010</strong> — Microsoft starts development (inside the Visual Studio Online project)</li>
+        <li><strong>October 2012</strong> — TypeScript 0.8, first public release on GitHub</li>
+        <li><strong>2014</strong> — TypeScript 1.0, first stable version</li>
+        <li><strong>2016</strong> — Google Angular 2 switches to TypeScript — turning point</li>
+        <li><strong>2018-2020</strong> — mass migration: Slack, Airbnb, Netflix, Lyft</li>
+        <li><strong>Today</strong> — 80%+ of professional JS developers use TS</li>
+    </ul>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Архитектор:</strong> <strong>Андерс Хейлсберг</strong> — создатель Turbo Pascal, Delphi и C#. Один из самых опытных «архитекторов языков» в мире.</p>
+        <p data-lang="en"><strong>Architect:</strong> <strong>Anders Hejlsberg</strong> — creator of Turbo Pascal, Delphi, and C#. One of the most experienced "language architects" in the world.</p>
+    </div>
+
+    <hr>
+
+    <h2 data-lang="ru">3. Какую проблему решает TypeScript</h2>
+    <h2 data-lang="en">3. What problem TypeScript solves</h2>
+
+    <p data-lang="ru">JavaScript — <strong>динамически-типизированный</strong>, переменная может в любой момент сменить тип. Это приводит к скрытым ошибкам:</p>
+    <p data-lang="en">JavaScript is <strong>dynamically-typed</strong>, a variable can change type at any time. This leads to hidden bugs:</p>
+
+    <pre><code>// JavaScript — БАГ не виден до запуска
+function calculatePrice(price, quantity) {
+    return price * quantity;
+}
+calculatePrice("100", 3);  // → "100100100" (строка вместо 300!)
+
+// TypeScript — ошибка видна СРАЗУ в редакторе
+function calculatePrice(price: number, quantity: number): number {
+    return price * quantity;
+}
+calculatePrice("100", 3);  // ❌ Argument of type 'string' is not assignable to 'number'</code></pre>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Запоминалка:</strong> JS ловит ошибки <em>в проде</em>, TS ловит ошибки <em>в редакторе</em>. Лучше потратить минуту на исправление в редакторе, чем час на отладку в продакшене.</p>
+        <p data-lang="en"><strong>Mnemonic:</strong> JS catches bugs <em>in production</em>, TS catches bugs <em>in the editor</em>. Better to spend a minute fixing in the editor than an hour debugging in production.</p>
+    </div>
+
+    <hr>
+
+    <h2 data-lang="ru">4. Как работает TypeScript: компиляция</h2>
+    <h2 data-lang="en">4. How TypeScript works: compilation</h2>
+
+    <div class="diagram">   ┌─────────────┐     tsc      ┌─────────────┐    запуск    ┌──────────────┐
+   │   app.ts    │ ──────────▶ │   app.js    │ ──────────▶ │  Браузер /   │
+   │ (с типами)  │  компилятор │ (чистый JS) │             │   Node.js    │
+   └─────────────┘             └─────────────┘             └──────────────┘</div>
+
+    <ol data-lang="ru">
+        <li>Пишем <code>app.ts</code> с аннотациями типов.</li>
+        <li>Запускаем компилятор: <code>tsc app.ts</code></li>
+        <li>Компилятор: а) проверяет типы; б) генерирует <code>app.js</code> без типов.</li>
+        <li>Запускаем готовый <code>app.js</code> — в браузере или через <code>node app.js</code>.</li>
+    </ol>
+    <ol data-lang="en">
+        <li>Write <code>app.ts</code> with type annotations.</li>
+        <li>Run the compiler: <code>tsc app.ts</code></li>
+        <li>Compiler: a) checks types; b) emits <code>app.js</code> without types.</li>
+        <li>Run the resulting <code>app.js</code> — in the browser or with <code>node app.js</code>.</li>
+    </ol>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Важно:</strong> аннотации типов (<code>: number</code>, <code>: string</code>, <code>interface</code>) <strong>исчезают</strong> после компиляции. В браузер попадает чистый JS — типы не «съедают» производительность и ничего не весят.</p>
+        <p data-lang="en"><strong>Important:</strong> type annotations (<code>: number</code>, <code>: string</code>, <code>interface</code>) <strong>vanish</strong> after compilation. The browser receives plain JS — types don't cost performance and add no weight.</p>
+    </div>
+
+    <hr>
+
+    <h2 data-lang="ru">5. TypeScript vs JavaScript</h2>
+    <h2 data-lang="en">5. TypeScript vs JavaScript</h2>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Признак</th><th>JavaScript</th><th>TypeScript</th></tr></thead>
+        <thead data-lang="en"><tr><th>Feature</th><th>JavaScript</th><th>TypeScript</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td>Типизация</td><td>Динамическая</td><td>Статическая</td></tr>
+            <tr><td>Проверка ошибок</td><td>Во время выполнения</td><td>Ещё в редакторе</td></tr>
+            <tr><td>Запуск</td><td>Прямой</td><td>Через компиляцию в JS</td></tr>
+            <tr><td>Расширение</td><td><code>.js</code></td><td><code>.ts</code> / <code>.tsx</code></td></tr>
+            <tr><td>Подсказки IDE</td><td>Слабые</td><td>Очень умные</td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td>Typing</td><td>Dynamic</td><td>Static</td></tr>
+            <tr><td>Error checking</td><td>At runtime</td><td>In the editor</td></tr>
+            <tr><td>Execution</td><td>Direct</td><td>Via compilation to JS</td></tr>
+            <tr><td>Extension</td><td><code>.js</code></td><td><code>.ts</code> / <code>.tsx</code></td></tr>
+            <tr><td>IDE hints</td><td>Weak</td><td>Very smart</td></tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h2 data-lang="ru">6. Первый взгляд на TS-код</h2>
+    <h2 data-lang="en">6. First look at TS code</h2>
+
+    <pre><code>// Аннотация типов переменных
+let age: number = 18;
+let name: string = "Seydi";
+let isStudent: boolean = true;
+
+// Типизированная функция
+function add(a: number, b: number): number {
+    return a + b;
+}
+
+// Интерфейс — описание формы объекта
+interface User {
+    name: string;
+    age: number;
+    email: string;
+}
+
+const seydi: User = {
+    name: "Seydi",
+    age: 20,
+    email: "seydi@example.com"
+};</code></pre>
+
+    <hr>
+
+    <h2 data-lang="ru">7. Где используется TypeScript</h2>
+    <h2 data-lang="en">7. Where TypeScript is used</h2>
+
+    <div class="diagram">                       TypeScript
+       ┌──────────┬────────────┬──────────┬────────────┐
+       │          │            │          │            │
+   ┌───▼────┐ ┌───▼────┐ ┌─────▼───┐ ┌────▼─────┐ ┌────▼───┐
+   │Фронтенд│ │ Сервер │ │ Mobile  │ │ Desktop  │ │  Tools │
+   │(React, │ │(NestJS,│ │  (RN,   │ │(Electron,│ │(VSCode,│
+   │ Next)  │ │ Deno)  │ │  Expo)  │ │  Tauri)  │ │ Vite)  │
+   └────────┘ └────────┘ └─────────┘ └──────────┘ └────────┘</div>
+
+    <ul data-lang="ru">
+        <li><strong>Фронтенд:</strong> Airbnb, Slack, Asana, Lyft</li>
+        <li><strong>Бэкенд:</strong> Microsoft, Stripe, Shopify</li>
+        <li><strong>Мобильные:</strong> Discord, Coinbase</li>
+        <li><strong>Десктоп:</strong> VS Code, Slack, Notion, Figma Desktop</li>
+        <li><strong>Сами инструменты:</strong> VS Code, TypeScript, Deno, Vite, Prettier</li>
+    </ul>
+    <ul data-lang="en">
+        <li><strong>Frontend:</strong> Airbnb, Slack, Asana, Lyft</li>
+        <li><strong>Backend:</strong> Microsoft, Stripe, Shopify</li>
+        <li><strong>Mobile:</strong> Discord, Coinbase</li>
+        <li><strong>Desktop:</strong> VS Code, Slack, Notion, Figma Desktop</li>
+        <li><strong>Dev tools themselves:</strong> VS Code, TypeScript, Deno, Vite, Prettier</li>
+    </ul>
+
+    <hr>
+
+    <h2 data-lang="ru">8. Что нужно для старта</h2>
+    <h2 data-lang="en">8. What you need to start</h2>
+
+    <ol data-lang="ru">
+        <li>Браузер (Chrome, Edge, Firefox)</li>
+        <li>Редактор кода — <strong>VS Code</strong> (TS поддерживается из коробки)</li>
+        <li><strong>Node.js 22+</strong> (LTS-версия) — или альтернатива <strong>Bun</strong></li>
+        <li>Компилятор: <code>npm install -D typescript</code> (локально в проект)</li>
+        <li>Раннер <code>tsx</code> для прямого запуска <code>.ts</code> — заменяет устаревший <code>ts-node</code></li>
+        <li>Все установим в <strong>занятии 2</strong></li>
+    </ol>
+    <ol data-lang="en">
+        <li>Browser (Chrome, Edge, Firefox)</li>
+        <li>Code editor — <strong>VS Code</strong> (TS supported out of the box)</li>
+        <li><strong>Node.js 22+</strong> (LTS version) — or the <strong>Bun</strong> alternative</li>
+        <li>Compiler: <code>npm install -D typescript</code> (locally per project)</li>
+        <li>Runner <code>tsx</code> to execute <code>.ts</code> directly — replaces the legacy <code>ts-node</code></li>
+        <li>We'll install everything in <strong>Lesson 2</strong></li>
+    </ol>
+
+    <hr>
+
+    <h2 data-lang="ru">9. Полезные ссылки</h2>
+    <h2 data-lang="en">9. Useful links</h2>
+
+    <ul data-lang="ru">
+        <li><strong>typescriptlang.org</strong> — официальный сайт и документация</li>
+        <li><strong>typescriptlang.org/play</strong> — онлайн-песочница, можно писать TS прямо в браузере</li>
+        <li><strong>github.com/microsoft/TypeScript</strong> — исходный код языка</li>
+        <li><strong>code.visualstudio.com</strong> — скачать VS Code</li>
+        <li><strong>nodejs.org</strong> — скачать Node.js</li>
+    </ul>
+    <ul data-lang="en">
+        <li><strong>typescriptlang.org</strong> — official website and documentation</li>
+        <li><strong>typescriptlang.org/play</strong> — online playground, write TS right in the browser</li>
+        <li><strong>github.com/microsoft/TypeScript</strong> — language source code</li>
+        <li><strong>code.visualstudio.com</strong> — download VS Code</li>
+        <li><strong>nodejs.org</strong> — download Node.js</li>
+    </ul>
+
+    <hr>
+
+    <div class="remember">
+        <ul data-lang="ru">
+            <li><strong>TypeScript</strong> — это JavaScript + типы. Любой JS — это уже TS.</li>
+            <li>Создан Microsoft (2010-2012), архитектор — <strong>Андерс Хейлсберг</strong>.</li>
+            <li>Решает проблему JS: <strong>ошибки типов ловятся до запуска</strong>, а не в проде.</li>
+            <li>Браузер TS не понимает — нужна <strong>компиляция</strong> через <code>tsc</code>.</li>
+            <li>После компиляции <strong>типы исчезают</strong> — в браузер попадает чистый JS.</li>
+            <li>VS Code сам написан на TS — <strong>идеальная поддержка из коробки</strong>.</li>
+            <li>Используется во всех крупных современных проектах: VS Code, Slack, Discord, Notion, Airbnb.</li>
+        </ul>
+        <ul data-lang="en">
+            <li><strong>TypeScript</strong> is JavaScript + types. Any JS is already TS.</li>
+            <li>Created by Microsoft (2010-2012), architect — <strong>Anders Hejlsberg</strong>.</li>
+            <li>Solves the JS problem: <strong>type errors are caught before runtime</strong>, not in production.</li>
+            <li>Browsers don't understand TS — <strong>compilation</strong> via <code>tsc</code> is required.</li>
+            <li>After compilation, <strong>types vanish</strong> — the browser receives plain JS.</li>
+            <li>VS Code is itself written in TS — <strong>perfect support out of the box</strong>.</li>
+            <li>Used in all major modern projects: VS Code, Slack, Discord, Notion, Airbnb.</li>
+        </ul>
+    </div>
+
+    <div class="homework">
+        <ol data-lang="ru">
+            <li>Откройте <code>typescriptlang.org/play</code> в браузере. Скопируйте туда любой пример из лекции и нажмите кнопку «Run» в правом верхнем углу. Запишите в тетрадь, что увидели.</li>
+            <li>В песочнице измените тип переменной на «неправильный»: например, замените <code>let age: number = 18</code> на <code>let age: number = "восемнадцать"</code>. Запишите текст ошибки, который покажет TypeScript.</li>
+            <li>Найдите и выпишите названия <strong>3 продуктов или компаний</strong>, которые используют TypeScript. По каждому укажите: что это за продукт и какую технологию (React, NestJS, Electron…) они на TS используют.</li>
+            <li>Подготовьте устные ответы на все 8 вопросов из раздела «Проверь себя» лекции.</li>
+            <li>Скачайте, но пока не устанавливайте: <strong>VS Code</strong> (<code>code.visualstudio.com</code>) и <strong>Node.js LTS</strong> (<code>nodejs.org</code>). Установим вместе на занятии 2.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Open <code>typescriptlang.org/play</code> in your browser. Paste any example from the lecture and click "Run" in the top right. Write down what you saw.</li>
+            <li>In the playground, change a variable type to a "wrong" one: e.g., replace <code>let age: number = 18</code> with <code>let age: number = "eighteen"</code>. Write down the error text TypeScript shows.</li>
+            <li>Find and write down <strong>3 products or companies</strong> that use TypeScript. For each, note what it is and which technology (React, NestJS, Electron…) they pair TS with.</li>
+            <li>Prepare oral answers to all 8 questions from the "Test yourself" section of the lecture.</li>
+            <li>Download but don't install yet: <strong>VS Code</strong> (<code>code.visualstudio.com</code>) and <strong>Node.js LTS</strong> (<code>nodejs.org</code>). We'll install together in Lesson 2.</li>
+        </ol>
+    </div>
+
+</div>
+
+</body>
+</html>

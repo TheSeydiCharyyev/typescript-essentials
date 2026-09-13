@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Занятие 1 — Практические задания</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/tasks.css">
+    <script src="../../js/lang.js" defer></script>
+    <style>
+        h1 { border-bottom-color: #3178c6; }
+        h2 { color: #1d4ed8; background: #eff6ff; border-left-color: #3178c6; }
+    </style>
+</head>
+<body>
+
+<div class="lesson-nav">
+    <a href="../../index.html" class="nav-home" data-lang="ru">&#8592; Главная</a>
+    <a href="../../index.html" class="nav-home" data-lang="en">&#8592; Home</a>
+    <span class="nav-sep">|</span>
+    <span class="nav-title" data-lang="ru">Занятие 1: Что такое TypeScript</span>
+    <span class="nav-title" data-lang="en">Lesson 1: What is TypeScript</span>
+    <span class="nav-sep">|</span>
+    <a href="lecture.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F3EB; Лекция</a>
+    <a href="lecture.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F3EB; Lecture</a>
+    <a href="student.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F393; Конспект</a>
+    <a href="student.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F393; Notes</a>
+    <span class="nav-active" data-lang="ru">&#x1F4CB; Задания</span>
+    <span class="nav-active" data-lang="en">&#x1F4CB; Tasks</span>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+</div>
+
+<div class="container">
+
+    <h1 data-lang="ru">&#x1F4DD; ПРАКТИЧЕСКИЕ ЗАДАНИЯ</h1>
+    <h1 data-lang="en">&#x1F4DD; PRACTICAL TASKS</h1>
+    <p class="subtitle" data-lang="ru">Занятие 1: Что такое TypeScript &mdash; 6 заданий от простого к сложному</p>
+    <p class="subtitle" data-lang="en">Lesson 1: What is TypeScript &mdash; 6 tasks from easy to advanced</p>
+
+    <div class="why" style="background:#eff6ff;border-left:4px solid #3178c6;padding:12px 18px;border-radius:8px;margin:16px 0;">
+        <p data-lang="ru"><strong>Важно:</strong> для всех заданий <em>не нужно</em> ничего устанавливать на компьютер. Вся практика идёт в онлайн-песочнице <code>typescriptlang.org/play</code> и в браузере. Установку инструментов разберём в занятии 2.</p>
+        <p data-lang="en"><strong>Important:</strong> for all these tasks you <em>don't need</em> to install anything on your computer. All the practice happens in the online playground at <code>typescriptlang.org/play</code> and in the browser. Tool installation comes in Lesson 2.</p>
+    </div>
+
+    <hr>
+
+    <!-- TASK 1 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 1. Знакомство с TypeScript Playground</div>
+            <div class="task-title" data-lang="en">Task 1. Meet the TypeScript Playground</div>
+            <div class="task-meta">
+                <span class="badge badge-easy" data-lang="ru">Легко</span>
+                <span class="badge badge-easy" data-lang="en">Easy</span>
+                <span class="badge badge-time">10 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Открыть онлайн-песочницу TypeScript, увидеть две панели (код и результат компиляции в JS), понять, как работает компилятор.</span>
+            <span data-lang="en">Open the TypeScript online playground, see the two panels (code and compiled JS result), and understand how the compiler works.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>Откройте в браузере <code>typescriptlang.org/play</code>.</li>
+            <li>Слева — поле для кода TS, справа — то, во что он скомпилируется (JS).</li>
+            <li>Удалите весь код слева и вставьте:
+                <pre><code>let age: number = 18;
+let name: string = "Seydi";
+console.log(name + " is " + age);</code></pre>
+            </li>
+            <li>Посмотрите справа: что появилось? Куда пропали <code>: number</code> и <code>: string</code>?</li>
+            <li>Нажмите кнопку <strong>«Run»</strong> в правом верхнем углу — внизу под кодом откроется консоль с результатом.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Open <code>typescriptlang.org/play</code> in your browser.</li>
+            <li>On the left — TS code editor, on the right — what it compiles to (JS).</li>
+            <li>Delete all the code on the left and paste:
+                <pre><code>let age: number = 18;
+let name: string = "Seydi";
+console.log(name + " is " + age);</code></pre>
+            </li>
+            <li>Look on the right: what appeared? Where did <code>: number</code> and <code>: string</code> go?</li>
+            <li>Press the <strong>"Run"</strong> button in the top right — a console with the result opens below the code.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Песочница открыта, видны обе панели — TS и JS</li>
+                <li>В консоли видна строка <code>Seydi is 18</code></li>
+                <li>В тетрадь записано: чем JS-код справа отличается от TS-кода слева</li>
+            </ul>
+            <ul data-lang="en">
+                <li>The playground is open, both panels (TS and JS) are visible</li>
+                <li>The console shows <code>Seydi is 18</code></li>
+                <li>Written in the notebook: how the JS code on the right differs from the TS code on the left</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Если правой панели не видно — нажмите <strong>«.JS»</strong> на верхней панели, чтобы её включить.</p>
+            <p data-lang="en">If you don't see the right panel — click <strong>".JS"</strong> on the top toolbar to enable it.</p>
+        </div>
+    </div>
+
+    <!-- TASK 2 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 2. Поймать ошибку до запуска</div>
+            <div class="task-title" data-lang="en">Task 2. Catch an error before runtime</div>
+            <div class="task-meta">
+                <span class="badge badge-easy" data-lang="ru">Легко</span>
+                <span class="badge badge-easy" data-lang="en">Easy</span>
+                <span class="badge badge-time">10 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Увидеть своими глазами главную силу TypeScript — обнаружение ошибок типов прямо в редакторе.</span>
+            <span data-lang="en">See firsthand the main strength of TypeScript — catching type errors right in the editor.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>В песочнице вставьте этот «правильный» код и убедитесь, что ошибок нет:
+                <pre><code>let age: number = 18;
+age = 19;
+console.log(age);</code></pre>
+            </li>
+            <li>Теперь намеренно сломайте: замените <code>age = 19</code> на <code>age = "девятнадцать"</code>.</li>
+            <li>Посмотрите, что подчеркнёт TypeScript красным. Наведите курсор на красную «волну» — появится подсказка с описанием ошибки.</li>
+            <li>Запишите в тетрадь полный текст ошибки.</li>
+            <li>Попробуйте ещё 2 «поломки»: <code>age = true</code> и <code>age = [1, 2]</code>. Запишите ошибки от каждой.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In the playground, paste this "correct" code and verify there are no errors:
+                <pre><code>let age: number = 18;
+age = 19;
+console.log(age);</code></pre>
+            </li>
+            <li>Now break it intentionally: replace <code>age = 19</code> with <code>age = "nineteen"</code>.</li>
+            <li>See what TypeScript underlines in red. Hover over the red "wave" — a tooltip with the error description appears.</li>
+            <li>Write down the full error text in your notebook.</li>
+            <li>Try 2 more breaks: <code>age = true</code> and <code>age = [1, 2]</code>. Write down each error.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Записаны тексты <strong>трёх</strong> разных ошибок типизации</li>
+                <li>Понятно: ошибки появились <em>до</em> нажатия «Run» — TypeScript нашёл их сам, читая код</li>
+            </ul>
+            <ul data-lang="en">
+                <li>Written down the text of <strong>three</strong> different type errors</li>
+                <li>You understand: errors appeared <em>before</em> pressing "Run" — TypeScript found them by just reading the code</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Все три ошибки начинаются со слов <code>Type '...' is not assignable to type 'number'</code>. Это и есть главное сообщение TypeScript: «вы хотите положить не то, что объявили».</p>
+            <p data-lang="en">All three errors start with <code>Type '...' is not assignable to type 'number'</code>. That's TypeScript's main message: "you're trying to assign something different from what you declared".</p>
+        </div>
+    </div>
+
+    <!-- TASK 3 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 3. JavaScript против TypeScript</div>
+            <div class="task-title" data-lang="en">Task 3. JavaScript vs TypeScript</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">15 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Сравнить, как один и тот же баг ведёт себя в JS и в TS, и почувствовать, как TS защищает от ошибок.</span>
+            <span data-lang="en">Compare how the same bug behaves in JS and in TS, and feel how TS protects against errors.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Часть А — JavaScript (запускаем баг):</strong></p>
+        <p data-lang="en"><strong>Part A — JavaScript (we run the bug):</strong></p>
+        <ol data-lang="ru">
+            <li>Откройте любой сайт в браузере, нажмите <span class="kbd">F12</span> → вкладка <strong>Console</strong>.</li>
+            <li>Вставьте в консоль и нажмите Enter:
+                <pre><code>function calculatePrice(price, quantity) {
+    return price * quantity;
+}
+console.log(calculatePrice("100", 3));
+console.log(calculatePrice(100, "3"));
+console.log(calculatePrice(100, 3));</code></pre>
+            </li>
+            <li>Запишите все три результата.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Open any site, press <span class="kbd">F12</span> → <strong>Console</strong> tab.</li>
+            <li>Paste in the console and press Enter:
+                <pre><code>function calculatePrice(price, quantity) {
+    return price * quantity;
+}
+console.log(calculatePrice("100", 3));
+console.log(calculatePrice(100, "3"));
+console.log(calculatePrice(100, 3));</code></pre>
+            </li>
+            <li>Write down all three results.</li>
+        </ol>
+
+        <p data-lang="ru"><strong>Часть Б — TypeScript (TS не даёт повторить баг):</strong></p>
+        <p data-lang="en"><strong>Part B — TypeScript (TS won't let the bug happen):</strong></p>
+        <ol data-lang="ru">
+            <li>Откройте <code>typescriptlang.org/play</code> и вставьте:
+                <pre><code>function calculatePrice(price: number, quantity: number): number {
+    return price * quantity;
+}
+console.log(calculatePrice("100", 3));
+console.log(calculatePrice(100, "3"));
+console.log(calculatePrice(100, 3));</code></pre>
+            </li>
+            <li>Посмотрите, какие строки TypeScript подчеркнул красным. Запишите тексты ошибок.</li>
+            <li>Уберите «битые» вызовы (со строками), оставьте только <code>calculatePrice(100, 3)</code>. Нажмите Run и убедитесь, что выведется <code>300</code>.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Open <code>typescriptlang.org/play</code> and paste:
+                <pre><code>function calculatePrice(price: number, quantity: number): number {
+    return price * quantity;
+}
+console.log(calculatePrice("100", 3));
+console.log(calculatePrice(100, "3"));
+console.log(calculatePrice(100, 3));</code></pre>
+            </li>
+            <li>See which lines TypeScript underlines in red. Write down the error texts.</li>
+            <li>Remove the "broken" calls (with strings), leaving only <code>calculatePrice(100, 3)</code>. Press Run and verify <code>300</code> is printed.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>В тетради записаны три результата JS (включая странную строку <code>"100100100"</code>)</li>
+                <li>В тетради записаны два сообщения об ошибке от TypeScript</li>
+                <li>Сделан вывод: TS не допустил вызов с неправильными аргументами</li>
+            </ul>
+            <ul data-lang="en">
+                <li>Three JS results written down (including the weird string <code>"100100100"</code>)</li>
+                <li>Two TypeScript error messages written down</li>
+                <li>You concluded: TS prevented the call with wrong arguments</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TASK 4 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 4. Исследование: продукты на TypeScript</div>
+            <div class="task-title" data-lang="en">Task 4. Research: products built in TypeScript</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">20 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Найти и описать 5 реальных продуктов, написанных на TypeScript, и понять, в каких сферах он применяется.</span>
+            <span data-lang="en">Find and describe 5 real products built in TypeScript and understand in which areas it's used.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>Найдите в интернете <strong>5 разных</strong> продуктов или компаний, использующих TypeScript. <em>Подсказка:</em> начните с тех, что упомянуты в лекции (VS Code, Slack, Discord, Notion, Figma, Airbnb), но добавьте 1-2 от себя.</li>
+            <li>Для каждого продукта запишите в тетрадь: <strong>название</strong>, <strong>что это за продукт</strong>, <strong>где используется TS</strong> (фронтенд / бэкенд / десктоп / мобильное), <strong>с какой технологией</strong> (React, NestJS, Electron, React Native…).</li>
+            <li>Все 5 продуктов должны быть из <strong>разных категорий</strong> применения (хотя бы 3 разные).</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Find <strong>5 different</strong> products or companies using TypeScript. <em>Hint:</em> start with those mentioned in the lecture (VS Code, Slack, Discord, Notion, Figma, Airbnb), but add 1-2 of your own.</li>
+            <li>For each product, write in your notebook: <strong>name</strong>, <strong>what it is</strong>, <strong>where TS is used</strong> (frontend / backend / desktop / mobile), <strong>with which technology</strong> (React, NestJS, Electron, React Native…).</li>
+            <li>All 5 should come from <strong>different categories</strong> of use (at least 3 distinct).</li>
+        </ol>
+
+        <div class="example">
+            <p data-lang="ru"><strong>Пример заполнения:</strong></p>
+            <p data-lang="en"><strong>Example entry:</strong></p>
+            <pre>1. VS Code — редактор кода от Microsoft
+   Категория: десктоп-программа
+   Технология: Electron + TypeScript</pre>
+        </div>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Заполнены данные по 5 продуктам</li>
+                <li>Покрыто минимум 3 разные категории</li>
+                <li>Указана технология для каждого</li>
+            </ul>
+            <ul data-lang="en">
+                <li>Data filled in for 5 products</li>
+                <li>At least 3 different categories covered</li>
+                <li>Technology listed for each</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Источники для поиска: <strong>github.com</strong> (раздел «Languages» в репозитории показывает, на чём написан проект), <strong>stackshare.io</strong>, <strong>builtwith.com</strong>, статьи на dev.to и Medium с тегом «TypeScript».</p>
+            <p data-lang="en">Sources to search: <strong>github.com</strong> (the "Languages" section in a repo shows what it's written in), <strong>stackshare.io</strong>, <strong>builtwith.com</strong>, articles on dev.to and Medium with the "TypeScript" tag.</p>
+        </div>
+    </div>
+
+    <!-- TASK 5 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 5. «JS превратился в TS» — миграция файла</div>
+            <div class="task-title" data-lang="en">Task 5. "JS turned into TS" — migrating a file</div>
+            <div class="task-meta">
+                <span class="badge badge-hard" data-lang="ru">Сложно</span>
+                <span class="badge badge-hard" data-lang="en">Hard</span>
+                <span class="badge badge-time">25 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Прочувствовать на практике главное свойство TS: «любой JS — уже TS». Постепенно добавить типы в готовый JS-код.</span>
+            <span data-lang="en">Feel the main TS property in practice: "any JS is already TS". Gradually add types to existing JS code.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>Откройте <code>typescriptlang.org/play</code>. Удалите весь код и вставьте этот <strong>чистый JS</strong> (никаких типов!):
+                <pre><code>function greet(name) {
+    return "Hello, " + name + "!";
+}
+
+const message = greet("Seydi");
+console.log(message);</code></pre>
+            </li>
+            <li>Нажмите Run. Убедитесь, что код работает: в консоли — <code>Hello, Seydi!</code>. Это доказывает: JS-код — это уже валидный TS-код.</li>
+            <li>Теперь <strong>постепенно</strong> добавляйте типы:
+                <ul>
+                    <li>Шаг 1: добавьте тип параметра — <code>function greet(name: string)</code></li>
+                    <li>Шаг 2: добавьте тип возвращаемого значения — <code>: string</code> после скобок</li>
+                    <li>Шаг 3: добавьте тип переменной — <code>const message: string = ...</code></li>
+                </ul>
+            </li>
+            <li>После каждого шага запускайте Run и убеждайтесь, что код работает.</li>
+            <li>В конце попробуйте сломать: вызовите <code>greet(42)</code>. Что скажет TypeScript?</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Open <code>typescriptlang.org/play</code>. Delete all code and paste this <strong>pure JS</strong> (no types!):
+                <pre><code>function greet(name) {
+    return "Hello, " + name + "!";
+}
+
+const message = greet("Seydi");
+console.log(message);</code></pre>
+            </li>
+            <li>Press Run. Verify the code works: console shows <code>Hello, Seydi!</code>. This proves: JS code is already valid TS code.</li>
+            <li>Now <strong>gradually</strong> add types:
+                <ul>
+                    <li>Step 1: add parameter type — <code>function greet(name: string)</code></li>
+                    <li>Step 2: add return type — <code>: string</code> after the parentheses</li>
+                    <li>Step 3: add variable type — <code>const message: string = ...</code></li>
+                </ul>
+            </li>
+            <li>After each step press Run and verify the code still works.</li>
+            <li>Finally, try to break it: call <code>greet(42)</code>. What does TypeScript say?</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Исходный JS-код запустился в TS-песочнице без изменений</li>
+                <li>Код прошёл 3 шага «типизации» и продолжает работать</li>
+                <li>В тетрадь записан финальный код целиком + ошибка от <code>greet(42)</code></li>
+            </ul>
+            <ul data-lang="en">
+                <li>The original JS code ran in the TS playground without changes</li>
+                <li>The code went through 3 "typing" steps and still works</li>
+                <li>Final code written down in full + the error from <code>greet(42)</code></li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru">Между двумя кружочками над редактором TS Playground переключается отображение «.JS» (скомпилированный код) и «.D.TS» (декларации). Включите «.JS», чтобы увидеть, как ваш TS превращается в JS.</p>
+            <p data-lang="en">Between the two icons above the editor in TS Playground, you can toggle ".JS" (compiled code) and ".D.TS" (declarations). Turn on ".JS" to see how your TS turns into JS.</p>
+        </div>
+    </div>
+
+    <!-- TASK 6 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 6. Мини-презентация «Зачем нужен TypeScript»</div>
+            <div class="task-title" data-lang="en">Task 6. Mini-presentation "Why TypeScript matters"</div>
+            <div class="task-meta">
+                <span class="badge badge-hard" data-lang="ru">Сложно</span>
+                <span class="badge badge-hard" data-lang="en">Hard</span>
+                <span class="badge badge-time">30 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Подготовить короткое устное выступление (3-5 минут) и объяснить однокурсникам или родителям, что такое TypeScript и зачем он нужен.</span>
+            <span data-lang="en">Prepare a short oral talk (3-5 minutes) and explain to classmates or parents what TypeScript is and why it matters.</span>
+        </div>
+
+        <p data-lang="ru"><strong>План выступления:</strong></p>
+        <p data-lang="en"><strong>Talk outline:</strong></p>
+        <ol data-lang="ru">
+            <li><strong>Хук</strong> (1 минута): расскажите про баг с <code>"100" * 3 === "100100100"</code>. Это «зацепит» слушателя — он сразу поймёт проблему.</li>
+            <li><strong>Что такое TypeScript</strong> (1 минута): «надстройка над JS», добавляет типы, разработана Microsoft с 2010 года.</li>
+            <li><strong>Как это работает</strong> (1 минута): нарисуйте схему <code>app.ts → tsc → app.js → браузер</code>. Подчеркните, что в браузер попадает чистый JS.</li>
+            <li><strong>Кто использует</strong> (1 минута): VS Code, Slack, Discord, Airbnb. Назовите хотя бы 3 продукта, которыми слушатель пользуется лично.</li>
+            <li><strong>Вывод</strong> (30 секунд): почему стоит учить TS в 2026 году.</li>
+        </ol>
+        <ol data-lang="en">
+            <li><strong>Hook</strong> (1 min): tell the <code>"100" * 3 === "100100100"</code> bug. This grabs the listener — they immediately get the problem.</li>
+            <li><strong>What is TypeScript</strong> (1 min): "a superset of JS", adds types, developed by Microsoft since 2010.</li>
+            <li><strong>How it works</strong> (1 min): draw the <code>app.ts → tsc → app.js → browser</code> diagram. Emphasize that the browser receives plain JS.</li>
+            <li><strong>Who uses it</strong> (1 min): VS Code, Slack, Discord, Airbnb. Name at least 3 products the listener uses personally.</li>
+            <li><strong>Conclusion</strong> (30 sec): why it's worth learning TS in 2026.</li>
+        </ol>
+
+        <div class="example">
+            <p data-lang="ru"><strong>Подсказка для хука:</strong></p>
+            <p data-lang="en"><strong>Hook hint:</strong></p>
+            <p data-lang="ru" style="font-style:italic;">«Представь, ты заходишь в интернет-магазин и видишь цену "100100100 рублей" вместо "300 рублей". Это реальный баг JavaScript — он молча умножает строку на число. TypeScript — язык, придуманный, чтобы такого не случалось…»</p>
+            <p data-lang="en" style="font-style:italic;">"Imagine: you go to an online store and see a price of '100100100 rubles' instead of '300 rubles'. That's a real JavaScript bug — it silently multiplies a string by a number. TypeScript is the language designed so this never happens…"</p>
+        </div>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Подготовлен план выступления (5 пунктов)</li>
+                <li>Есть хотя бы один пример «бага без TS» (можно из лекции)</li>
+                <li>Названо 3+ продукта, использующих TypeScript</li>
+                <li>(Бонус) Пересказали кому-то в реальной жизни и записали обратную связь</li>
+            </ul>
+            <ul data-lang="en">
+                <li>A 5-point talk outline prepared</li>
+                <li>At least one "bug without TS" example (the lecture one is fine)</li>
+                <li>3+ products using TypeScript named</li>
+                <li>(Bonus) Told the talk to someone in real life and wrote down their feedback</li>
+            </ul>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="write-box">
+        <p data-lang="ru">Запишите сюда, какие задания вам дались легко, а где пришлось подумать дольше всего:</p>
+        <p data-lang="en">Write here which tasks were easy and which took the most thought:</p>
+    </div>
+
+</div>
+
+</body>
+</html>

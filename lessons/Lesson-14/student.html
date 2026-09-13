@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Занятие 14 — Перегрузка функций</title>
+    <script src="../../js/lang.js" defer></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', 'Segoe UI', sans-serif; line-height: 1.7; color: #1e293b; background: #f8fafc; }
+        .header { position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; padding: 0 24px; z-index: 100; }
+        .header a.logo { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; font-weight: 700; text-decoration: none; color: #1e293b; }
+        .header a.logo span { background: linear-gradient(135deg, #3178c6, #235a97); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .header .back { margin-right: 16px; font-size: 0.85rem; font-weight: 600; color: #64748b; text-decoration: none; padding: 6px 12px; border-radius: 8px; background: #f1f5f9; transition: all 0.15s ease; }
+        .header .back:hover { background: #e2e8f0; color: #1e293b; }
+        .header .lang-btn { margin-left: auto; }
+        .main { max-width: 900px; margin: 0 auto; padding: 84px 24px 64px; }
+        .crumbs { font-size: 0.85rem; color: #94a3b8; margin-bottom: 8px; }
+        .crumbs b { color: #f97316; font-weight: 600; }
+        .hero { margin-bottom: 32px; }
+        .hero h1 { font-size: 1.8rem; font-weight: 700; background: linear-gradient(135deg, #f97316, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 6px; }
+        .hero .sub { color: #64748b; font-size: 0.95rem; }
+        .placeholder { background: #fff; border: 2px dashed #cbd5e1; border-radius: 16px; padding: 60px 24px; text-align: center; color: #64748b; margin-top: 32px; }
+        .placeholder .icon { font-size: 3rem; margin-bottom: 12px; }
+        .placeholder h2 { font-size: 1.2rem; color: #475569; margin-bottom: 8px; }
+        .nav-pages { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+        .nav-page { padding: 8px 14px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: transform 0.15s ease; }
+        .nav-page:hover { transform: scale(1.04); }
+        .nav-page.active { background: #f97316; color: #fff; }
+        .nav-page.lecture { background: #dbeafe; color: #1d4ed8; }
+        .nav-page.student { background: #dcfce7; color: #15803d; }
+        .nav-page.tasks { background: #fef3c7; color: #a16207; }
+    </style>
+</head>
+<body>
+<header class="header">
+    <a href="../../index.html" class="back" data-lang="ru">&#8592; Главная</a>
+    <a href="../../index.html" class="back" data-lang="en">&#8592; Home</a>
+    <a href="../../index.html" class="logo">&#x1F537; <span>TypeScript LMS</span></a>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+</header>
+<div class="main">
+    <div class="crumbs" data-lang="ru"><b>Занятие 14</b> &bull; Конспект</div>
+    <div class="crumbs" data-lang="en"><b>Lesson 14</b> &bull; Notes</div>
+    <div class="hero">
+        <h1 data-lang="ru">&#x1F468;&#x200D;&#x1F393; Перегрузка функций</h1>
+        <h1 data-lang="en">&#x1F468;&#x200D;&#x1F393; Function Overloads</h1>
+        <p class="sub" data-lang="ru">Конспект для занятия №14</p>
+        <p class="sub" data-lang="en">Notes for lesson #14</p>
+    </div>
+    <div class="nav-pages">
+        <a href="lecture.html" class="nav-page lecture" data-lang="ru">&#x1F468;&#x200D;&#x1F3EB; Лекция</a>
+        <a href="lecture.html" class="nav-page lecture" data-lang="en">&#x1F468;&#x200D;&#x1F3EB; Lecture</a>
+        <a href="student.html" class="nav-page student active" data-lang="ru">&#x1F468;&#x200D;&#x1F393; Конспект</a>
+        <a href="student.html" class="nav-page student active" data-lang="en">&#x1F468;&#x200D;&#x1F393; Notes</a>
+        <a href="tasks.html" class="nav-page tasks" data-lang="ru">&#x1F4CB; Задания</a>
+        <a href="tasks.html" class="nav-page tasks" data-lang="en">&#x1F4CB; Tasks</a>
+    </div>
+    <div class="placeholder">
+        <div class="icon">&#x1F468;&#x200D;&#x1F393;</div>
+        <h2 data-lang="ru">Контент будет добавлен позже</h2>
+        <h2 data-lang="en">Content coming soon</h2>
+        <p data-lang="ru">Этот раздел в разработке. Возвращайтесь позже!</p>
+        <p data-lang="en">This section is in development. Come back later!</p>
+    </div>
+</div>
+</body>
+</html>

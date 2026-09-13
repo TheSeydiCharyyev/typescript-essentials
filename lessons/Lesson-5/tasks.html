@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Занятие 5 — Практические задания</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/tasks.css">
+    <script src="../../js/lang.js" defer></script>
+    <style>
+        h1 { border-bottom-color: #14b8a6; }
+        h2 { color: #0f766e; background: #f0fdfa; border-left-color: #14b8a6; }
+    </style>
+</head>
+<body>
+
+<div class="lesson-nav">
+    <a href="../../index.html" class="nav-home" data-lang="ru">&#8592; Главная</a>
+    <a href="../../index.html" class="nav-home" data-lang="en">&#8592; Home</a>
+    <span class="nav-sep">|</span>
+    <span class="nav-title" data-lang="ru">Занятие 5: Примитивные типы и literal types</span>
+    <span class="nav-title" data-lang="en">Lesson 5: Primitive Types and Literal Types</span>
+    <span class="nav-sep">|</span>
+    <a href="lecture.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F3EB; Лекция</a>
+    <a href="lecture.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F3EB; Lecture</a>
+    <a href="student.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F393; Конспект</a>
+    <a href="student.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F393; Notes</a>
+    <span class="nav-active" data-lang="ru">&#x1F4CB; Задания</span>
+    <span class="nav-active" data-lang="en">&#x1F4CB; Tasks</span>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+</div>
+
+<div class="container">
+
+    <h1 data-lang="ru">&#x1F4DD; ПРАКТИЧЕСКИЕ ЗАДАНИЯ</h1>
+    <h1 data-lang="en">&#x1F4DD; PRACTICAL TASKS</h1>
+    <p class="subtitle" data-lang="ru">Занятие 5: Примитивные типы и literal types &mdash; 7 заданий от string-методов до union из литералов</p>
+    <p class="subtitle" data-lang="en">Lesson 5: Primitive Types and Literal Types &mdash; 7 tasks from string methods to literal unions</p>
+
+    <div class="why" style="background:#f0fdfa;border-left:4px solid #14b8a6;padding:12px 18px;border-radius:8px;margin:16px 0;">
+        <p data-lang="ru"><strong>Где работаем:</strong> в проекте <code>ts-strict-demo/</code> из занятия 3. Каждое задание — отдельный файл в <code>src/</code>.</p>
+        <p data-lang="en"><strong>Where:</strong> in the <code>ts-strict-demo/</code> project from Lesson 3. Each task is a separate file in <code>src/</code>.</p>
+    </div>
+
+    <hr>
+
+    <!-- TASK 1 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 1. Игра со строками</div>
+            <div class="task-title" data-lang="en">Task 1. Playing with strings</div>
+            <div class="task-meta">
+                <span class="badge badge-easy" data-lang="ru">Легко</span>
+                <span class="badge badge-easy" data-lang="en">Easy</span>
+                <span class="badge badge-time">15 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Поработать с базовыми методами строки: <code>length</code>, <code>toUpperCase</code>, <code>trim</code>, <code>slice</code>, <code>split</code>, <code>replace</code>.</span>
+            <span data-lang="en">Practice basic string methods: <code>length</code>, <code>toUpperCase</code>, <code>trim</code>, <code>slice</code>, <code>split</code>, <code>replace</code>.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>В <code>src/strings-play.ts</code> вставьте:
+                <pre><code>const phrase = "  Hello, TypeScript World!  ";
+
+// 1. Узнать длину (с пробелами)
+const lengthWith = phrase.length;
+
+// 2. Убрать пробелы по краям и снова длину
+const trimmed = phrase.trim();
+const lengthWithout = trimmed.length;
+
+// 3. Перевести в верхний регистр
+const upper = trimmed.toUpperCase();
+
+// 4. Взять первое слово (до запятой)
+const firstWord = trimmed.slice(0, trimmed.indexOf(","));
+
+// 5. Разбить по пробелам
+const words = trimmed.split(" ");
+
+// 6. Заменить "TypeScript" на "TS"
+const short = trimmed.replace("TypeScript", "TS");
+
+console.log({ lengthWith, lengthWithout, upper, firstWord, words, short });</code></pre>
+            </li>
+            <li>Запустите <code>npm run dev -- src/strings-play.ts</code> (или временно поправьте скрипт <code>dev</code> в <code>package.json</code> на этот файл).</li>
+            <li>Запишите вывод в тетрадь.</li>
+            <li>В VS Code наведите курсор на <code>trimmed.</code> и посмотрите, какие методы есть. Запишите 5 интересных, которых нет в задании.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In <code>src/strings-play.ts</code> paste:
+                <pre><code>const phrase = "  Hello, TypeScript World!  ";
+
+// 1. Length (with spaces)
+const lengthWith = phrase.length;
+
+// 2. Strip edge spaces and length again
+const trimmed = phrase.trim();
+const lengthWithout = trimmed.length;
+
+// 3. Uppercase
+const upper = trimmed.toUpperCase();
+
+// 4. First word (up to the comma)
+const firstWord = trimmed.slice(0, trimmed.indexOf(","));
+
+// 5. Split by spaces
+const words = trimmed.split(" ");
+
+// 6. Replace "TypeScript" with "TS"
+const short = trimmed.replace("TypeScript", "TS");
+
+console.log({ lengthWith, lengthWithout, upper, firstWord, words, short });</code></pre>
+            </li>
+            <li>Run <code>npm run dev -- src/strings-play.ts</code> (or temporarily point the <code>dev</code> script to this file).</li>
+            <li>Write the output in your notebook.</li>
+            <li>In VS Code hover over <code>trimmed.</code> and see the available methods. Write down 5 interesting ones not used in the task.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Программа выводит результаты всех 6 операций</li>
+                <li>Записаны 5 «новых» строковых методов из autocomplete</li>
+                <li>Понятно: <code>length</code> с пробелами больше, чем без</li>
+            </ul>
+            <ul data-lang="en">
+                <li>The program prints results of all 6 operations</li>
+                <li>5 "new" string methods recorded from autocomplete</li>
+                <li>Clear: <code>length</code> with spaces is bigger than without</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TASK 2 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 2. Конкатенация → template literals</div>
+            <div class="task-title" data-lang="en">Task 2. Concatenation → template literals</div>
+            <div class="task-meta">
+                <span class="badge badge-easy" data-lang="ru">Легко</span>
+                <span class="badge badge-easy" data-lang="en">Easy</span>
+                <span class="badge badge-time">10 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Переписать «старый» код с <code>+</code> на современные template literals.</span>
+            <span data-lang="en">Rewrite "old" <code>+</code>-style code into modern template literals.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Стартовый код (положите в <code>src/concat.ts</code>):</strong></p>
+        <p data-lang="en"><strong>Starter code (put in <code>src/concat.ts</code>):</strong></p>
+
+        <pre><code>const name = "Сейди";
+const age = 20;
+const city = "Ашхабад";
+const lang = "TypeScript";
+const year = 2026;
+
+// "Старая" версия — переписать!
+const greeting = "Привет, " + name + "!";
+const profile = name + ", " + age + " лет, " + city;
+const banner = "Я учу " + lang + " в " + year + " году";
+const html = "&lt;div&gt;" + name + " (" + age + ")&lt;/div&gt;";
+
+console.log(greeting);
+console.log(profile);
+console.log(banner);
+console.log(html);</code></pre>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>Перепишите все 4 строки на template literals (backticks <code>`</code>).</li>
+            <li>Запустите программу — вывод должен остаться <strong>тем же самым</strong>.</li>
+            <li>В тетради сравните: где запись стала короче, где — понятнее.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Rewrite all 4 lines as template literals (backticks <code>`</code>).</li>
+            <li>Run the program — the output must stay <strong>identical</strong>.</li>
+            <li>In your notebook compare: where the code got shorter, where clearer.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Все 4 строки используют <code>`...${...}...`</code></li>
+                <li>Программа работает и выводит то же самое</li>
+                <li>Записан вывод о пользе template literals</li>
+            </ul>
+            <ul data-lang="en">
+                <li>All 4 lines use <code>`...${...}...`</code></li>
+                <li>Program runs and prints identically</li>
+                <li>Wrote down conclusion about template literal benefits</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TASK 3 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 3. NaN и сюрпризы чисел</div>
+            <div class="task-title" data-lang="en">Task 3. NaN and number surprises</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">15 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Прочувствовать «странные» значения <code>number</code> и научиться их правильно проверять.</span>
+            <span data-lang="en">Feel the "weird" <code>number</code> values and learn the right way to check for them.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>В <code>src/numbers.ts</code> вставьте и запустите:
+                <pre><code>// 1. Infinity и -Infinity
+console.log(1 / 0);            // ?
+console.log(-1 / 0);           // ?
+
+// 2. NaN
+console.log(0 / 0);            // ?
+console.log(parseInt("abc"));  // ?
+console.log(Number("hello"));  // ?
+
+// 3. Главный сюрприз: NaN != NaN
+const x = NaN;
+console.log("x === NaN:", x === NaN);            // ?
+console.log("Number.isNaN(x):", Number.isNaN(x)); // ?
+
+// 4. toFixed возвращает СТРОКУ, не число
+const pi = 3.14159;
+const rounded = pi.toFixed(2);
+console.log("rounded:", rounded);
+console.log("typeof rounded:", typeof rounded);  // ?
+
+// 5. Math
+console.log(Math.max(1, 5, 3));    // ?
+console.log(Math.min(1, 5, 3));    // ?
+console.log(Math.round(2.7));      // ?
+console.log(Math.floor(2.7));      // ?
+console.log(Math.ceil(2.1));       // ?</code></pre>
+            </li>
+            <li>Запишите в тетрадь все «?» ответы.</li>
+            <li>Объясните в 1-2 предложениях <strong>почему</strong> <code>x === NaN</code> возвращает <code>false</code>.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In <code>src/numbers.ts</code> paste and run:
+                <pre><code>// 1. Infinity and -Infinity
+console.log(1 / 0);            // ?
+console.log(-1 / 0);           // ?
+
+// 2. NaN
+console.log(0 / 0);            // ?
+console.log(parseInt("abc"));  // ?
+console.log(Number("hello"));  // ?
+
+// 3. The big surprise: NaN != NaN
+const x = NaN;
+console.log("x === NaN:", x === NaN);            // ?
+console.log("Number.isNaN(x):", Number.isNaN(x)); // ?
+
+// 4. toFixed returns a STRING, not a number
+const pi = 3.14159;
+const rounded = pi.toFixed(2);
+console.log("rounded:", rounded);
+console.log("typeof rounded:", typeof rounded);  // ?
+
+// 5. Math
+console.log(Math.max(1, 5, 3));    // ?
+console.log(Math.min(1, 5, 3));    // ?
+console.log(Math.round(2.7));      // ?
+console.log(Math.floor(2.7));      // ?
+console.log(Math.ceil(2.1));       // ?</code></pre>
+            </li>
+            <li>Write down every "?" answer in your notebook.</li>
+            <li>Explain in 1-2 sentences <strong>why</strong> <code>x === NaN</code> returns <code>false</code>.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Записаны все ответы из <code>console.log</code></li>
+                <li>Понятно: <code>NaN</code> не равен сам себе по дизайну, проверка только через <code>Number.isNaN()</code></li>
+                <li>Понятно: <code>toFixed</code> возвращает <strong>строку</strong>, а не число</li>
+            </ul>
+            <ul data-lang="en">
+                <li>All <code>console.log</code> answers recorded</li>
+                <li>Clear: <code>NaN</code> is not equal to itself by design; only <code>Number.isNaN()</code> checks it</li>
+                <li>Clear: <code>toFixed</code> returns a <strong>string</strong>, not a number</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TASK 4 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 4. Truthy/falsy — таблица</div>
+            <div class="task-title" data-lang="en">Task 4. Truthy/falsy — the table</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">15 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Запомнить, какие значения «правдивые», а какие «ложные» в логическом контексте.</span>
+            <span data-lang="en">Memorize which values are "truthy" and which are "falsy" in logical context.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>В <code>src/truthy.ts</code> вставьте и запустите:
+                <pre><code>function check(label: string, value: unknown) {
+    console.log(`${label}: ${value ? "TRUTHY" : "falsy"}`);
+}
+
+check("false", false);
+check("0", 0);
+check("-0", -0);
+check('""', "");
+check("null", null);
+check("undefined", undefined);
+check("NaN", NaN);
+check("'0'", "0");
+check("'false'", "false");
+check("[]", []);
+check("{}", {});
+check("-1", -1);
+check("' '", " ");
+check("1", 1);</code></pre>
+            </li>
+            <li>Запишите в тетрадь таблицу: значение → truthy/falsy. Где результат удивил?</li>
+            <li>Ответьте: <em>«как правильно проверить, что массив пустой?»</em>. Подсказка: <code>arr.length === 0</code>.</li>
+            <li>Ответьте: <em>«как правильно проверить, что строка <strong>не пустая</strong>?»</em>. Подсказка: <code>str.length > 0</code> или <code>!!str</code>.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In <code>src/truthy.ts</code> paste and run:
+                <pre><code>function check(label: string, value: unknown) {
+    console.log(`${label}: ${value ? "TRUTHY" : "falsy"}`);
+}
+
+check("false", false);
+check("0", 0);
+check("-0", -0);
+check('""', "");
+check("null", null);
+check("undefined", undefined);
+check("NaN", NaN);
+check("'0'", "0");
+check("'false'", "false");
+check("[]", []);
+check("{}", {});
+check("-1", -1);
+check("' '", " ");
+check("1", 1);</code></pre>
+            </li>
+            <li>In your notebook tabulate: value → truthy/falsy. Where did the result surprise you?</li>
+            <li>Answer: <em>"how do you correctly check that an array is empty?"</em>. Hint: <code>arr.length === 0</code>.</li>
+            <li>Answer: <em>"how do you correctly check that a string is <strong>not empty</strong>?"</em>. Hint: <code>str.length > 0</code> or <code>!!str</code>.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Заполнена таблица для всех 14 значений</li>
+                <li>Найдены минимум 2 «удивительных» результата (<code>"0"</code>, <code>[]</code>, <code>{}</code>, <code>" "</code> — все truthy)</li>
+                <li>Записаны правильные проверки на «пустоту» массива и строки</li>
+            </ul>
+            <ul data-lang="en">
+                <li>Table filled for all 14 values</li>
+                <li>Found at least 2 "surprising" results (<code>"0"</code>, <code>[]</code>, <code>{}</code>, <code>" "</code> — all truthy)</li>
+                <li>Recorded correct empty checks for arrays and strings</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TASK 5 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 5. Literal types для статуса задачи</div>
+            <div class="task-title" data-lang="en">Task 5. Literal types for a task status</div>
+            <div class="task-meta">
+                <span class="badge badge-medium" data-lang="ru">Средне</span>
+                <span class="badge badge-medium" data-lang="en">Medium</span>
+                <span class="badge badge-time">20 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Применить literal-union на реальной задаче и увидеть, как TS защищает от опечаток.</span>
+            <span data-lang="en">Apply a literal union on a real task and see how TS protects you from typos.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>В <code>src/task-status.ts</code> создайте тип:
+                <pre><code>type TaskStatus = "todo" | "in-progress" | "done" | "archived";</code></pre>
+            </li>
+            <li>Напишите функцию <code>setStatus(taskId: number, status: TaskStatus): void</code>, которая выводит:
+                <code>`Задача #${taskId}: новый статус — "${status}"`</code>.
+            </li>
+            <li>Вызовите её <strong>правильно</strong> минимум 3 раза с разными статусами.</li>
+            <li>Вызовите её <strong>неправильно</strong> 3 раза с такими ошибками:
+                <ul>
+                    <li><code>"Done"</code> (большая буква)</li>
+                    <li><code>"in progress"</code> (пробел вместо дефиса)</li>
+                    <li><code>"compleated"</code> (опечатка в слове)</li>
+                </ul>
+            </li>
+            <li>Запустите <code>npm run check</code>. Запишите все 3 ошибки от TS.</li>
+            <li>В VS Code <strong>поставьте курсор</strong> внутрь <code>setStatus(1, "</code> — увидите autocomplete с 4 вариантами. Опишите, как это удобно по сравнению с JS.</li>
+            <li>Удалите все «неправильные» вызовы, оставьте только правильные. Запустите <code>npm run dev</code>.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>In <code>src/task-status.ts</code> create the type:
+                <pre><code>type TaskStatus = "todo" | "in-progress" | "done" | "archived";</code></pre>
+            </li>
+            <li>Write a function <code>setStatus(taskId: number, status: TaskStatus): void</code> that prints:
+                <code>`Task #${taskId}: new status — "${status}"`</code>.
+            </li>
+            <li>Call it <strong>correctly</strong> at least 3 times with different statuses.</li>
+            <li>Call it <strong>incorrectly</strong> 3 times with these mistakes:
+                <ul>
+                    <li><code>"Done"</code> (capital letter)</li>
+                    <li><code>"in progress"</code> (space instead of dash)</li>
+                    <li><code>"compleated"</code> (typo in word)</li>
+                </ul>
+            </li>
+            <li>Run <code>npm run check</code>. Record all 3 TS errors.</li>
+            <li>In VS Code <strong>place the cursor</strong> inside <code>setStatus(1, "</code> — you'll see autocomplete with 4 options. Describe how convenient this is vs JS.</li>
+            <li>Remove all "wrong" calls, keep only the correct ones. Run <code>npm run dev</code>.</li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Тип <code>TaskStatus</code> создан как union из 4 литералов</li>
+                <li>Записаны 3 ошибки от TS для трёх «неправильных» вызовов</li>
+                <li>Autocomplete в VS Code сработал — записан вывод</li>
+                <li>После очистки <code>npm run dev</code> выводит 3+ строки</li>
+            </ul>
+            <ul data-lang="en">
+                <li><code>TaskStatus</code> type created as union of 4 literals</li>
+                <li>3 TS errors recorded for the three "wrong" calls</li>
+                <li>VS Code autocomplete worked — observation recorded</li>
+                <li>After cleanup <code>npm run dev</code> prints 3+ lines</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TASK 6 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 6. as const — заморозка конфига</div>
+            <div class="task-title" data-lang="en">Task 6. as const — freezing a config</div>
+            <div class="task-meta">
+                <span class="badge badge-hard" data-lang="ru">Сложно</span>
+                <span class="badge badge-hard" data-lang="en">Hard</span>
+                <span class="badge badge-time">20 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Понять, как <code>as const</code> превращает «обычный объект» в типобезопасный конфиг.</span>
+            <span data-lang="en">Understand how <code>as const</code> turns a "plain object" into a type-safe config.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Шаги:</strong></p>
+        <p data-lang="en"><strong>Steps:</strong></p>
+        <ol data-lang="ru">
+            <li>В <code>src/config.ts</code> вставьте:
+                <pre><code>// Версия 1: БЕЗ as const
+const config1 = {
+    apiUrl: "https://api.example.com",
+    port: 3000,
+    env: "production"
+};
+
+// Версия 2: С as const
+const config2 = {
+    apiUrl: "https://api.example.com",
+    port: 3000,
+    env: "production"
+} as const;</code></pre>
+            </li>
+            <li>Наведите курсор на каждое поле обоих объектов. Заполните таблицу:
+                <table style="margin-top:8px;">
+                    <thead><tr><th>Поле</th><th>config1 (без as const)</th><th>config2 (с as const)</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>apiUrl</code></td><td>...</td><td>...</td></tr>
+                        <tr><td><code>port</code></td><td>...</td><td>...</td></tr>
+                        <tr><td><code>env</code></td><td>...</td><td>...</td></tr>
+                    </tbody>
+                </table>
+            </li>
+            <li>Попробуйте <code>config1.port = 5000</code> и <code>config2.port = 5000</code>. Что разрешено, что нет?</li>
+            <li>Создайте функцию:
+                <pre><code>function setEnv(env: "production" | "development") {
+    console.log(`Окружение: ${env}`);
+}
+
+setEnv(config1.env);   // ?
+setEnv(config2.env);   // ?</code></pre>
+                Запишите, какой вызов прошёл, а какой нет, и <strong>почему</strong>.
+            </li>
+        </ol>
+        <ol data-lang="en">
+            <li>In <code>src/config.ts</code> paste:
+                <pre><code>// Version 1: WITHOUT as const
+const config1 = {
+    apiUrl: "https://api.example.com",
+    port: 3000,
+    env: "production"
+};
+
+// Version 2: WITH as const
+const config2 = {
+    apiUrl: "https://api.example.com",
+    port: 3000,
+    env: "production"
+} as const;</code></pre>
+            </li>
+            <li>Hover each field of both objects. Fill in the table:
+                <table style="margin-top:8px;">
+                    <thead><tr><th>Field</th><th>config1 (without as const)</th><th>config2 (with as const)</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>apiUrl</code></td><td>...</td><td>...</td></tr>
+                        <tr><td><code>port</code></td><td>...</td><td>...</td></tr>
+                        <tr><td><code>env</code></td><td>...</td><td>...</td></tr>
+                    </tbody>
+                </table>
+            </li>
+            <li>Try <code>config1.port = 5000</code> and <code>config2.port = 5000</code>. What's allowed, what isn't?</li>
+            <li>Create the function:
+                <pre><code>function setEnv(env: "production" | "development") {
+    console.log(`Environment: ${env}`);
+}
+
+setEnv(config1.env);   // ?
+setEnv(config2.env);   // ?</code></pre>
+                Record which call passed, which failed, and <strong>why</strong>.
+            </li>
+        </ol>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Таблица заполнена: <code>config1</code> имеет широкие типы (<code>string</code>, <code>number</code>), <code>config2</code> — литералы</li>
+                <li>Зафиксировано: <code>config2.port = 5000</code> запрещён (readonly), <code>config1.port</code> — разрешён</li>
+                <li>Зафиксировано: <code>setEnv(config1.env)</code> ❌ (тип <code>string</code>), <code>setEnv(config2.env)</code> ✅ (тип <code>"production"</code>)</li>
+            </ul>
+            <ul data-lang="en">
+                <li>Table filled: <code>config1</code> has wide types (<code>string</code>, <code>number</code>), <code>config2</code> has literals</li>
+                <li>Recorded: <code>config2.port = 5000</code> forbidden (readonly), <code>config1.port</code> allowed</li>
+                <li>Recorded: <code>setEnv(config1.env)</code> ❌ (type <code>string</code>), <code>setEnv(config2.env)</code> ✅ (type <code>"production"</code>)</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru"><strong>Главный вывод:</strong> <code>as const</code> делает 2 вещи одновременно — даёт литеральные типы (вместо широких) и делает объект readonly.</p>
+            <p data-lang="en"><strong>Key takeaway:</strong> <code>as const</code> does 2 things at once — assigns literal types (instead of widened) and makes the object readonly.</p>
+        </div>
+    </div>
+
+    <!-- TASK 7 -->
+    <div class="task">
+        <div class="task-header">
+            <div class="task-title" data-lang="ru">Задание 7. Мини-программа «Светофор»</div>
+            <div class="task-title" data-lang="en">Task 7. Mini-program "Traffic light"</div>
+            <div class="task-meta">
+                <span class="badge badge-hard" data-lang="ru">Сложно</span>
+                <span class="badge badge-hard" data-lang="en">Hard</span>
+                <span class="badge badge-time">25 мин</span>
+            </div>
+        </div>
+
+        <div class="task-goal">
+            <span data-lang="ru">Соединить всё с занятия: <code>string</code>, <code>number</code>, <code>boolean</code>, template literals, literal types, <code>as const</code>.</span>
+            <span data-lang="en">Combine everything from the lesson: <code>string</code>, <code>number</code>, <code>boolean</code>, template literals, literal types, <code>as const</code>.</span>
+        </div>
+
+        <p data-lang="ru"><strong>Задача:</strong> написать «светофор» — программу, которая принимает текущий цвет, выводит понятное описание и говорит, можно ли двигаться. Файл — <code>src/traffic-light.ts</code>.</p>
+        <p data-lang="en"><strong>Task:</strong> write a "traffic light" — a program that takes the current color, prints a clear description, and says whether you can move. File — <code>src/traffic-light.ts</code>.</p>
+
+        <p data-lang="ru"><strong>Требования:</strong></p>
+        <p data-lang="en"><strong>Requirements:</strong></p>
+        <ol data-lang="ru">
+            <li>Создайте тип <code>type Light = "red" | "yellow" | "green"</code>.</li>
+            <li>Создайте константу-словарь через <code>as const</code>:
+                <pre><code>const LIGHT_INFO = {
+    red:    { message: "Стоп!",      canGo: false, waitSeconds: 30 },
+    yellow: { message: "Внимание!",  canGo: false, waitSeconds: 5  },
+    green:  { message: "Поезжай!",   canGo: true,  waitSeconds: 0  }
+} as const;</code></pre>
+            </li>
+            <li>Напишите функцию <code>describe(light: Light): string</code>. Она:
+                <ul>
+                    <li>Берёт <code>LIGHT_INFO[light]</code> и вытаскивает 3 поля</li>
+                    <li>Если <code>canGo === true</code> — возвращает: <code>`🟢 ${message} Можно ехать.`</code></li>
+                    <li>Иначе — возвращает: <code>`🔴 ${message} Подожди ${waitSeconds} сек.`</code></li>
+                </ul>
+            </li>
+            <li>Вызовите <code>describe</code> для всех трёх цветов, выведите результат.</li>
+            <li>Попробуйте передать <code>"blue"</code> — запишите ошибку TS.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Create the type <code>type Light = "red" | "yellow" | "green"</code>.</li>
+            <li>Create a dictionary constant via <code>as const</code>:
+                <pre><code>const LIGHT_INFO = {
+    red:    { message: "Stop!",      canGo: false, waitSeconds: 30 },
+    yellow: { message: "Caution!",   canGo: false, waitSeconds: 5  },
+    green:  { message: "Go!",        canGo: true,  waitSeconds: 0  }
+} as const;</code></pre>
+            </li>
+            <li>Write a function <code>describe(light: Light): string</code>. It:
+                <ul>
+                    <li>Takes <code>LIGHT_INFO[light]</code> and extracts 3 fields</li>
+                    <li>If <code>canGo === true</code> — returns: <code>`🟢 ${message} Safe to drive.`</code></li>
+                    <li>Else — returns: <code>`🔴 ${message} Wait ${waitSeconds} sec.`</code></li>
+                </ul>
+            </li>
+            <li>Call <code>describe</code> for all three colors, print the result.</li>
+            <li>Try passing <code>"blue"</code> — record the TS error.</li>
+        </ol>
+
+        <p data-lang="ru"><strong>Ожидаемый вывод:</strong></p>
+        <p data-lang="en"><strong>Expected output:</strong></p>
+
+        <pre><code>🔴 Стоп! Подожди 30 сек.
+🔴 Внимание! Подожди 5 сек.
+🟢 Поезжай! Можно ехать.</code></pre>
+
+        <div class="criteria">
+            <ul data-lang="ru">
+                <li>Тип <code>Light</code> — union из 3 литералов</li>
+                <li><code>LIGHT_INFO</code> создан с <code>as const</code></li>
+                <li>Функция <code>describe</code> аннотирована: <code>(light: Light): string</code></li>
+                <li>Внутри функции используются template literals и условный оператор/тернарка</li>
+                <li>Все 3 цвета корректно описаны</li>
+                <li><code>describe("blue")</code> вызывает ошибку компиляции — записана</li>
+                <li><code>npm run check</code> — 0 ошибок (после удаления "blue")</li>
+            </ul>
+            <ul data-lang="en">
+                <li><code>Light</code> type — a union of 3 literals</li>
+                <li><code>LIGHT_INFO</code> created with <code>as const</code></li>
+                <li>Function <code>describe</code> annotated: <code>(light: Light): string</code></li>
+                <li>Function body uses template literals and an if or ternary</li>
+                <li>All 3 colors correctly described</li>
+                <li><code>describe("blue")</code> causes a compile error — recorded</li>
+                <li><code>npm run check</code> — 0 errors (after removing "blue")</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            <p data-lang="ru"><strong>Подсказка</strong>: вытащить поля можно через деструктуризацию: <code>const { message, canGo, waitSeconds } = LIGHT_INFO[light];</code></p>
+            <p data-lang="en"><strong>Hint</strong>: extract fields via destructuring: <code>const { message, canGo, waitSeconds } = LIGHT_INFO[light];</code></p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="write-box">
+        <p data-lang="ru">Запишите сюда, что сегодня впервые увидели в TypeScript (literal types, <code>as const</code>) — и где это может пригодиться в реальном коде:</p>
+        <p data-lang="en">Write here what you saw in TypeScript for the first time today (literal types, <code>as const</code>) — and where you could use it in real code:</p>
+    </div>
+
+</div>
+
+</body>
+</html>

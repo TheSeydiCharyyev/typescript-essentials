@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Занятие 4 — Конспект ученика</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/student.css">
+    <script src="../../js/lang.js" defer></script>
+    <style>
+        h1 { border-bottom-color: #10b981; }
+        h2 { color: #047857; background: #ecfdf5; border-left-color: #10b981; }
+        h3 { color: #064e3b; }
+        .definition strong { color: #047857; }
+    </style>
+</head>
+<body>
+
+<div class="lesson-nav">
+    <a href="../../index.html" class="nav-home" data-lang="ru">&#8592; Главная</a>
+    <a href="../../index.html" class="nav-home" data-lang="en">&#8592; Home</a>
+    <span class="nav-sep">|</span>
+    <span class="nav-title" data-lang="ru">Занятие 4: Переменные и аннотации типов</span>
+    <span class="nav-title" data-lang="en">Lesson 4: Variables and Type Annotations</span>
+    <span class="nav-sep">|</span>
+    <a href="lecture.html" class="nav-link" data-lang="ru">&#x1F468;&#x200D;&#x1F3EB; Лекция</a>
+    <a href="lecture.html" class="nav-link" data-lang="en">&#x1F468;&#x200D;&#x1F3EB; Lecture</a>
+    <span class="nav-active" data-lang="ru">&#x1F468;&#x200D;&#x1F393; Конспект</span>
+    <span class="nav-active" data-lang="en">&#x1F468;&#x200D;&#x1F393; Notes</span>
+    <a href="tasks.html" class="nav-link" data-lang="ru">&#x1F4CB; Задания</a>
+    <a href="tasks.html" class="nav-link" data-lang="en">&#x1F4CB; Tasks</a>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+</div>
+
+<div class="container">
+
+    <h1 data-lang="ru">&#x1F4D3; КОНСПЕКТ УЧЕНИКА</h1>
+    <h1 data-lang="en">&#x1F4D3; STUDENT NOTES</h1>
+    <p class="subtitle" data-lang="ru">Занятие 4: Переменные и аннотации типов</p>
+    <p class="subtitle" data-lang="en">Lesson 4: Variables and Type Annotations</p>
+    <p class="date-line" data-lang="ru">Дата: _______________</p>
+    <p class="date-line" data-lang="en">Date: _______________</p>
+
+    <hr>
+
+    <h2 data-lang="ru">1. Что такое переменная</h2>
+    <h2 data-lang="en">1. What a variable is</h2>
+
+    <div class="definition">
+        <p data-lang="ru"><strong>Переменная</strong> — это именованный «контейнер» для хранения значения. В TS/JS объявляется тремя ключевыми словами: <code>let</code>, <code>const</code>, <code>var</code>.</p>
+        <p data-lang="en"><strong>A variable</strong> is a named "container" for storing a value. In TS/JS declared with three keywords: <code>let</code>, <code>const</code>, <code>var</code>.</p>
+    </div>
+
+    <hr>
+
+    <h2 data-lang="ru">2. let, const, var</h2>
+    <h2 data-lang="en">2. let, const, var</h2>
+
+    <table>
+        <thead data-lang="ru"><tr><th></th><th><code>const</code></th><th><code>let</code></th><th><code>var</code></th></tr></thead>
+        <thead data-lang="en"><tr><th></th><th><code>const</code></th><th><code>let</code></th><th><code>var</code></th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td>Можно переназначить</td><td>❌</td><td>✅</td><td>✅</td></tr>
+            <tr><td>Область видимости</td><td>Блок <code>{ }</code></td><td>Блок <code>{ }</code></td><td>Вся функция</td></tr>
+            <tr><td>В 2026 году?</td><td>✅ <strong>по умолчанию</strong></td><td>⚠ если надо менять</td><td>❌ <strong>никогда</strong></td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td>Reassignable</td><td>❌</td><td>✅</td><td>✅</td></tr>
+            <tr><td>Scope</td><td>Block <code>{ }</code></td><td>Block <code>{ }</code></td><td>Whole function</td></tr>
+            <tr><td>In 2026?</td><td>✅ <strong>by default</strong></td><td>⚠ if it must change</td><td>❌ <strong>never</strong></td></tr>
+        </tbody>
+    </table>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Запоминалка:</strong> «<em>const сначала, let если надо менять, var никогда</em>».</p>
+        <p data-lang="en"><strong>Mnemonic:</strong> "<em>const first, let if it must change, var never</em>".</p>
+    </div>
+
+    <p data-lang="ru"><strong>Важно про const:</strong> запрещает <em>переназначение</em>, но не <em>изменение полей</em> объекта/массива.</p>
+    <p data-lang="en"><strong>Important about const:</strong> forbids <em>reassignment</em>, not <em>mutation</em> of object/array fields.</p>
+
+    <pre><code>const user = { name: "Anna" };
+user = { name: "Boris" };   // ❌ нельзя
+user.name = "Boris";        // ✅ можно</code></pre>
+
+    <hr>
+
+    <h2 data-lang="ru">3. Аннотация типа</h2>
+    <h2 data-lang="en">3. Type annotation</h2>
+
+    <p data-lang="ru">Синтаксис: <code>let &lt;имя&gt;: &lt;тип&gt; = &lt;значение&gt;;</code></p>
+    <p data-lang="en">Syntax: <code>let &lt;name&gt;: &lt;type&gt; = &lt;value&gt;;</code></p>
+
+    <pre><code>let age: number = 18;
+let userName: string = "Anna";
+let isAdmin: boolean = false;</code></pre>
+
+    <p data-lang="ru">Три базовых типа (подробнее в занятии 5):</p>
+    <p data-lang="en">Three basic types (more in Lesson 5):</p>
+
+    <ul data-lang="ru">
+        <li><code>number</code> — числа (целые, дробные)</li>
+        <li><code>string</code> — строки в кавычках</li>
+        <li><code>boolean</code> — <code>true</code> или <code>false</code></li>
+    </ul>
+    <ul data-lang="en">
+        <li><code>number</code> — numbers (integer, decimal)</li>
+        <li><code>string</code> — strings in quotes</li>
+        <li><code>boolean</code> — <code>true</code> or <code>false</code></li>
+    </ul>
+
+    <hr>
+
+    <h2 data-lang="ru">4. Type inference — TS «угадывает» тип</h2>
+    <h2 data-lang="en">4. Type inference — TS "guesses" the type</h2>
+
+    <div class="definition">
+        <p data-lang="ru"><strong>Type inference</strong> — способность TypeScript автоматически определять тип переменной по присвоенному значению. Не надо писать <code>: number</code>, если значение уже число.</p>
+        <p data-lang="en"><strong>Type inference</strong> — TypeScript's ability to automatically figure out a variable's type from its assigned value. No need to write <code>: number</code> if the value is already a number.</p>
+    </div>
+
+    <pre><code>let age = 18;              // TS выводит: number
+const userName = "Anna";   // TS выводит: "Anna" (литерал)
+const isAdmin = false;     // TS выводит: false (литерал)</code></pre>
+
+    <h3 data-lang="ru">Где inference работает:</h3>
+    <h3 data-lang="en">Where inference works:</h3>
+
+    <ul data-lang="ru">
+        <li>Объявление с инициализацией: <code>let x = 5</code></li>
+        <li>Возврат из функции (тип возврата выводится сам)</li>
+        <li>Свойства объектов</li>
+        <li>Большинство выражений</li>
+    </ul>
+    <ul data-lang="en">
+        <li>Declaration with initializer: <code>let x = 5</code></li>
+        <li>Return from a function (return type inferred automatically)</li>
+        <li>Object properties</li>
+        <li>Most expressions</li>
+    </ul>
+
+    <h3 data-lang="ru">Где inference НЕ работает (нужна аннотация):</h3>
+    <h3 data-lang="en">Where inference does NOT work (annotation required):</h3>
+
+    <ul data-lang="ru">
+        <li>Объявление без значения (<code>let x;</code>)</li>
+        <li>Параметры функций (<code>function f(x)</code>)</li>
+        <li>Данные с границы системы (API-ответ, чтение файла)</li>
+    </ul>
+    <ul data-lang="en">
+        <li>Declaration with no value (<code>let x;</code>)</li>
+        <li>Function parameters (<code>function f(x)</code>)</li>
+        <li>Data from system boundaries (API response, file read)</li>
+    </ul>
+
+    <hr>
+
+    <h2 data-lang="ru">5. Widening: let vs const с литералами</h2>
+    <h2 data-lang="en">5. Widening: let vs const with literals</h2>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Объявление</th><th>Выведенный тип</th></tr></thead>
+        <thead data-lang="en"><tr><th>Declaration</th><th>Inferred type</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td><code>let x = 5</code></td><td><code>number</code></td></tr>
+            <tr><td><code>const x = 5</code></td><td><code>5</code> (литерал)</td></tr>
+            <tr><td><code>let s = "hi"</code></td><td><code>string</code></td></tr>
+            <tr><td><code>const s = "hi"</code></td><td><code>"hi"</code> (литерал)</td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td><code>let x = 5</code></td><td><code>number</code></td></tr>
+            <tr><td><code>const x = 5</code></td><td><code>5</code> (literal)</td></tr>
+            <tr><td><code>let s = "hi"</code></td><td><code>string</code></td></tr>
+            <tr><td><code>const s = "hi"</code></td><td><code>"hi"</code> (literal)</td></tr>
+        </tbody>
+    </table>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Почему так:</strong> <code>let</code> можно переназначить → TS «расширяет» тип. <code>const</code> переназначить нельзя → точный (литеральный) тип.</p>
+        <p data-lang="en"><strong>Why:</strong> <code>let</code> can be reassigned → TS "widens" the type. <code>const</code> can't → exact (literal) type.</p>
+    </div>
+
+    <hr>
+
+    <h2 data-lang="ru">6. Главное правило 2026</h2>
+    <h2 data-lang="en">6. The 2026 headline rule</h2>
+
+    <div style="background:#ecfdf5;border:2px solid #10b981;padding:14px 18px;border-radius:8px;margin:14px 0;">
+        <p data-lang="ru"><strong>«Аннотируй границы — параметры функций и явный возврат. Доверяй inference внутри.»</strong></p>
+        <p data-lang="en"><strong>"Annotate boundaries — function parameters and explicit returns. Trust inference inside."</strong></p>
+    </div>
+
+    <pre><code>// ✅ Идиоматически
+function calculatePrice(price: number, quantity: number): number {
+    const total = price * quantity;     // inference: number
+    const taxRate = 0.13;               // inference: number
+    return total * (1 + taxRate);
+}
+
+// ❌ Слишком много аннотаций — лишний шум
+function calculatePrice(price: number, quantity: number): number {
+    const total: number = price * quantity;
+    const taxRate: number = 0.13;
+    return total * (1 + taxRate);
+}</code></pre>
+
+    <hr>
+
+    <h2 data-lang="ru">7. Когда аннотировать</h2>
+    <h2 data-lang="en">7. When to annotate</h2>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Ситуация</th><th>Аннотация</th></tr></thead>
+        <thead data-lang="en"><tr><th>Situation</th><th>Annotate</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td>Параметры функции</td><td>✅ обязательно</td></tr>
+            <tr><td>Возврат из функции</td><td>⚠ часто да</td></tr>
+            <tr><td>Объявление без значения</td><td>✅ обязательно</td></tr>
+            <tr><td>Данные с API/из файла</td><td>✅ обязательно</td></tr>
+            <tr><td>Внутренние переменные функций</td><td>❌ нет</td></tr>
+            <tr><td><code>const x = 5</code></td><td>❌ нет</td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td>Function parameters</td><td>✅ mandatory</td></tr>
+            <tr><td>Function return</td><td>⚠ often yes</td></tr>
+            <tr><td>Declaration without value</td><td>✅ mandatory</td></tr>
+            <tr><td>Data from API/file</td><td>✅ mandatory</td></tr>
+            <tr><td>Local variables in functions</td><td>❌ no</td></tr>
+            <tr><td><code>const x = 5</code></td><td>❌ no</td></tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h2 data-lang="ru">8. Чтение ошибки TS</h2>
+    <h2 data-lang="en">8. Reading a TS error</h2>
+
+    <pre><code>Type 'string' is not assignable to type 'number'.
+     ↑                             ↑
+   что положили                  что ожидалось</code></pre>
+
+    <p data-lang="ru">Перевод: «вы передаёте <strong>строку</strong>, а ждали <strong>число</strong>».</p>
+    <p data-lang="en">Translation: "you're passing a <strong>string</strong> where a <strong>number</strong> is expected".</p>
+
+    <hr>
+
+    <h2 data-lang="ru">9. TDZ — Temporal Dead Zone</h2>
+    <h2 data-lang="en">9. TDZ — Temporal Dead Zone</h2>
+
+    <p data-lang="ru">«Мёртвая зона» с начала скоупа до строки объявления <code>let/const</code>. Использовать переменную до объявления — ошибка <code>ReferenceError</code>. Это <strong>защита</strong>.</p>
+    <p data-lang="en">"Dead zone" from the start of scope to the <code>let/const</code> declaration. Using the variable before declaration → <code>ReferenceError</code>. This is <strong>protection</strong>.</p>
+
+    <pre><code>console.log(y);   // ❌ Cannot access 'y' before initialization
+let y = 5;</code></pre>
+
+    <hr>
+
+    <h2 data-lang="ru">10. Правила именования</h2>
+    <h2 data-lang="en">10. Naming rules</h2>
+
+    <table>
+        <thead data-lang="ru"><tr><th>Что</th><th>Стиль</th><th>Пример</th></tr></thead>
+        <thead data-lang="en"><tr><th>What</th><th>Style</th><th>Example</th></tr></thead>
+        <tbody data-lang="ru">
+            <tr><td>Переменные, функции</td><td>camelCase</td><td><code>userName</code></td></tr>
+            <tr><td>Типы, классы, интерфейсы</td><td>PascalCase</td><td><code>User</code></td></tr>
+            <tr><td>Константы-значения</td><td>UPPER_SNAKE_CASE</td><td><code>API_URL</code></td></tr>
+        </tbody>
+        <tbody data-lang="en">
+            <tr><td>Variables, functions</td><td>camelCase</td><td><code>userName</code></td></tr>
+            <tr><td>Types, classes, interfaces</td><td>PascalCase</td><td><code>User</code></td></tr>
+            <tr><td>Constant values</td><td>UPPER_SNAKE_CASE</td><td><code>API_URL</code></td></tr>
+        </tbody>
+    </table>
+
+    <div class="key-point">
+        <p data-lang="ru"><strong>Принцип:</strong> код читается в 10 раз чаще, чем пишется. Лучше длинное понятное имя, чем короткое непонятное.</p>
+        <p data-lang="en"><strong>Principle:</strong> code is read 10x more than it's written. A long clear name beats a short cryptic one.</p>
+    </div>
+
+    <hr>
+
+    <div class="remember">
+        <ul data-lang="ru">
+            <li>Переменная = именованный контейнер. Объявляется <code>let</code>, <code>const</code>, <code>var</code>.</li>
+            <li><strong>const</strong> по умолчанию, <strong>let</strong> если меняем, <strong>var</strong> никогда.</li>
+            <li><code>const</code> запрещает переназначение, но не изменение полей объекта/массива.</li>
+            <li>Аннотация типа: <code>let x: number = 5</code> — TS будет это проверять.</li>
+            <li>Type inference: TS сам определяет тип по значению. Работает почти везде.</li>
+            <li><strong>Widening:</strong> <code>let</code> → широкий тип (<code>number</code>), <code>const</code> → литеральный (<code>5</code>).</li>
+            <li><strong>Правило 2026:</strong> аннотируй границы (параметры, возврат), доверяй inference внутри.</li>
+            <li>Аннотируй обязательно: параметры функций, переменные без значения, данные с API.</li>
+            <li>Не аннотируй: внутренние переменные функций, очевидные литералы.</li>
+            <li>Ошибка <code>Type 'X' is not assignable to type 'Y'</code> = «передаёте X туда, где ждут Y».</li>
+            <li>TDZ защищает от использования <code>let/const</code> до объявления.</li>
+            <li>camelCase для переменных, PascalCase для типов, UPPER_SNAKE для констант.</li>
+        </ul>
+        <ul data-lang="en">
+            <li>A variable = a named container. Declared with <code>let</code>, <code>const</code>, <code>var</code>.</li>
+            <li><strong>const</strong> by default, <strong>let</strong> if changing, <strong>var</strong> never.</li>
+            <li><code>const</code> forbids reassignment, not mutation of object/array fields.</li>
+            <li>Type annotation: <code>let x: number = 5</code> — TS will check it.</li>
+            <li>Type inference: TS figures out types from values. Works almost everywhere.</li>
+            <li><strong>Widening:</strong> <code>let</code> → wide type (<code>number</code>), <code>const</code> → literal (<code>5</code>).</li>
+            <li><strong>2026 rule:</strong> annotate boundaries (params, return), trust inference inside.</li>
+            <li>Must annotate: function params, value-less declarations, data from API.</li>
+            <li>Don't annotate: local variables in functions, obvious literals.</li>
+            <li>The error <code>Type 'X' is not assignable to type 'Y'</code> = "you pass X where Y is expected".</li>
+            <li>TDZ prevents using <code>let/const</code> before declaration.</li>
+            <li>camelCase for variables, PascalCase for types, UPPER_SNAKE for constants.</li>
+        </ul>
+    </div>
+
+    <div class="homework">
+        <ol data-lang="ru">
+            <li>Откройте проект <code>ts-strict-demo</code> из занятия 3. Создайте файл <code>src/variables.ts</code>. Напишите 5 переменных: 2 через <code>const</code>, 2 через <code>let</code>, 1 через <code>var</code>. Запустите <code>npm run dev</code>, убедитесь, что всё работает.</li>
+            <li>Наведите курсор в VS Code на каждую переменную и запишите в тетрадь, какой тип TypeScript вывел сам (без явных аннотаций).</li>
+            <li>Эксперимент с widening: создайте <code>const a = 10</code> и <code>let b = 10</code>. Наведите курсор на оба. Запишите, какие типы показывает VS Code. Объясните разницу.</li>
+            <li>Возьмите <code>const message = "hello"</code>. Попробуйте присвоить <code>message = "world"</code> — запишите ошибку. Замените на <code>let</code> — теперь работает. Объясните почему.</li>
+            <li>Объект через <code>const</code>: создайте <code>const user = { name: "Anna", age: 20 }</code>. Сначала попробуйте <code>user = { name: "Boris", age: 30 }</code>, потом <code>user.name = "Boris"</code>. Запишите, что разрешено, а что нет, и почему.</li>
+            <li>Напишите функцию <code>greet(name)</code> без аннотации параметра. Запустите <code>npm run check</code>. Запишите ошибку. Добавьте аннотацию <code>name: string</code> — ошибка исчезла.</li>
+            <li>Эксперимент с inference: напишите функцию <code>sum(a: number, b: number)</code> <strong>без</strong> аннотации возврата. Наведите курсор на имя функции — TS сам вывел тип возврата. Какой?</li>
+            <li>Найдите в своём коде из заданий 1-5 минимум <strong>3 лишних аннотации</strong> (внутренние переменные, которые TS вывел бы сам). Удалите их. Запустите <code>npm run check</code> — всё должно работать.</li>
+            <li>Подготовьте устные ответы на все 11 вопросов из раздела «Проверь себя» лекции.</li>
+        </ol>
+        <ol data-lang="en">
+            <li>Open the <code>ts-strict-demo</code> project from Lesson 3. Create <code>src/variables.ts</code>. Write 5 variables: 2 via <code>const</code>, 2 via <code>let</code>, 1 via <code>var</code>. Run <code>npm run dev</code>, verify it works.</li>
+            <li>In VS Code, hover the cursor over each variable and write down in your notebook what type TypeScript inferred (without explicit annotations).</li>
+            <li>Widening experiment: create <code>const a = 10</code> and <code>let b = 10</code>. Hover over both. Write down the types VS Code shows. Explain the difference.</li>
+            <li>Take <code>const message = "hello"</code>. Try to assign <code>message = "world"</code> — write down the error. Change to <code>let</code> — now it works. Explain why.</li>
+            <li>Object via <code>const</code>: create <code>const user = { name: "Anna", age: 20 }</code>. First try <code>user = { name: "Boris", age: 30 }</code>, then <code>user.name = "Boris"</code>. Write down what's allowed and what isn't, and why.</li>
+            <li>Write a function <code>greet(name)</code> without a parameter annotation. Run <code>npm run check</code>. Write down the error. Add <code>name: string</code> — the error disappears.</li>
+            <li>Inference experiment: write a function <code>sum(a: number, b: number)</code> <strong>without</strong> a return annotation. Hover over the function name — TS inferred the return type. What is it?</li>
+            <li>Find in your Task 1-5 code at least <strong>3 unnecessary annotations</strong> (local variables TS would infer itself). Delete them. Run <code>npm run check</code> — everything should still work.</li>
+            <li>Prepare oral answers to all 11 questions from the lecture's "Test yourself" section.</li>
+        </ol>
+    </div>
+
+</div>
+
+</body>
+</html>
